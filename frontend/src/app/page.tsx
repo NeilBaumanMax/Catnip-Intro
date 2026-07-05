@@ -33,7 +33,7 @@ export default async function HomePage() {
   })
 
   return (
-    <div className="page-enter overflow-hidden">
+    <div className="page-enter">
       {/* Hero with carousel */}
       <section className="relative text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
