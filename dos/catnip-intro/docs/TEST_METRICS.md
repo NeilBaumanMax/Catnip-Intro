@@ -159,3 +159,56 @@ Phase 3 以后：
 - 后台管理增删改查有效。
 - 前台页面能展示数据。
 - 图片上传能保存真实文件并返回可访问 URL。
+
+## 2026-07-05 Phase 1 backend minimal skeleton test
+
+测试范围：
+
+- backend Node.js + Express + TypeScript 最小骨架。
+- `GET /health` 健康检查接口。
+
+测试前置条件：
+
+- 已备份：是，Phase 0 已提交并推送到 GitHub，提交 `571339c`。
+- 已读取文档：是。
+- 已写开工计划：是。
+
+测试项目：
+
+1. 项目：`cd backend && npm install`
+   检查方式：命令退出码。
+   结果：通过。
+   失败原因：初始 `tsx` 方案安装卡住。
+   修复记录：移除 `tsx`，将 `dev` 改为 `tsc && node dist/app.js`。
+   重新测试结果：通过。
+
+2. 项目：`cd backend && npm run build`
+   检查方式：TypeScript 编译。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+3. 项目：`cd backend && npm run dev`
+   检查方式：服务启动日志。
+   结果：通过，服务监听 `http://0.0.0.0:4000`。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+4. 项目：访问 `http://localhost:4000/health`
+   检查方式：`curl -sS http://localhost:4000/health`。
+   结果：通过，返回 `{"ok":true,"message":"backend is running"}`。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+统计：
+
+- 通过数量：4
+- 失败数量：0
+- 失败项：无最终失败项；初始安装卡住已修复。
+- 是否存在文档漂移：收尾前存在 backend 状态漂移。
+- 是否已修正文档漂移：是。
+- 是否允许提交本次结果：是。
+- 是否允许进入下一 Phase：Phase 1 完成后可以建议进入 Phase 2，但必须由用户明确授权。

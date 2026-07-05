@@ -162,3 +162,74 @@
 - 是否切换 Git 分支：否。
 - 是否提交或上传 GitHub：否，本轮用户要求只验收。
 - 下一次施工建议：提交本次 Phase 0 脚手架流程修正；进入 Phase 1 前先按新流程备份、读档、写计划。
+
+## 2026-07-05 Phase 1 backend minimal skeleton
+
+备份记录：
+
+- 备份方式：提交并推送 Phase 0 已验收内容到 GitHub。
+- 备份位置或提交：`571339c`，`origin/main`。
+- 不能备份原因：无。
+
+读档记录：
+
+- 已读取文档：`CODEX_START_HERE.md`、`CODEX_MASTER_REQUIREMENTS.md`、`ARCHITECTURE.md`、`LAYER_CONTRACT.md`、`CONSTRUCTION_PLAN.md`、`WORKFLOW.md`、`DEV_PROGRESS.md`、`LOG.md`、`HANDOFF.md`、`progress/layers/backend.md`。
+- 已读取目标目录文件：`backend/README.md`。
+
+本轮目标：
+
+- 创建 backend Node.js + Express + TypeScript 最小可运行骨架。
+- 提供 `GET /health` 健康检查接口。
+- 后端监听 `0.0.0.0:4000`。
+- 不接入数据库、不接入 Prisma、不实现真实业务接口。
+
+本轮计划：
+
+1. 创建 backend package、TypeScript 配置和源代码目录。
+2. 实现 Express app、基础 CORS、JSON 解析和健康检查接口。
+3. 更新 backend README。
+4. 执行 `npm install`、`npm run build`、`npm run dev` 和 `/health` 访问测试。
+5. 测试通过后更新进度、日志、交接、测试指标和 backend 分层进度。
+6. 检查文档漂移，提交并推送 Phase 1。
+
+施工记录：
+
+- 已开始创建 backend 最小骨架。
+- 已创建 `backend/package.json`。
+- 已创建 `backend/tsconfig.json`。
+- 已创建 `backend/src/app.ts`。
+- 已创建 `backend/.gitignore`，忽略 `node_modules/`、`dist/`、`.env` 和 npm debug 日志。
+- 已更新 `backend/README.md`。
+- 第一次 `npm install` 长时间无输出后中止，记录为测试失败处理第一轮。
+- 第二次 `npm install --verbose` 卡在包含 `tsx` 的依赖安装收尾后中止。
+- 修复动作：移除 `tsx`，将 `dev` 脚本改为 `tsc && node dist/app.js`，保持 Phase 1 最小依赖。
+- 清理失败安装产生的 `backend/node_modules` 和可能的 lockfile 后重新安装。
+
+测试记录：
+
+- `npm install`：第二轮修复后通过，安装 85 个包，0 个漏洞。
+- `npm run build`：通过。
+- `npm run dev`：通过，服务监听 `http://0.0.0.0:4000`。
+- `curl -sS http://localhost:4000/health`：通过，返回 `{"ok":true,"message":"backend is running"}`。
+- 文档漂移修正后复验：`npm run build` 通过，`npm run dev` 通过，`/health` 返回值仍符合验收标准。
+
+失败处理记录：
+
+- 失败原因：初始 dev 工具 `tsx` 引入较重依赖树，安装过程长时间卡住。
+- 修复动作：删除 `tsx` 依赖，使用 `tsc && node dist/app.js` 作为 `dev` 命令。
+- 重新测试结果：通过。
+
+文档漂移检查：
+
+- 是否存在文档漂移：backend 层状态和 Phase 1 测试结果需要更新。
+- 已修正文档：`DEV_PROGRESS.md`、`LOG.md`、`HANDOFF.md`、`TEST_METRICS.md`、`progress/layers/backend.md`。
+- 未修正原因：无。
+
+收尾记录：
+
+- 是否写入业务代码：仅写入 Phase 1 允许的 backend 健康检查最小骨架。
+- 是否安装依赖：是，按 Phase 1 测试要求在 `backend/` 执行 `npm install`。
+- 是否创建新 worktree：否。
+- 是否切换 Git 分支：否。
+- 是否提交或上传 GitHub：待提交和推送。
+- 下一次施工建议：进入 Phase 2 前先备份，随后建立 SQLite 文件位置和后端基础数据结构；不要在 Phase 2 之前实现登录、产品、案例、留言或上传业务接口。

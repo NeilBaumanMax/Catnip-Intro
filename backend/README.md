@@ -1,21 +1,60 @@
 # backend
 
-当前只完成 Phase 0：工程脚手架。
+当前完成 Phase 1：backend 最小可运行骨架。
 
-本目录用于后端接口服务，后续负责登录、产品、案例、留言、网站设置、图片上传和 uploads 静态文件访问。
+本目录是 Catnip Intro 的后端服务目录。当前阶段只提供 Express + TypeScript 基础服务和健康检查接口，不包含数据库、Prisma、登录、产品、案例、留言、上传或其他真实业务接口。
 
-允许：
+## 技术栈
 
-- 后续创建后端项目骨架。
-- 后续实现接口、鉴权、数据库读写、上传处理和静态文件访问。
+- Node.js
+- Express
+- TypeScript
+- CORS
 
-禁止：
+## 命令
 
-- 在 Phase 0 写业务代码。
-- 将真实图片保存到 SQLite。
-- 让 frontend 直接访问 SQLite。
+```bash
+npm install
+npm run build
+npm run dev
+npm start
+```
 
-下一阶段：
+## 健康检查
 
-- Phase 1 确认技术栈后创建最小可运行后端骨架。
+开发服务监听：
 
+- Host: `0.0.0.0`
+- Port: `4000`
+
+访问：
+
+```text
+http://localhost:4000/health
+```
+
+期望返回：
+
+```json
+{
+  "ok": true,
+  "message": "backend is running"
+}
+```
+
+## 当前允许
+
+- 启动后端服务。
+- 访问 `GET /health`。
+- 使用基础 CORS。
+
+## 当前禁止
+
+- 接入 SQLite。
+- 接入 Prisma。
+- 实现登录接口。
+- 实现产品接口。
+- 实现案例接口。
+- 实现留言接口。
+- 实现上传接口。
+- 写任何前端页面。

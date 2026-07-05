@@ -2,11 +2,11 @@
 
 ## 当前阶段
 
-Phase 0：工程脚手架。
+Phase 1：backend 最小骨架。
 
 ## 当前状态
 
-Phase 0 已创建项目目录和工程文档。
+Phase 1 backend 最小骨架测试通过。后端服务可以启动，并提供 `GET /health` 健康检查接口。
 
 ## Phase 状态记录模板
 
@@ -48,18 +48,24 @@ Phase 0 已创建项目目录和工程文档。
 - 创建架构、层级契约、建设计划、工作流、日志、交接、测试指标和分层进度文档。
 - 补充标准施工流程：开工备份、读档、写计划、施工写日志、测试写日志、失败回修、测试通过后修正文档漂移、提出下次建议、上传 GitHub。
 - 补充统一日志模板、测试记录模板、交接记录模板和 Phase 状态记录模板。
+- Phase 1 backend：创建 Node.js + Express + TypeScript 最小后端骨架。
+- Phase 1 backend：配置基础 CORS。
+- Phase 1 backend：配置 `dev`、`build`、`start` npm scripts。
+- Phase 1 backend：实现 `GET /health`，返回 `{"ok":true,"message":"backend is running"}`。
+- Phase 1 backend：服务监听 `0.0.0.0:4000`。
 
 ## 未完成
 
-- 未创建业务代码。
 - 未创建前端项目代码。
-- 未创建后端项目代码。
 - 未创建 SQLite 数据库文件。
 - 未创建上传处理逻辑。
-- 未安装依赖。
+- 未安装前端依赖。
+- 未实现登录、产品、案例、留言、上传等真实业务接口。
+- 未接入 SQLite。
+- 未接入 Prisma。
 
 ## 下一阶段
 
-Phase 1：技术栈确认与最小工程骨架。
+建议进入 Phase 2：数据库与后端基础。
 
-Phase 1 开工前必须先备份当前仓库状态，并记录备份方式和备份位置。
+Phase 2 开工前必须先备份当前仓库状态，并记录备份方式和备份位置。
