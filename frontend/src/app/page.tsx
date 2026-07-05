@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import HeroCarousel from '@/components/HeroCarousel'
 import { fallbackProducts } from '@/lib/fallback'
 import { getProducts, getImageUrl } from '@/lib/api'
 
@@ -34,14 +33,53 @@ export default async function HomePage() {
 
   return (
     <div className="page-enter">
-      {/* Hero with carousel */}
+      {/* Hero */}
       <section className="relative text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image src="/images/hero-bg.jpg" alt="" fill className="object-cover" priority />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/95 via-[#0a1628]/80 to-[#0a1628]/60" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 md:py-20 w-full">
-          <HeroCarousel />
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            {/* Left: brand message */}
+            <div>
+              <p className="text-[#00AEEF] font-medium mb-3 text-xs tracking-[0.3em] uppercase" style={{ fontFamily: 'var(--font-orbitron)' }}>
+                万物有灵 · 本地 Agent 软硬件一体化
+              </p>
+              <h1 className="text-3xl md:text-5xl font-black leading-tight mb-4" style={{ fontFamily: 'var(--font-orbitron)' }}>
+                让 AI 从云端工具<br />变成可本地运行的<br />
+                <span className="text-[#00AEEF]">智能员工与设备大脑</span>
+              </h1>
+              <p className="text-base text-gray-300 mb-6 max-w-lg leading-relaxed">
+                科霓朋特科技面向端侧大模型部署、设备控制和本地智能执行，提供本地 Agent 智能板卡、端侧 AI 控制主板与私有化 Agent 系统。
+              </p>
+              <div className="flex gap-3 flex-wrap">
+                <Link href="/products" className="bg-[#00AEEF] hover:bg-cyan-400 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/25">
+                  查看产品
+                </Link>
+                <Link href="/contact" className="border border-white/40 hover:bg-white/10 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 backdrop-blur">
+                  联系我们
+                </Link>
+              </div>
+            </div>
+
+            {/* Right: 4 product images in 2x2 grid */}
+            <div className="hidden md:grid grid-cols-2 gap-3">
+              {[
+                { src: '/images/products/wanwu-agent-board.png', name: 'AI Agent 智能板卡', id: 1 },
+                { src: '/images/products/lobsterpi-edge-ai-board.png', name: '端侧 AI 控制主板', id: 2 },
+                { src: '/images/products/opc-ai-employee-box.png', name: 'OPC 智能员工盒子', id: 3 },
+                { src: '/images/products/live2d-smart-accessory.png', name: 'Live2D 智能挂件', id: 4 },
+              ].map((item) => (
+                <Link key={item.id} href={`/products/${item.id}`} className="group relative rounded-xl overflow-hidden ring-1 ring-white/20 hover:ring-[#00AEEF] transition-all duration-300 hover:scale-105">
+                  <img src={item.src} alt={item.name} className="w-full aspect-[4/3] object-cover" />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+                    <p className="text-white text-xs font-medium leading-tight">{item.name}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
