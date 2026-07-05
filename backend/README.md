@@ -74,6 +74,15 @@ http://localhost:4000/health
 }
 ```
 
+## 数据库迁移策略
+
+本机 `prisma migrate dev` 不可用（返回空 `Schema engine error`），当前使用 `prisma db push` 作为本地原型 schema 同步方案。
+
+详细评估见：`dos/catnip-intro/docs/DATABASE_MIGRATION_STRATEGY.md`
+
+- `prisma db push`：本地原型方案，直接同步 schema 到 SQLite，不生成 migration 历史文件。
+- 正式上线前需重新评估迁移体系（修复 migrate 或迁移到 Drizzle ORM）。
+
 ## 当前允许
 
 - 启动后端服务。

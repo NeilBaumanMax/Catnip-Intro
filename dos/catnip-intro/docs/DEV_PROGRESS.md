@@ -2,11 +2,11 @@
 
 ## 当前阶段
 
-Phase 2B：数据库读写验证脚本。
+Phase 2C：数据库迁移方案评估。
 
 ## 当前状态
 
-Phase 2B 测试通过。Prisma Client 连接模块和 seed/check 验证脚本已创建，数据库读写路径通过验证。
+Phase 2C 完成。数据库迁移策略已明确：当前第一版继续使用 Prisma + db push 作为本地原型方案，正式上线前重新评估。
 
 ## Phase 状态记录模板
 
@@ -46,20 +46,14 @@ Phase 2B 测试通过。Prisma Client 连接模块和 seed/check 验证脚本已
 - 创建根目录 README。
 - 创建各基础目录 README。
 - 创建架构、层级契约、建设计划、工作流、日志、交接、测试指标和分层进度文档。
-- Phase 1 backend：创建 Node.js + Express + TypeScript 最小后端骨架。
-- Phase 1 backend：配置基础 CORS。
-- Phase 1 backend：实现 `GET /health`。
-- Phase 2A：创建 `backend/.env.example`。
-- Phase 2A：创建 `backend/prisma/schema.prisma`，定义 Admin、Product、Case、Message、SiteSetting 模型。
-- Phase 2A：安装 Prisma 6.19.0 + SQLite 依赖。
-- Phase 2A：`prisma db push` 成功生成 `data/company.db`，5 张表就位。
-- Phase 2A：`prisma:generate` 成功生成 Prisma Client。
-- Phase 2B：创建 `backend/src/lib/prisma.ts`，导出 Prisma Client 单例。
-- Phase 2B：创建 `backend/src/scripts/seed.ts`，upsert 写入 5 表测试数据。
-- Phase 2B：创建 `backend/src/scripts/check-db.ts`，读取各表数量和样例。
-- Phase 2B：`db:seed` 和 `db:check` npm scripts 已配置。
-- Phase 2B：数据库读写路径通过验证（seed 写入 + check 读取）。
-- 注意：本机 `prisma migrate` 不可用（Schema engine error），使用 `prisma db push` 替代作为本地原型方案。
+- Phase 1 backend：Node.js + Express + TypeScript 最小后端骨架，`GET /health` 可用。
+- Phase 2A：Prisma 6.19.0 + SQLite 接入，`data/company.db` 5 张表就位。
+- Phase 2B：Prisma Client 连接单例和 seed/check 验证脚本，读写链路验证通过。
+- Phase 2C：数据库迁移方案评估完成，`DATABASE_MIGRATION_STRATEGY.md` 已创建。
+  - 决策：继续 Prisma + db push 用于第一版原型开发。
+  - 技术债已记录：`prisma migrate` 不可用，正式上线前需解决或迁移到 Drizzle。
+  - 如果必须平替，首选 Drizzle ORM + drizzle-kit。
+- 注意：本机 `prisma migrate` 不可用（Schema engine error），使用 `prisma db push` 替代。
 
 ## 未完成
 

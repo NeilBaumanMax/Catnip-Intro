@@ -521,3 +521,72 @@
 - 是否切换 Git 分支：否。
 - 是否提交或上传 GitHub：待提交和推送。
 - 下一次施工建议：Phase 2B 完成，数据库读写路径已验证。建议进入 Phase 3（后台登录与内容管理）。
+
+## 2026-07-05 Phase 2C database migration strategy evaluation
+
+备份记录：
+
+- 备份方式：开工前 `git status` 确认工作区干净，`main` 与 `origin/main` 同步。
+- 备份位置或提交：`08a573a`，`origin/main`（Phase 2B 提交）。
+- 不能备份原因：无。
+
+读档记录：
+
+- 已读取文档：`CODEX_START_HERE.md`、`CODEX_MASTER_REQUIREMENTS.md`、`ARCHITECTURE.md`、`LAYER_CONTRACT.md`、`CONSTRUCTION_PLAN.md`、`WORKFLOW.md`、`DEV_PROGRESS.md`、`LOG.md`、`HANDOFF.md`、`progress/layers/database.md`、`progress/layers/backend.md`。
+- 已读取目标目录文件：`backend/package.json`、`backend/prisma/schema.prisma`、`backend/src/lib/prisma.ts`、`backend/src/scripts/seed.ts`、`backend/src/scripts/check-db.ts`。
+
+本轮目标：
+
+- 只做数据库迁移方案评估，不写业务接口，不重构现有代码，不替换 ORM。
+
+本轮计划：
+
+1. 执行基线测试（build、generate、push、check）。
+2. 创建 `DATABASE_MIGRATION_STRATEGY.md`。
+3. 评估 5 个方案，回答 8 个必答问题。
+4. 更新相关工程文档。
+5. 提交并推送。
+
+施工记录：
+
+- 基线测试全部通过（build、prisma:generate、prisma:push、db:check）。
+- 已创建 `dos/catnip-intro/docs/DATABASE_MIGRATION_STRATEGY.md`。
+- 方案 A（继续 Prisma + db push）：推荐，零迁移成本，风险低，适合原型阶段。
+- 方案 B（继续排查 migrate）：不建议，收益低于成本，会阻塞业务开发。
+- 方案 C（Drizzle ORM + drizzle-kit）：如果必须平替，首选此方案。
+- 方案 D（Knex）：不太适合，类型安全不足。
+- 方案 E（Kysely）：不推荐，缺少内置 migration 工具，需额外组合。
+
+最终建议：
+
+- 当前第一版继续使用 Prisma + db push。
+- 不现在替换 ORM。
+- 如果必须平替，优先 Drizzle ORM + drizzle-kit。
+- 正式上线前重新评估迁移体系。
+- 下一阶段进入 Phase 3。
+
+测试记录：
+
+- `npm run build`：通过。
+- `npm run prisma:generate`：通过。
+- `npm run prisma:push`：通过。
+- `npm run db:check`：通过。
+
+失败处理记录：
+
+- 无失败项。
+
+文档漂移检查：
+
+- 是否存在文档漂移：存在，`DEV_PROGRESS.md`、分层进度、`HANDOFF.md` 需更新为 Phase 2C 完成态。
+- 已修正文档：正在修正中。
+- 未修正原因：无。
+
+收尾记录：
+
+- 是否写入业务代码：否。
+- 是否安装依赖：否。
+- 是否创建新 worktree：否。
+- 是否切换 Git 分支：否。
+- 是否提交或上传 GitHub：待提交和推送。
+- 下一次施工建议：进入 Phase 3（后台登录与内容管理），继续使用 Prisma + db push。

@@ -2,7 +2,7 @@
 
 ## 当前阶段
 
-当前完成 Phase 2B：数据库读写验证脚本。
+当前完成 Phase 2C：数据库迁移方案评估。
 
 ## 职责
 
@@ -21,7 +21,7 @@ SQLite 负责保存文字数据和图片路径。
 - 已创建 SQLite 数据库文件 `data/company.db`。
 - 已定义表结构（通过 `backend/prisma/schema.prisma`）。
 - 已通过 Prisma Client 验证写入和读取路径。
-- 保存图片路径。
+- 原型阶段使用 `prisma db push` 管理 schema 变更。
 
 ## 禁止
 
@@ -31,15 +31,14 @@ SQLite 负责保存文字数据和图片路径。
 ## 当前进度
 
 - Phase 0 已创建 `data/README.md`。
-- Phase 2A 已创建 `backend/prisma/schema.prisma`，包含 Admin、Product、Case、Message、SiteSetting 模型。
-- Phase 2A 已通过 `prisma db push` 生成 `data/company.db`，5 张表全部就位。
-- Phase 2A 已通过 `prisma generate` 生成 Prisma Client。
-- Phase 2B 已创建 `backend/src/lib/prisma.ts`（Prisma Client 连接单例）。
-- Phase 2B 已创建 `backend/src/scripts/seed.ts`（upsert 写入验证）。
-- Phase 2B 已创建 `backend/src/scripts/check-db.ts`（读取验证）。
-- Phase 2B 已验证写入→读取完整链路通过。
-- 注意：本机 `prisma migrate` 不可用（schema engine 空错误），使用 `prisma db push` 替代作为本地原型方案。
+- Phase 2A 已创建 schema，5 表就位，Prisma Client 可用。
+- Phase 2B 已创建 seed/check 脚本，读写链路验证通过。
+- Phase 2C 迁移策略已明确：
+  - 第一版继续 Prisma + db push。
+  - `prisma migrate` 不可用记录为技术债。
+  - 正式上线前重新评估（修复 migrate 或迁移 Drizzle）。
+  - 策略文档：`dos/catnip-intro/docs/DATABASE_MIGRATION_STRATEGY.md`。
 
 ## 下一步
 
-Phase 3 建议在 backend 中实现登录鉴权和业务接口，通过 Prisma Client 读写数据库。
+Phase 3 在 backend 中实现业务接口，通过 Prisma Client 读写数据库。
