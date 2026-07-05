@@ -138,15 +138,23 @@ Phase 0-2B 为 Node/Express/Prisma 历史路线，已完成但后续不再扩展
 
 ## 每阶段收尾要求
 
-每个阶段测试通过后必须：
+## 每阶段收尾要求（强制文档收尾）
 
-- 写记录文档。
-- 写施工日志和测试日志。
-- 修正本阶段涉及的所有施工文档。
-- 检查并处理文档漂移。
-- 提出下一次施工建议。
-- 提交或上传 GitHub 并记录结果。
+每个阶段测试通过后必须完成以下文档更新（全部）：
+
+1. 更新 `docs/DEV_PROGRESS.md`（阶段状态、已完成、未完成、下一阶段）。
+2. 更新 `docs/LOG.md`（施工日志：备份、读档、目标、计划、施工、测试、失败处理、文档漂移、收尾）。
+3. 更新 `docs/HANDOFF.md`（交接状态、已具备、尚未具备、下一步建议）。
+4. 更新 `docs/TEST_METRICS.md`（测试项目、通过/失败数量、是否允许进入下一阶段）。
+5. 更新 `docs/progress/layers/对应层.md`（当前进度、下一步）。
+6. 更新对应 README.md（frontend/README.md、backend/README.md 等）。
+7. 检查并处理文档漂移。
+8. 执行 Phase Completion Gate 自检（见 WORKFLOW.md）。
+9. 提出下一次施工建议。
+10. 提交或上传 GitHub 并记录结果。
+
+**未完成文档收尾不允许汇报 Phase 完成。** 详见 CODEX_START_HERE.md 和 WORKFLOW.md 中的 Phase 完成定义。
 
 ## 下一阶段
 
-Phase 2D：Go backend 最小骨架。
+Phase 7：全站联调 + 局域网手机访问验收。

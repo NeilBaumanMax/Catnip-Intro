@@ -32,6 +32,68 @@ Phase 0-2B 为 Node/Express/Prisma 历史路线，已完成但后续不再扩展
 - 测试失败后必须先记录失败日志，再回去修复，再重新测试。
 - 测试通过但未修正文档漂移时，不允许提交或上传 GitHub。
 - 用户明确要求只验收时，不允许进入下一 Phase。
+- **未完成文档收尾不允许汇报 Phase 完成。**
+- **如果发现上一阶段功能已完成但文档未更新，下一次任务必须优先进入 Phase X-DOC。**
+
+## Phase 完成定义（硬性门槛）
+
+任何 Phase 只有**同时满足以下 5 项**，才允许汇报"Phase 完成"：
+
+1. 功能施工完成。
+2. 测试完成并记录通过/失败数量。
+3. 相关工程文档已更新（见下方文档清单）。
+4. git status 检查无意外文件。
+5. 已提交并推送 GitHub。
+
+如果没有完成文档收尾，只能汇报：
+
+"功能完成，但 Phase 未完成，正在补文档收尾。"
+
+## 强制文档收尾清单
+
+每个 Phase 结束前必须更新以下文档（全部）：
+
+1. `dos/catnip-intro/docs/DEV_PROGRESS.md`
+2. `dos/catnip-intro/docs/LOG.md`
+3. `dos/catnip-intro/docs/HANDOFF.md`
+4. `dos/catnip-intro/docs/TEST_METRICS.md`
+5. `dos/catnip-intro/docs/progress/layers/对应层.md`
+6. 对应模块 README.md：
+   - 前端阶段：`frontend/README.md`
+   - 后端阶段：`backend/README.md`
+   - 数据库阶段：`data/README.md` 或 database 进度文档
+   - uploads 阶段：`uploads/README.md`
+
+## Phase Completion Gate（完成前自检）
+
+每个 Phase 最终汇报前，必须先自检以下 8 项：
+
+1. 本阶段是否更新 DEV_PROGRESS.md？
+2. 本阶段是否更新 LOG.md？
+3. 本阶段是否更新 HANDOFF.md？
+4. 本阶段是否更新 TEST_METRICS.md？
+5. 本阶段是否更新对应 progress/layers/*.md？
+6. 本阶段是否更新对应 README？
+7. git diff --name-only 是否包含这些文档？
+8. 如果没有，立刻补文档，不允许结束。
+
+## 最终汇报模板
+
+每次 Phase 完成后必须按以下模板输出：
+
+1. 修改了哪些业务文件。
+2. 修改了哪些文档文件。
+3. 是否已更新 DEV_PROGRESS.md。
+4. 是否已更新 LOG.md。
+5. 是否已更新 HANDOFF.md。
+6. 是否已更新 TEST_METRICS.md。
+7. 是否已更新对应 progress/layers 文件。
+8. 是否已更新对应 README。
+9. 是否完成 Phase。
+10. 是否已提交 GitHub。
+11. commit id。
+
+如果上述文档字段中任何一项为"否"，则"是否完成 Phase"必须写"否"。
 
 ## 每次 Codex 开工前读取顺序
 

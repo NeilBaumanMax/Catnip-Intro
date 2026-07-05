@@ -72,21 +72,69 @@ Catnip Intro 是一个企业官网与后台管理系统，采用 frontend + Go b
 
 ## 收尾规则
 
-每次 Codex 收尾时必须记录：
+### Phase 完成定义（硬性门槛）
 
-- 备份方式和备份位置。
-- 本轮完成了什么。
-- 修改了哪些文件。
-- 是否新增业务代码。
-- 是否安装依赖。
-- 是否创建 worktree。
-- 是否切换 Git 分支。
-- 测试或验收结果。
-- 是否已修正文档漂移。
-- 下一阶段建议。
-- 是否已上传 GitHub。
+任何 Phase 只有**同时满足以下 5 项**，才允许汇报"Phase 完成"：
 
-记录位置：
+1. 功能施工完成。
+2. 测试完成并记录通过/失败数量。
+3. 相关工程文档已更新（见下方文档清单）。
+4. git status 检查无意外文件。
+5. 已提交并推送 GitHub。
+
+如果没有完成文档收尾，只能汇报：
+
+"功能完成，但 Phase 未完成，正在补文档收尾。"
+
+不能汇报"Phase X 完成"。
+
+### 强制文档收尾清单
+
+每个 Phase 结束前必须更新以下文档（全部）：
+
+1. `dos/catnip-intro/docs/DEV_PROGRESS.md`
+2. `dos/catnip-intro/docs/LOG.md`
+3. `dos/catnip-intro/docs/HANDOFF.md`
+4. `dos/catnip-intro/docs/TEST_METRICS.md`
+5. `dos/catnip-intro/docs/progress/layers/对应层.md`
+6. 对应模块 README.md（前端→frontend/README.md, 后端→backend/README.md, 数据库→data/README.md, uploads→uploads/README.md）
+
+### Phase Completion Gate（完成前自检）
+
+每个 Phase 最终汇报前，必须先自检：
+
+1. 本阶段是否更新 DEV_PROGRESS.md？
+2. 本阶段是否更新 LOG.md？
+3. 本阶段是否更新 HANDOFF.md？
+4. 本阶段是否更新 TEST_METRICS.md？
+5. 本阶段是否更新对应 progress/layers/*.md？
+6. 本阶段是否更新对应 README？
+7. git diff --name-only 是否包含这些文档？
+8. 如果没有，立刻补文档，不允许结束。
+
+### 最终汇报模板
+
+每次 Phase 完成汇报必须包含：
+
+1. 修改了哪些业务文件。
+2. 修改了哪些文档文件。
+3. 是否已更新 DEV_PROGRESS.md。
+4. 是否已更新 LOG.md。
+5. 是否已更新 HANDOFF.md。
+6. 是否已更新 TEST_METRICS.md。
+7. 是否已更新对应 progress/layers 文件。
+8. 是否已更新对应 README。
+9. 是否完成 Phase。
+10. 是否已提交 GitHub。
+11. commit id。
+
+如果上述文档字段中任何一项为"否"，则"是否完成 Phase"必须写"否"。
+
+### 自动修正规则
+
+如果发现上一阶段功能已完成但文档未更新，下一次任务必须优先进入 Phase X-DOC，只补文档，不写代码。
+
+### 记录位置
 
 - 阶段状态写入 `docs/DEV_PROGRESS.md`。
 - 过程日志写入 `docs/LOG.md`。
@@ -94,15 +142,16 @@ Catnip Intro 是一个企业官网与后台管理系统，采用 frontend + Go b
 - 测试和验收结果写入 `docs/TEST_METRICS.md`。
 - 分层进度写入 `docs/progress/layers/*.md`。
 
-测试通过后的收尾顺序：
+### 测试通过后的收尾顺序
 
 1. 写记录文档。
 2. 写日志。
 3. 修正所有施工文档。
 4. 检查并处理文档漂移。
-5. 提出下一次施工建议。
-6. 上传 GitHub 并记录上传结果。
+5. 执行 Phase Completion Gate 自检。
+6. 提出下一次施工建议。
+7. 上传 GitHub 并记录上传结果。
 
 ## 下一阶段
 
-Phase 2D：Go backend 最小骨架。
+Phase 7：全站联调 + 局域网手机访问验收。
