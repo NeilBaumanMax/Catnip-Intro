@@ -9,7 +9,7 @@ const products = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0a1628] text-gray-300">
+    <footer className="bg-[#0a1628] text-gray-300 relative z-10">
       <div className="max-w-7xl mx-auto px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
