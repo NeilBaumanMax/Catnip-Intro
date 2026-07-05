@@ -30,22 +30,19 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-2">
+        <ul className="hidden md:flex items-center gap-3">
           {navItems.map((item) => (
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={`relative px-5 py-2.5 text-base font-semibold rounded-full transition-all duration-300`}
+                className={`relative px-3 py-2 text-base font-semibold transition-all duration-300 ${
+                  isActive(item.href)
+                    ? 'text-[#00AEEF] after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-6 after:h-0.5 after:bg-[#00AEEF] after:rounded-full'
+                    : 'text-[#0F3D7A] hover:text-[#1A56DB]'
+                }`}
                 style={{ fontFamily: 'var(--font-orbitron)' }}
               >
-                <span className={`relative z-10 transition-colors duration-300 ${
-                  isActive(item.href) ? 'text-white' : 'text-gray-400 hover:text-white'
-                }`}>
-                  {item.label}
-                </span>
-                {isActive(item.href) && (
-                  <span className="absolute inset-0 bg-gradient-to-r from-[#00AEEF] to-[#1A56DB] rounded-full shadow-lg shadow-cyan-500/25" />
-                )}
+                {item.label}
               </Link>
             </li>
           ))}
