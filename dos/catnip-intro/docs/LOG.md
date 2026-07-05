@@ -1196,5 +1196,45 @@
 - 是否安装依赖：否。
 - 是否创建新 worktree：否。
 - 是否切换 Git 分支：否。
-- 是否提交或上传 GitHub：待提交。
+- 是否提交或上传 GitHub：已提交，`6ea9f3e`。
 - 下一次施工建议：第一版开发完成。后续可考虑生产部署、Node/Prisma 清理。
+
+## 2026-07-06 V2 前台视觉改版
+
+本轮目标：根据用户反馈进行前台视觉二次改版，包括毛玻璃导航、全页背景图、玻璃卡片、产品轮播、词云动效等。
+
+施工记录：
+- 删除顶部蓝色公告栏，Header 改为毛玻璃 dock（backdrop-blur + 渐变透明）。
+- 添加 usePathname 导航高亮。
+- 删除"解决方案"导航项，导航保留 4 项：首页、关于我们、产品中心、联系我们。
+- Home Hero 背景从科技蓝渐变改为山景照片（Unsplash）。
+- Hero 导入 Orbitron 科技风字体（Google Fonts）。
+- Hero 右侧改为 4 产品轮播，每 4s 自动切换。
+- 删除"为什么选择本地 Agent"整块。
+- 新增"软硬件一体化产品矩阵"（4 产品 fallback 数据）。
+- 产品中心改为全页背景 + 玻璃卡片，4 产品左右交替大卡片布局。
+- 关于我们改为全页背景 + 玻璃卡片，公司简介、技术路线、发展历程均为玻璃风格。
+- 联系我们改为全页背景 + 玻璃卡片，合作方向改为词云（15 关键词 + pulse 动效）。
+- 产品详情页改为全页背景 + 玻璃描述卡片。
+- Nginx 1.26.2 安装并配置反向代理，监听 :8080。
+- 所有页面统一深色背景 + 白色文字 + 玻璃卡片。
+
+测试记录：
+- npm run lint：通过，0 errors。
+- npm run build：通过，13 routes。
+- 所有页面 HTTP 200。
+- Nginx 反向代理验证通过 (:8080 → 3000, :8080/api → 4000)。
+
+新增文件：
+- src/components/HeroCarousel.tsx
+- src/lib/fallback.ts
+- public/images/hero-bg.jpg, about-bg.jpg, products-bg.jpg, contact-bg.jpg
+- public/images/products/ (4 product PNGs)
+- design-input/ 资料包（用户自行填充）
+- nginx.conf, start-nginx.sh
+
+收尾记录：
+- 是否写入业务代码：是，前台视觉改版。
+- 是否安装依赖：是，Nginx 1.26.2 系统工具，Orbitron Google Font。
+- 是否修改 backend：否。
+- 下一阶段建议：项目已交付。

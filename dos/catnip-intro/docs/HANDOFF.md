@@ -60,20 +60,30 @@
 ## 启动方式
 
 ```bash
+# Nginx 反向代理 (端口 8080, 推荐)
+./start-nginx.sh start
+
 # 1. 后端 (端口 4000)
 cd backend && go run ./cmd/server
 
 # 2. 前端 (端口 3000)
-cd frontend && NEXT_PUBLIC_API_BASE_URL=http://localhost:4000 npx next dev --hostname 0.0.0.0 --port 3000
+cd frontend && npx next dev --hostname 0.0.0.0 --port 3000
 
-# 3. 局域网手机访问
-# 修改 .env.local: NEXT_PUBLIC_API_BASE_URL=http://电脑IP:4000
-# 手机浏览器访问: http://电脑IP:3000
+# 3. 访问
+# Nginx: http://localhost:8080
+# 直连: http://localhost:3000
 ```
 
 ## 测试账号
 
 admin / admin123456
+
+## 前台 V2 视觉
+
+- 毛玻璃导航 + 全页背景图 + 玻璃卡片
+- 4 产品 Hero 轮播
+- 联系我们词云动效
+- Orbitron 科技风字体
 
 ## 尚未具备
 
@@ -81,10 +91,9 @@ admin / admin123456
 
 ## 后续可考虑
 
-- 生产环境部署
+- 生产环境部署、HTTPS
 - Node/Prisma 历史代码清理
-- 正式 migration 方案（db push → migrate）
-- HTTPS 支持
+- 产品图片统一优化
 
 ## 2026-07-05 Phase 1 handoff
 

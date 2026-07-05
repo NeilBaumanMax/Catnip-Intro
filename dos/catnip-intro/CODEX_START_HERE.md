@@ -4,9 +4,11 @@
 
 ## 当前阶段
 
-当前完成 Phase 2C：后端技术栈切换文档修正。
+项目第一版已完成，前台视觉 V2 改版完成。
 
-Phase 0-2B 为 Node/Express/Prisma 历史路线，已完成但后续不再扩展。
+- 后端：Go + SQLite，24 API，Nginx 反向代理
+- 前端：Next.js 16，前台玻璃风格 + 后台管理 6 页面
+- Phase 0-2B 为 Node/Express/Prisma 历史路线，已完成但后续不再扩展。
 
 ## 项目目标
 
@@ -154,4 +156,4 @@ Catnip Intro 是一个企业官网与后台管理系统，采用 frontend + Go b
 
 ## 下一阶段
 
-Phase 7：全站联调 + 局域网手机访问验收。
+项目第一版已交付。后续可进行：产品图片优化、SEO、生产部署、Node/Prisma 清理。

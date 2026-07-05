@@ -2,11 +2,11 @@
 
 ## 当前阶段
 
-Phase 7：全站联调 + 局域网手机访问验收。
+项目第一版交付，前台视觉 V2 改版完成。
 
 ## 当前状态
 
-Phase 7 已完成。全站端到端联调验证通过，局域网访问 CORS 已配置。
+全站功能完整，后台 6 页面 + 前台 7 页面，玻璃风格视觉，Nginx 反向代理已配置。
 
 ## 已完成
 
@@ -37,11 +37,21 @@ Phase 7 已完成。全站端到端联调验证通过，局域网访问 CORS 已
   - CORS 已支持局域网访问
   - LAN IP: 10.139.223.120
 
+- V2 视觉改版 ✅
+  - 毛玻璃导航栏（backdrop-blur）
+  - 全页背景图 + 玻璃卡片（关于我们、产品中心、联系我们）
+  - Hero 4 产品轮播（每 4s 自动切换）
+  - Orbitron 科技风字体
+  - 联系我们词云动效
+  - 产品中心 4 产品大卡片
+- Nginx 反向代理 ✅ (:8080 → Next.js :3000 + Go :4000)
+
 ### 底座
 - Go 1.25 + net/http + database/sql + modernc.org/sqlite
 - Next.js 16 + React 19 + TypeScript + Tailwind CSS
 - SQLite (data/company.db, 不提交 Git)
 - uploads (真实图片, 不提交 Git)
+- Nginx 1.26.2 反向代理
 - Node/Prisma 历史代码保留
 
 ## 未完成
@@ -50,4 +60,4 @@ Phase 7 已完成。全站端到端联调验证通过，局域网访问 CORS 已
 
 ## 下一阶段
 
-项目已完成第一版开发。后续可考虑：生产部署、Node/Prisma 清理、正式 migration 方案。
+后续可考虑：产品图片优化、SEO 元数据、生产部署、Node/Prisma 清理。
