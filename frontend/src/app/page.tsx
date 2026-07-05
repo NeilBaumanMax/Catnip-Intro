@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { fallbackProducts } from '@/lib/fallback'
-import { getProducts, getCases, getImageUrl } from '@/lib/api'
+import { getProducts, getImageUrl } from '@/lib/api'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,9 +20,8 @@ const whyUs = [
 ]
 
 export default async function HomePage() {
-  const [productsRes, casesRes] = await Promise.all([getProducts(), getCases()])
+  const productsRes = await getProducts()
   const apiProducts = productsRes.ok ? (productsRes.data || []) : []
-  const caseItems = casesRes.ok ? (casesRes.data || []).slice(0, 3) : []
 
   // Merge: prefer API products, fill with fallback to ensure 4
   const displayProducts = fallbackProducts.map((fb) => {
@@ -63,8 +62,9 @@ export default async function HomePage() {
                 </Link>
               </div>
             </div>
-            <div className="hidden md:flex justify-center">
-              <Image src="/images/products/wanwu-agent-board.png" alt="万物有灵 AI Agent 智能板卡" width={420} height={315} className="rounded-2xl shadow-2xl ring-1 ring-white/20 object-contain" />
+            <div className="hidden md:flex items-center justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/products/wanwu-agent-board.png" alt="万物有灵 AI Agent 智能板卡" className="rounded-2xl shadow-2xl ring-1 ring-white/20 w-full max-w-md h-auto" />
             </div>
           </div>
         </div>
@@ -132,35 +132,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Cases */}
-      {caseItems.length > 0 && (
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-14">
-              <p className="text-[#00AEEF] font-medium text-sm mb-3">落地案例</p>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">客户实践</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {caseItems.map((c: { id: number; title: string; summary: string; image_url: string }) => (
-                <Link key={c.id} href={`/cases/${c.id}`} className="card-hover bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 group">
-                  <div className="h-48 bg-gradient-to-br from-[#0F3D7A] to-[#1A56DB] flex items-center justify-center">
-                    {c.image_url ? (
-                      <img src={getImageUrl(c.image_url)} alt={c.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
-                    ) : (
-                      <span className="text-4xl text-white/30">📋</span>
-                    )}
-                  </div>
-                  <div className="p-5">
-                    <h3 className="font-bold text-gray-900 mb-1">{c.title}</h3>
-                    <p className="text-sm text-gray-500 line-clamp-2">{c.summary}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Why Us */}
       <section className="py-20 bg-[#0a1628] text-white">
