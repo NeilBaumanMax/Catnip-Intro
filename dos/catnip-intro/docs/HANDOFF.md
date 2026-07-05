@@ -91,11 +91,16 @@ admin / admin123456
 
 - 无。第一版全部功能已交付。
 
+## 部署
+
+- 腾讯云 CVM: **118.195.247.102**
+- Nginx :80 → Next.js :3000 + Go :4000
+- Go 1.25, Node v22, Ubuntu 22.04
+
 ## 后续可考虑
 
-- 生产环境部署、HTTPS
+- HTTPS 证书
 - Node/Prisma 历史代码清理
-- 产品图片统一优化
 
 ## 2026-07-05 Phase 1 handoff
 

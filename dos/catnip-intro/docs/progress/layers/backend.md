@@ -54,6 +54,10 @@ nginx.conf 配置反向代理，监听 :8080。
 - /api/ → :4000 (Go)
 - /uploads/ → :4000 (Go)
 
+## 部署
+
+腾讯云 CVM Ubuntu 22.04, 118.195.247.102. Go 1.25 + Nginx 反向代理。
+
 ## 下一步
 
-生产部署、HTTPS、migration 方案。
+HTTPS、migration 方案。

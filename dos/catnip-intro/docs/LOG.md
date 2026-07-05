@@ -1261,3 +1261,27 @@
 收尾记录：
 - 是否写入业务代码：是，SSE 轮播、前端适配。
 - 是否修改 backend：是，新增 carousel SSE handler。
+
+## 2026-07-06 腾讯云部署 + 图片优化
+
+本轮目标：将项目部署至腾讯云 CVM (118.195.247.102)，优化图片加载速度。
+
+施工记录：
+- 服务器：Ubuntu 22.04 LTS, 118.195.247.102。
+- 安装 Go 1.25.0, Node v22.23.1, Nginx 1.18.0。
+- 从 GitHub clone 项目，构建后端（go build）和前端（npm run build）。
+- 配置 Nginx 反向代理 :80 → Next.js :3000 + Go :4000。
+- Go backend 以 nohup 后台运行，Next.js 以 `next start` 生产模式运行。
+- 图片优化：ImageMagick 将产品图从 3-6MB PNG 压缩至 9-27KB JPEG（99% 缩减）。
+- 所有页面背景引用统一为 .jpg。
+- Nginx 配置 gzip 压缩。
+
+测试记录：
+- 公网 IP 访问 HTTP 200。
+- API 通过 Nginx 代理正常。
+- 图片加载从 50s 缩短至 0.1s。
+
+收尾记录：
+- 是否写入业务代码：是，图片格式调整、部署配置。
+- 是否修改 backend：否。
+- 部署服务器：118.195.247.102。
