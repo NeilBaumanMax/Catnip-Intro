@@ -25,7 +25,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 glass-nav">
       <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
-          <Image src="/logo.jpg" alt="Catnipent" width={32} height={32} className="rounded-md" />
+          <Image src="/logo.png" alt="Catnipent" width={48} height={48} className="object-contain" />
           <span className="text-base font-bold text-[#0F3D7A]">Catnipent</span>
         </Link>
 
