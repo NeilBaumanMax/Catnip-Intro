@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 const slides = [
@@ -12,34 +12,14 @@ const slides = [
 
 export default function HeroCarousel() {
   const [i, setI] = useState(0)
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-  // Try SSE first, fall back to local timer
   useEffect(() => {
-    let es: EventSource | null = null
-
-    try {
-      es = new EventSource('/api/carousel/tick')
-      es.onmessage = (e) => {
-        const n = parseInt(e.data, 10)
-        if (!isNaN(n) && n >= 0 && n < 4) setI(n)
-      }
-      es.onerror = () => {
-        es?.close()
-        // fall back to local timer
-        if (!timerRef.current) {
-          timerRef.current = setInterval(() => setI((p) => (p + 1) % 4), 4000)
-        }
-      }
-    } catch {
-      // SSE not supported, use local timer
-      timerRef.current = setInterval(() => setI((p) => (p + 1) % 4), 4000)
+    const es = new EventSource('/api/carousel/tick')
+    es.onmessage = (e) => {
+      const n = parseInt(e.data, 10)
+      if (!isNaN(n) && n >= 0 && n < 4) setI(n)
     }
-
-    return () => {
-      es?.close()
-      if (timerRef.current) clearInterval(timerRef.current)
-    }
+    return () => es.close()
   }, [])
 
   const s = slides[i]
