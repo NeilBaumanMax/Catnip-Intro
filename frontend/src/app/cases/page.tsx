@@ -1,6 +1,8 @@
 import { getCases } from '@/lib/api'
 import CaseCard from '@/components/CaseCard'
 
+export const dynamic = 'force-dynamic'
+
 export default async function CasesPage() {
   const res = await getCases()
   const items = res.ok ? (res.data || []) : []

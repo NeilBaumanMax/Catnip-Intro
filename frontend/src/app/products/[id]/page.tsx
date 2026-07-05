@@ -2,11 +2,24 @@ import { getProduct } from '@/lib/api'
 import { getImageUrl } from '@/lib/api'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 export default async function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const res = await getProduct(Number(id))
 
-  if (!res.ok && !res.data) {
+  if (!res.ok) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-16 text-center">
+        <div className="bg-red-50 border border-red-200 text-red-600 rounded-lg p-4 mb-4 inline-block text-sm">
+          {res.error || '加载失败，请确认后端已启动'}
+        </div>
+        <div><Link href="/products" className="text-blue-600 hover:underline">← 返回产品列表</Link></div>
+      </div>
+    )
+  }
+
+  if (!res.data) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-16 text-center">
         <p className="text-gray-400 text-lg">产品不存在或已下架</p>

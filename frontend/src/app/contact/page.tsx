@@ -1,6 +1,8 @@
 import { getSettings, getImageUrl } from '@/lib/api'
 import ContactForm from '@/components/ContactForm'
 
+export const dynamic = 'force-dynamic'
+
 export default async function ContactPage() {
   const res = await getSettings()
   const s = res.ok ? res.data : null
@@ -9,9 +11,15 @@ export default async function ContactPage() {
     <div className="max-w-4xl mx-auto px-4 py-16">
       <h1 className="text-3xl font-bold text-gray-900 mb-8">联系我们</h1>
 
+      {!res.ok && (
+        <div className="bg-red-50 border border-red-200 text-red-600 rounded-lg p-4 mb-6 text-sm">
+          {res.error || '加载失败，请确认后端已启动'}
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div className="space-y-4 text-gray-600">
-          {s ? (
+          {res.ok && s ? (
             <>
               {s.company_name && <p className="text-xl font-bold text-gray-900">{s.company_name}</p>}
               {s.phone && <p><span className="font-medium text-gray-900">电话：</span>{s.phone}</p>}
