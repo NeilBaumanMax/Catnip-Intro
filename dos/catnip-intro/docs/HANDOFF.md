@@ -93,14 +93,17 @@ admin / admin123456
 
 ## 部署
 
-- 腾讯云 CVM: **118.195.247.102**
+- 腾讯云 CVM: **118.195.247.102** (Ubuntu 22.04)
 - Nginx :80 → Next.js :3000 + Go :4000
-- Go 1.25, Node v22, Ubuntu 22.04
+- Go 1.25, Node v22
+- SSE 轮播：Go goroutine 4s 计时 → Nginx 透传 → EventSource
+- 图片：ImageMagick 压缩 99%，加载 <0.1s
 
 ## 后续可考虑
 
 - HTTPS 证书
 - Node/Prisma 历史代码清理
+- PM2 / systemd 进程守护
 
 ## 2026-07-05 Phase 1 handoff
 

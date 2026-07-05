@@ -1285,3 +1285,23 @@
 - 是否写入业务代码：是，图片格式调整、部署配置。
 - 是否修改 backend：否。
 - 部署服务器：118.195.247.102。
+
+## 2026-07-06 SSE 轮播部署修复
+
+本轮目标：修复腾讯云部署后轮播不工作的问题。
+
+施工记录：
+- SSR 模式 EventSource 使用相对路径 `/api/carousel/tick`（避免 localhost 写死）。
+- Nginx `/api/` 通用 location 会覆盖响应头，导致 `Content-Type: text/event-stream` 丢失。
+- 解决方案：新增独立 `location /api/carousel/tick` 块，设置 `proxy_buffering off` + `chunked_transfer_encoding on`。
+- 前端恢复纯 SSE 模式，移除本地 setInterval 回退（用户要求后端计时器）。
+- 旧 Next.js 进程未正确 kill，需手动 `kill -9` 后重启。
+
+测试记录：
+- `curl -sI http://localhost/api/carousel/tick` 返回 `Content-Type: text/event-stream`。
+- 公网 `curl -sN` 收到 `data: 3` / `data: 0` 事件流。
+- 安全组 80 端口已放行。
+
+收尾记录：
+- 是否修改业务代码：是，SSE 路径修复。
+- 是否修改 backend：否。
