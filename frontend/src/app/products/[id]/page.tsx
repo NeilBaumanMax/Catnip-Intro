@@ -8,7 +8,8 @@ export const dynamic = 'force-dynamic'
 export default async function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const res = await getProduct(Number(id))
-  const fb = fallbackProducts.find((p) => p.id === Number(id))
+  const apiData = res.ok ? (res.data as { name?: string } | null) : null
+  const fb = fallbackProducts.find((p) => p.name === apiData?.name) || fallbackProducts.find((p) => p.id === Number(id))
 
   if (!res.ok && !fb) {
     return (
@@ -21,9 +22,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     )
   }
 
-  const apiData = res.ok ? res.data : null
   const product = apiData || fb
-  if (!product) {
+  if (!product && !fb) {
     return (
       <div className="max-w-3xl mx-auto px-6 py-20 text-center page-enter">
         <p className="text-gray-400 text-lg">产品不存在</p>
@@ -32,14 +32,15 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     )
   }
 
-  const name = (product as { name: string }).name
-  const category = (product as { category?: string }).category || (fb as { category?: string })?.category || ''
-  const summary = (product as { summary?: string }).summary || (fb as { summary?: string })?.summary || ''
-  const description = (product as { description?: string }).description || (fb as { description?: string })?.description || ''
+  // Prefer fallback text for known products, API for image_url
+  const name = fb?.name || (product as { name: string })?.name || ''
+  const category = fb?.category || (product as { category?: string })?.category || ''
+  const summary = fb?.summary || (product as { summary?: string })?.summary || ''
+  const description = fb?.description || (product as { description?: string })?.description || ''
   const apiImg = (apiData as { image_url?: string })?.image_url
   const fbImg = (fb as { image?: string })?.image
   const image_url = (apiImg && apiImg !== '') ? apiImg : (fbImg || '')
-  const tags = (product as { tags?: string[] }).tags || (fb as { tags?: string[] })?.tags || []
+  const tags = fb?.tags || (product as { tags?: string[] })?.tags || []
 
   return (
     <div className="page-enter">
