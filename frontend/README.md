@@ -1,12 +1,15 @@
 # frontend
 
-当前完成 Phase 5：frontend 前台官网骨架。
+当前完成 Phase 6A：admin 登录 + 后台布局骨架。
 
 猫薄荷企业官网前端，使用 Next.js + TypeScript + Tailwind CSS。
 
 ## 启动
 
-### 1. 先启动后端
+### 前置依赖
+需要 Go backend 在 4000 端口运行。API 地址由 `NEXT_PUBLIC_API_BASE_URL` 配置。
+
+### 1. 启动后端
 ```bash
 cd backend && go run ./cmd/server
 ```
@@ -19,10 +22,12 @@ npx next dev --hostname 0.0.0.0 --port 3000
 ```
 
 ### 3. 访问
-- 本地：http://localhost:3000
-- 局域网：http://电脑IP:3000（需修改 .env.local 中的 API 地址）
+- 前台：http://localhost:3000
+- 后台登录：http://localhost:3000/admin/login
+- 后台首页：http://localhost:3000/admin
+- 测试账号：admin / admin123456
 
-## 页面
+## 前台页面
 
 | 路径 | 说明 |
 |------|------|
@@ -33,6 +38,13 @@ npx next dev --hostname 0.0.0.0 --port 3000
 | /cases | 案例列表 |
 | /cases/:id | 案例详情 |
 | /contact | 联系我们 |
+
+## 后台页面
+
+| 路径 | 说明 |
+|------|------|
+| /admin/login | 管理员登录 |
+| /admin | 后台首页（需登录） |
 
 ## 技术栈
 

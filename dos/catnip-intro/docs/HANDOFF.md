@@ -48,44 +48,42 @@
 
 ## 当前交接状态
 
-当前完成 Phase 4B：Go backend 产品/案例业务接口。
+当前完成 Phase 6A：admin 登录 + 后台布局骨架。
 
 ## 已具备
 
-- 项目目标、架构、各层职责已定义。
-- Go backend 最小骨架 + /health。
-- Go + SQLite：5 张表，db-seed/db-check。
-- uploads：图片上传 + 静态访问。
-- API 基础 + 鉴权：
-  - 统一 JSON 响应格式。
-  - CORS 中间件（Allow-Origin: localhost:3000）。
-  - bcrypt 密码哈希（admin/admin123456）。
-  - POST /api/auth/login（token 返回）。
-  - Bearer token 鉴权中间件。
-  - GET /api/admin/ping（受保护验证）。
-- Node/Prisma 历史代码保留。
+### 后端 (Go backend) — 24 个 API 全部完成
+- 公开：health, login, uploads, static, products, cases, messages, settings
+- 鉴权：admin ping, products CRUD, cases CRUD, messages CRUD, settings upsert
 
-## 已完成接口
+### 前端 (Next.js) 
+- **前台官网**：7 个页面 (/, /about, /products, /cases, /contact)
+- **admin 后台**：登录页 + 后台首页 + 侧边栏导航布局
+- Token 鉴权：localStorage + GET /api/admin/ping 验证
+- 测试账号：admin / admin123456
+- Node/Prisma 历史代码保留
 
-| 方法 | 路径 | 鉴权 | 说明 |
-|------|------|------|------|
-| GET | /health | 公开 | 健康检查 |
-| POST | /api/auth/login | 公开 | 管理员登录 |
-| POST | /api/uploads | 公开 | 图片上传 |
-| GET | /uploads/... | 公开 | 静态文件访问 |
-| GET | /api/admin/ping | Bearer token | 鉴权验证 |
+## 后台页面
+
+| 路径 | 状态 | 说明 |
+|------|------|------|
+| /admin/login | ✅ 完成 | 登录页 |
+| /admin | ✅ 完成 | 后台首页 |
+| /admin/products | ⬜ 占位 | 产品管理 (Phase 6B) |
+| /admin/cases | ⬜ 占位 | 案例管理 (Phase 6B) |
+| /admin/messages | ⬜ 占位 | 留言管理 |
+| /admin/settings | ⬜ 占位 | 网站设置 |
 
 ## 尚未具备
 
-- 产品 CRUD
-- 案例 CRUD
-- 留言接口
-- 网站设置接口
-- 前端页面
+- 产品管理 CRUD 页面
+- 案例管理 CRUD 页面
+- 留言管理页面
+- 网站设置页面
 
 ## 下一位 Codex 应做什么
 
-进入 Phase 4B：Go backend 业务接口（产品/案例/留言/网站设置 CRUD）。
+进入 Phase 6B：产品/案例管理 CRUD 页面。不要重复做 admin 登录。使用已有 token。
 6. `docs/BACKEND_TECH_STACK_DECISION.md`
 7. `docs/ARCHITECTURE.md`
 

@@ -920,3 +920,24 @@ Phase 3 以后：
 9. go mod tidy + test ✅
 
 统计：通过 9，失败 0。允许进入 Phase 4B，须用户授权。
+
+（Phase 4B / 4C / 5 / 5R 测试记录详见 git log 和 HANDOFF.md。）
+
+## 2026-07-05 Phase 6A admin login and layout skeleton test
+
+测试范围：admin 登录页、后台首页、token 鉴权守卫、侧边栏导航。
+
+前置条件：已备份 `35df40e`，Go backend 运行中。
+
+测试项目：
+1. npm run lint: 0 errors ✅
+2. npm run build: /admin + /admin/login ✅
+3. /admin/login HTTP 200 ✅
+4. 错误密码 → "invalid credentials" ✅
+5. 正确登录 → token + user ✅
+6. /api/admin/ping token 验证 ✅
+7. 错误 token → 401 ✅
+8. 退出登录 → token 清除 ✅
+9. 前台页面回归 (3/3 HTTP 200) ✅
+
+统计：通过 9，失败 0。backend 未修改。允许进入 Phase 6B，须用户授权。

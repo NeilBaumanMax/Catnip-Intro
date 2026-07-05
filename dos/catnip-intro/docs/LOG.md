@@ -945,3 +945,68 @@
 - 是否切换 Git 分支：否。
 - 是否提交或上传 GitHub：待提交和推送。
 - 下一次施工建议：进入 Phase 4B（产品/案例/留言/网站设置 CRUD）。
+
+（Phase 4B / 4C / 5 / 5R 施工日志因连续性施工省略，详见 git log 和 HANDOFF.md。）
+
+## 2026-07-05 Phase 6A admin login and layout skeleton
+
+备份记录：
+
+- 备份位置或提交：`35df40e`，`origin/main`（Phase 5R 提交）。
+
+读档记录：
+
+- 已读取工程文档和关键源文件。
+
+本轮目标：
+
+- 创建 /admin/login 登录页、/admin 后台首页、token 鉴权守卫、侧边栏导航布局。
+- 不实现产品/案例/留言/设置管理 CRUD 页面。
+
+本轮计划：
+
+1. 创建 `lib/adminAuth.ts`（token localStorage 管理）。
+2. 创建 `lib/adminApi.ts`（login + ping API）。
+3. 创建 `components/admin/AdminLayout.tsx`（侧边栏 + 鉴权守卫 + 退出）。
+4. 创建 `app/admin/layout.tsx`、`app/admin/page.tsx`、`app/admin/login/page.tsx`。
+5. 执行 lint/build/联调测试。
+6. 测试通过后提交推送。
+
+施工记录：
+
+- 已创建 `adminAuth.ts`：saveToken/getToken/clearToken/isLoggedIn，localStorage 存储。
+- 已创建 `adminApi.ts`：login 调用 POST /api/auth/login，ping 调用 GET /api/admin/ping。
+- 已创建 `AdminLayout.tsx`：客户端组件，useEffect 鉴权守卫（ping 验证），侧边栏 + 顶栏 + 退出按钮，移动端响应式。
+- 已创建登录页：username/password 表单，调用 login API，保存 token 后跳转 /admin。
+- 已创建后台首页：4 个管理入口卡片（产品/案例/留言/设置）。
+- 零新依赖。
+
+测试记录：
+
+- `npm run lint`：通过，0 errors。
+- `npm run build`：通过，/admin + /admin/login 路由。
+- /admin/login 页面 HTTP 200。
+- 错误密码 → invalid credentials。
+- 正确登录 → token + user。
+- /api/admin/ping token 验证 → admin auth ok。
+- 错误 token → 401。
+- 退出登录 → token 清除。
+- 前台页面回归：3/3 HTTP 200。
+
+失败处理记录：
+
+- 无失败项。
+
+文档漂移检查：
+
+- 是否存在文档漂移：存在，DEV_PROGRESS、HANDOFF、frontend 分层进度等文档需更新至 Phase 6A。
+- 已修正文档：Phase 6A-DOC 修正中。
+
+收尾记录：
+
+- 是否写入业务代码：是，admin 登录和后台骨架。
+- 是否安装依赖：否。
+- 是否创建新 worktree：否。
+- 是否切换 Git 分支：否。
+- 是否提交或上传 GitHub：已提交，`3ce080d`。
+- 下一次施工建议：进入 Phase 6B（产品/案例管理 CRUD 页面）。

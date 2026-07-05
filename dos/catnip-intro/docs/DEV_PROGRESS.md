@@ -2,50 +2,42 @@
 
 ## 当前阶段
 
-Phase 4B：Go backend 产品/案例业务接口。
+Phase 6A：admin 登录 + 后台布局骨架。
 
 ## 当前状态
 
-Phase 4B 测试通过。12 个接口全部可用：6 个公开访问 + 6 个后台管理（token 鉴权）。
+Phase 6A 已完成。admin 登录页、后台首页、token 鉴权、侧边栏导航布局已实现。
 
 ## 已完成
 
-### Phase 0-4A ✅
-### Phase 4B：产品/案例业务接口 ✅
-- `internal/products/`：repository + service + handler（6 个接口）
-- `internal/cases/`：repository + service + handler（6 个接口）
-- 公开接口（无需登录）：列表/详情，只返回 is_visible=true
-- 后台接口（需 Bearer token）：创建/编辑/删除/显示隐藏
-- 统一响应：`{"ok":true,"data":...}` 或 `{"ok":false,"error":"..."}`
+### 后端 (Go backend)
+- Phase 0-4C: Go backend 24 个 API 全部完成 ✅
+- /health、登录、上传、产品/案例/留言/设置 CRUD
 
-## 已完成接口
+### 前端 (Next.js)
+- Phase 5: 前台官网 7 页面 ✅
+- Phase 5R: 前台补验收修正（force-dynamic + 错误处理）✅
+- Phase 6A: admin 登录 + 后台布局骨架 ✅
+  - /admin/login (登录页)
+  - /admin (后台首页仪表盘)
+  - AdminLayout (侧边栏 + token 鉴权守卫)
+  - adminAuth.ts (localStorage token 管理)
+  - adminApi.ts (login + ping API)
 
-| 方法 | 路径 | 鉴权 | 说明 |
-|------|------|------|------|
-| GET | /health | 公开 | 健康检查 |
-| POST | /api/auth/login | 公开 | 管理员登录 |
-| POST | /api/uploads | 公开 | 图片上传 |
-| GET | /uploads/... | 公开 | 静态文件 |
-| GET | /api/products | 公开 | 产品列表（仅可见） |
-| GET | /api/products/{id} | 公开 | 产品详情（仅可见） |
-| GET | /api/cases | 公开 | 案例列表（仅可见） |
-| GET | /api/cases/{id} | 公开 | 案例详情（仅可见） |
-| GET | /api/admin/ping | token | 鉴权验证 |
-| POST | /api/admin/products | token | 新增产品 |
-| PUT | /api/admin/products/{id} | token | 修改产品 |
-| DELETE | /api/admin/products/{id} | token | 删除产品 |
-| PATCH | /api/admin/products/{id}/visibility | token | 显示/隐藏 |
-| POST | /api/admin/cases | token | 新增案例 |
-| PUT | /api/admin/cases/{id} | token | 修改案例 |
-| DELETE | /api/admin/cases/{id} | token | 删除案例 |
-| PATCH | /api/admin/cases/{id}/visibility | token | 显示/隐藏 |
+### 底座
+- Go 1.25 + net/http + database/sql + modernc.org/sqlite
+- Next.js 16 + React 19 + TypeScript + Tailwind CSS
+- SQLite (data/company.db, 不提交 Git)
+- uploads (真实图片, 不提交 Git)
+- Node/Prisma 历史代码保留
 
 ## 未完成
 
-- 留言接口
-- 网站设置接口
-- 前端页面
+- 产品管理 CRUD 页面 (Phase 6B)
+- 案例管理 CRUD 页面 (Phase 6B)
+- 留言管理页面
+- 网站设置页面
 
 ## 下一阶段
 
-Phase 4C：留言接口 + 网站设置接口，或 Phase 5：frontend 前端项目。
+Phase 6B：产品/案例管理 CRUD 页面。
