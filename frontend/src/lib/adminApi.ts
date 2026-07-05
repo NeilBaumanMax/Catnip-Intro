@@ -44,3 +44,39 @@ export async function login(username: string, password: string): Promise<APIResp
 export async function ping(): Promise<APIResponse<{ message: string }>> {
   return fetchAdmin('/api/admin/ping')
 }
+
+// --- Product admin ---
+
+export async function createProduct(data: Record<string, unknown>): Promise<APIResponse<unknown>> {
+  return fetchAdmin('/api/admin/products', { method: 'POST', body: JSON.stringify(data) })
+}
+
+export async function updateProduct(id: number, data: Record<string, unknown>): Promise<APIResponse<unknown>> {
+  return fetchAdmin(`/api/admin/products/${id}`, { method: 'PUT', body: JSON.stringify(data) })
+}
+
+export async function deleteProduct(id: number): Promise<APIResponse<unknown>> {
+  return fetchAdmin(`/api/admin/products/${id}`, { method: 'DELETE' })
+}
+
+export async function setProductVisibility(id: number, isVisible: boolean): Promise<APIResponse<unknown>> {
+  return fetchAdmin(`/api/admin/products/${id}/visibility`, { method: 'PATCH', body: JSON.stringify({ isVisible }) })
+}
+
+// --- Case admin ---
+
+export async function createCase(data: Record<string, unknown>): Promise<APIResponse<unknown>> {
+  return fetchAdmin('/api/admin/cases', { method: 'POST', body: JSON.stringify(data) })
+}
+
+export async function updateCase(id: number, data: Record<string, unknown>): Promise<APIResponse<unknown>> {
+  return fetchAdmin(`/api/admin/cases/${id}`, { method: 'PUT', body: JSON.stringify(data) })
+}
+
+export async function deleteCase(id: number): Promise<APIResponse<unknown>> {
+  return fetchAdmin(`/api/admin/cases/${id}`, { method: 'DELETE' })
+}
+
+export async function setCaseVisibility(id: number, isVisible: boolean): Promise<APIResponse<unknown>> {
+  return fetchAdmin(`/api/admin/cases/${id}/visibility`, { method: 'PATCH', body: JSON.stringify({ isVisible }) })
+}
