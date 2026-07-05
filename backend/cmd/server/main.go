@@ -7,6 +7,7 @@ import (
 
 	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/api"
 	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/auth"
+	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/carousel"
 	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/cases"
 	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/database"
 	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/messages"
@@ -61,6 +62,7 @@ func main() {
 		log.Fatalf("uploads static handler: %v", err)
 	}
 	mux.Handle("/uploads/", staticHandler)
+	mux.HandleFunc("GET /api/carousel/tick", carousel.SSEHandler)
 
 	// Public product routes
 	mux.HandleFunc("GET /api/products", products.ListPublic(productSvc))

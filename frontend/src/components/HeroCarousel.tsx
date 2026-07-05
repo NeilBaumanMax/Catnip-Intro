@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 const slides = [
@@ -10,35 +10,34 @@ const slides = [
   { src: '/images/products/live2d-smart-accessory.png', name: 'Live2D 智能挂件', tag: 'AI 交互硬件', desc: '结合 Live2D 形象、本地 Agent 能力和智能硬件交互的桌面级 AI 挂件，适合陪伴、展示、教学和品牌互动。', tags: ['Live2D', 'AI 交互', '桌面助手', '创客教育'], id: 4 },
 ]
 
+const API = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
+
 export default function HeroCarousel() {
   const [i, setI] = useState(0)
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
-    timerRef.current = setInterval(() => setI((p) => (p + 1) % 4), 4000)
-    return () => { if (timerRef.current) clearInterval(timerRef.current) }
+    const es = new EventSource(`${API}/api/carousel/tick`)
+    es.onmessage = (e) => {
+      const n = parseInt(e.data, 10)
+      if (!isNaN(n) && n >= 0 && n < 4) setI(n)
+    }
+    es.onerror = () => { es.close() }
+    return () => es.close()
   }, [])
-
-  const goTo = (n: number) => {
-    if (timerRef.current) clearInterval(timerRef.current)
-    setI(n)
-    timerRef.current = setInterval(() => setI((p) => (p + 1) % 4), 4000)
-  }
 
   const s = slides[i]
 
   return (
-    <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-      {/* Left text */}
+    <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-center">
       <div>
         <p className="text-[#00AEEF] font-medium mb-3 text-xs tracking-[0.3em] uppercase" style={{ fontFamily: 'var(--font-orbitron)' }}>
           万物有灵 · 本地 Agent 软硬件一体化
         </p>
-        <h1 className="text-3xl md:text-5xl font-black leading-tight mb-3" style={{ fontFamily: 'var(--font-orbitron)' }}>
+        <h1 className="text-2xl md:text-5xl font-black leading-tight mb-3" style={{ fontFamily: 'var(--font-orbitron)' }}>
           {s.name}
         </h1>
         <span className="inline-block text-xs text-[#00AEEF] bg-white/10 backdrop-blur px-3 py-1 rounded-full mb-4">{s.tag}</span>
-        <p className="text-base text-gray-300 mb-5 max-w-lg leading-relaxed">{s.desc}</p>
+        <p className="text-sm md:text-base text-gray-300 mb-5 max-w-lg leading-relaxed">{s.desc}</p>
         <div className="flex flex-wrap gap-2 mb-5">
           {s.tags.map((t) => <span key={t} className="text-xs text-white/70 bg-white/10 backdrop-blur px-3 py-1 rounded-full">{t}</span>)}
         </div>
@@ -50,24 +49,17 @@ export default function HeroCarousel() {
             联系我们
           </Link>
         </div>
-        {/* Dots */}
         <div className="flex gap-2 mt-6">
           {[0, 1, 2, 3].map((n) => (
-            <button key={n} onClick={() => goTo(n)}
-              className={`rounded-full transition-all duration-300 ${n === i ? 'w-8 h-1.5 bg-[#00AEEF]' : 'w-1.5 h-1.5 bg-white/30 hover:bg-white/50'}`}
-            />
+            <span key={n} className={`h-1.5 rounded-full transition-all duration-300 ${n === i ? 'w-8 bg-[#00AEEF]' : 'w-1.5 bg-white/30'}`} />
           ))}
         </div>
       </div>
 
-      {/* Right image - shows on all screens */}
       <div>
         <div className="relative aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-white/20 shadow-2xl bg-white/5 max-w-sm mx-auto md:max-w-none">
           {slides.map((slide, n) => (
-            <img
-              key={n}
-              src={slide.src}
-              alt={slide.name}
+            <img key={n} src={slide.src} alt={slide.name}
               className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out ${
                 n === i ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
               }`}
