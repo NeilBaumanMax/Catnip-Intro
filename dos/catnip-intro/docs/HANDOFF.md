@@ -48,7 +48,7 @@
 
 ## 当前交接状态
 
-当前完成 Phase 6A：admin 登录 + 后台布局骨架。
+当前完成 Phase 6B：后台产品/案例管理 CRUD 页面。
 
 ## 已具备
 
@@ -58,38 +58,35 @@
 
 ### 前端 (Next.js) 
 - **前台官网**：7 个页面 (/, /about, /products, /cases, /contact)
-- **admin 后台**：登录页 + 后台首页 + 侧边栏导航布局
+- **admin 后台**：
+  - /admin/login (登录页)
+  - /admin (后台首页仪表盘)
+  - /admin/products (产品 CRUD + 显示隐藏)
+  - /admin/cases (案例 CRUD + 显示隐藏)
+  - 侧边栏导航 + token 鉴权守卫
 - Token 鉴权：localStorage + GET /api/admin/ping 验证
 - 测试账号：admin / admin123456
 - Node/Prisma 历史代码保留
 
-## 后台页面
+## 后台页面完成度
 
-| 路径 | 状态 | 说明 |
+| 路径 | 状态 | 功能 |
 |------|------|------|
-| /admin/login | ✅ 完成 | 登录页 |
-| /admin | ✅ 完成 | 后台首页 |
-| /admin/products | ⬜ 占位 | 产品管理 (Phase 6B) |
-| /admin/cases | ⬜ 占位 | 案例管理 (Phase 6B) |
-| /admin/messages | ⬜ 占位 | 留言管理 |
-| /admin/settings | ⬜ 占位 | 网站设置 |
+| /admin/login | ✅ | 登录页 |
+| /admin | ✅ | 后台首页 |
+| /admin/products | ✅ | 产品 CRUD + 显示隐藏 |
+| /admin/cases | ✅ | 案例 CRUD + 显示隐藏 |
+| /admin/messages | ⬜ | 留言管理 (Phase 6C) |
+| /admin/settings | ⬜ | 网站设置 (Phase 6C) |
 
 ## 尚未具备
 
-- 产品管理 CRUD 页面
-- 案例管理 CRUD 页面
 - 留言管理页面
 - 网站设置页面
 
 ## 下一位 Codex 应做什么
 
-进入 Phase 6B：产品/案例管理 CRUD 页面。不要重复做 admin 登录。使用已有 token。
-6. `docs/BACKEND_TECH_STACK_DECISION.md`
-7. `docs/ARCHITECTURE.md`
-
-Phase 2D 应创建 Go backend 最小骨架：监听 `0.0.0.0:4000`，提供 `GET /health`。不接入 SQLite，不写业务接口。
-
-Phase 2 应建立 SQLite 数据库文件位置和后端基础数据结构。不要在 Phase 2 开工前实现登录、产品、案例、留言或上传业务接口。
+进入 Phase 6C：留言管理页面 + 网站设置页面。不要重复做产品/案例管理页面。使用已有 token。
 
 ## 2026-07-05 Phase 1 handoff
 

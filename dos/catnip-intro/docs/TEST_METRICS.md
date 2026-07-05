@@ -941,3 +941,20 @@ Phase 3 以后：
 9. 前台页面回归 (3/3 HTTP 200) ✅
 
 统计：通过 9，失败 0。backend 未修改。允许进入 Phase 6B，须用户授权。
+
+## 2026-07-05 Phase 6B admin product case management test
+
+测试范围：后台产品/案例管理 CRUD 页面。前置条件：已备份 `c15b148`，Go backend 运行中。
+
+测试项目：
+1. npm run lint: 0 errors ✅
+2. npm run build ✅
+3. /admin/products HTTP 200 ✅
+4. /admin/cases HTTP 200 ✅
+5. 产品创建 API ✅
+6. 案例创建 API ✅
+7. 缺少 name → 400 ✅
+8. 无 token → 401 ✅
+9. 前台首页回归 ✅
+
+统计：通过 9，失败 0。backend 未修改。零新前端依赖。允许进入 Phase 6C，须用户授权。

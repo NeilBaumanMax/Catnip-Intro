@@ -1010,3 +1010,65 @@
 - 是否切换 Git 分支：否。
 - 是否提交或上传 GitHub：已提交，`3ce080d`。
 - 下一次施工建议：进入 Phase 6B（产品/案例管理 CRUD 页面）。
+
+## 2026-07-05 Phase 6B admin product case management
+
+备份记录：
+
+- 备份位置或提交：`c15b148`，`origin/main`（Phase 6A-DOC 提交）。
+
+读档记录：
+
+- 已读取工程文档、adminApi.ts、adminAuth.ts、types/api.ts、AdminLayout.tsx。
+
+本轮目标：
+
+- 实现 /admin/products 和 /admin/cases 的 CRUD 管理页面。
+- 不修改后端。
+
+本轮计划：
+
+1. 扩展 `adminApi.ts`（8 个 admin API 函数）。
+2. 创建 `ProductManager.tsx`（产品 CRUD 表格 + 内联表单）。
+3. 创建 `CaseManager.tsx`（案例 CRUD 表格 + 内联表单）。
+4. 创建 `app/admin/products/page.tsx` 和 `app/admin/cases/page.tsx`。
+5. 执行 lint/build/联调测试。
+6. 测试通过后提交推送。
+
+施工记录：
+
+- 已扩展 `adminApi.ts`：createProduct/updateProduct/deleteProduct/setProductVisibility + 对应 case 函数。
+- 已创建 `ProductManager.tsx`：列表表格 + 内联表单（创建/编辑），删除 confirm，显示/隐藏切换，auth guard。
+- 已创建 `CaseManager.tsx`：同上结构，title 替代 name，content 替代 description。
+- 日志初次 lint 有 2 errors：useEffect 内调用 setState + 未使用 import，已修复。
+- 零新依赖。
+
+测试记录：
+
+- `npm run lint`：通过，0 errors。
+- `npm run build`：通过，/admin/products + /admin/cases 路由。
+- /admin/products HTTP 200，/admin/cases HTTP 200。
+- 产品创建 API → ok=true，案例创建 API → ok=true。
+- 缺少 name → 400，缺少 title → 400。
+- 无 token → 401。
+- 前台首页回归 HTTP 200。
+
+失败处理记录：
+
+- 失败原因：lint 报 useEffect setState + 未使用 import。
+- 修复动作：useEffect 改为内联 init 函数；移除 ProductManager 中 getImageUrl import。
+- 重新测试结果：0 errors，build 通过。
+
+文档漂移检查：
+
+- 是否存在文档漂移：存在，DEV_PROGRESS、HANDOFF、frontend 分层进度需更新至 Phase 6B。
+- 已修正文档：Phase 6B-DOC 修正中。
+
+收尾记录：
+
+- 是否写入业务代码：是，后台产品/案例管理页面。
+- 是否安装依赖：否。
+- 是否创建新 worktree：否。
+- 是否切换 Git 分支：否。
+- 是否提交或上传 GitHub：已提交，`c7b08a0`。
+- 下一次施工建议：进入 Phase 6C（留言管理页面 + 网站设置页面）。

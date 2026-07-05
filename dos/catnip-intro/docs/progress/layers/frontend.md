@@ -30,20 +30,19 @@ frontend 负责官网页面和后台管理页面。
 - 产品/案例详情 API 错误处理
 
 ### Phase 6A：admin 后台骨架 ✅
-- /admin/login (登录页, POST /api/auth/login, localStorage token)
-- /admin (后台首页仪表盘, token 鉴权守卫)
-- AdminLayout (侧边栏导航 + 顶栏 + 退出登录)
-- adminAuth.ts (token save/get/clear)
-- adminApi.ts (login + ping)
-- 移动端响应式侧边栏
+- /admin/login (登录页), /admin (仪表盘), AdminLayout (侧边栏+鉴权)
+
+### Phase 6B：后台产品/案例管理 ✅
+- /admin/products (产品 CRUD 表格 + 内联表单)
+- /admin/cases (案例 CRUD 表格 + 内联表单)
+- ProductManager / CaseManager 组件
+- adminApi.ts 扩展：8 个 CRUD API 函数
 
 ## 未完成
 
-- [ ] /admin/products 产品管理 CRUD 页面
-- [ ] /admin/cases 案例管理 CRUD 页面
 - [ ] /admin/messages 留言管理页面
 - [ ] /admin/settings 网站设置页面
 
 ## 下一步
 
-Phase 6B：产品/案例管理 CRUD 页面。
+Phase 6C：留言管理页面 + 网站设置页面。
