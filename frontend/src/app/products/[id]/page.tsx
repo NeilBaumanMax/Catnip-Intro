@@ -46,7 +46,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     <div className="page-enter">
       {/* Full-page background */}
       <div className="fixed inset-0 z-0">
-        <Image src="/images/products-bg.webp" alt="" fill className="object-cover" priority />
+        <Image src="/images/products-bg.jpg" alt="" fill className="object-cover" priority />
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628]/88 via-[#0a1628]/72 to-[#0a1628]/88" />
       </div>
 

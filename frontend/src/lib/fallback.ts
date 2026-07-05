@@ -18,7 +18,7 @@ export const fallbackProducts: FallbackProduct[] = [
 
 产品可用于学校资料管理、企业知识库、智能办公、工业设备控制和机器人控制等场景，让 AI 不再停留在云端问答，而是能够在客户现场长期运行、调用工具、处理任务并控制设备。`,
     tags: ['本地部署', 'Agent Runtime', '硬件控制', '私有化运行'],
-    image: '/images/products/wanwu-agent-board.webp',
+    image: '/images/products/wanwu-agent-board.jpg',
   },
   {
     id: 2,
@@ -29,7 +29,7 @@ export const fallbackProducts: FallbackProduct[] = [
 
 它可以作为智能硬件、机器人、工业设备和本地 AI 终端的控制核心，承载模型推理、状态管理、任务调度和外设控制能力，帮助客户在本地环境中完成更安全、更稳定、更低延迟的智能化部署。`,
     tags: ['端侧 AI', '边缘推理', '设备控制', '工业接口'],
-    image: '/images/products/lobsterpi-edge-ai-board.webp',
+    image: '/images/products/lobsterpi-edge-ai-board.jpg',
   },
   {
     id: 3,
@@ -40,7 +40,7 @@ export const fallbackProducts: FallbackProduct[] = [
 
 相比纯云端工具，OPC 智能员工盒子更适合数据不能上云、网络环境复杂、需要长期稳定运行和本地化维护的客户场景。`,
     tags: ['智能办公', '本地知识库', '私有化部署', '文档处理'],
-    image: '/images/products/opc-ai-employee-box.webp',
+    image: '/images/products/opc-ai-employee-box.jpg',
   },
   {
     id: 4,
@@ -51,6 +51,6 @@ export const fallbackProducts: FallbackProduct[] = [
 
 它可用于展台展示、教学实验、桌面助手、IP 互动和智能硬件体验场景，是科霓朋特在 AI+硬件交互方向的探索产品。`,
     tags: ['Live2D', 'AI 交互', '桌面助手', '创客教育'],
-    image: '/images/products/live2d-smart-accessory.webp',
+    image: '/images/products/live2d-smart-accessory.jpg',
   },
 ]

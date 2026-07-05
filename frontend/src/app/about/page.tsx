@@ -25,7 +25,7 @@ export default function AboutPage() {
     <div className="page-enter">
       {/* Full-page background */}
       <div className="fixed inset-0 z-0">
-        <Image src="/images/about-bg.webp" alt="" fill className="object-cover" priority />
+        <Image src="/images/about-bg.jpg" alt="" fill className="object-cover" priority />
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628]/85 via-[#0a1628]/70 to-[#0a1628]/85" />
       </div>
 

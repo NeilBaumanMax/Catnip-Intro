@@ -37,7 +37,7 @@ export default async function HomePage() {
       {/* Hero with carousel */}
       <section className="relative text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image src="/images/hero-bg.webp" alt="" fill className="object-cover" priority />
+          <Image src="/images/hero-bg.jpg" alt="" fill className="object-cover" priority />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/95 via-[#0a1628]/80 to-[#0a1628]/60" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-20 w-full">
