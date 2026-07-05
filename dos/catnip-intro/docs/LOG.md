@@ -1132,3 +1132,69 @@
 - 是否切换 Git 分支：否。
 - 是否提交或上传 GitHub：已提交，`ca9f407`。
 - 下一次施工建议：进入 Phase 7（全站联调 + 局域网手机访问验收）。后台页面 6/6 已完成。
+
+## 2026-07-05 Phase 7 full site integration and LAN access
+
+备份记录：
+
+- 备份位置或提交：`fa7b0e1`，`origin/main`（DOC-RULE-PATCH 提交）。
+
+读档记录：
+
+- 已读取全部工程文档。
+
+本轮目标：
+
+- 全站端到端联调验收 + 局域网手机访问验证。
+
+本轮计划：
+
+1. 后端 24 API 回归测试。
+2. 前端 lint + build + 页面测试。
+3. 4 条 E2E 闭环流程。
+4. LAN CORS 修复。
+5. 文档收尾。
+
+施工记录：
+
+- 后端回归：go mod tidy ✅ go test ./... ✅ db-seed ✅ db-check ✅。
+- 前端回归：npm run lint 0 errors ✅ npm run build ✅。
+- 24 API 端点回归：23x200 + 1x404 (expected) ✅。
+- 前台页面 7/7 HTTP 200 ✅。
+- 后台页面 6/6 HTTP 200 ✅。
+- E2E 产品闭环：创建→公开列表可见 ✅。
+- E2E 案例闭环：创建→公开列表可见 ✅。
+- E2E 留言闭环：前台提交→后台查看 ✅。
+- E2E 设置闭环：后台修改→前台读取更新值 ✅。
+- E2E 图片闭环：上传→静态访问 ✅。
+- LAN CORS 修复：`middleware/cors.go` 动态反射请求 Origin（支持 http://10.x.x.x:3000）。
+- LAN IP：10.139.223.120。
+- 测试图片已清理，data/company.db 和 uploads 图片未被 Git 跟踪。
+
+测试记录：
+
+- 后端 24 API 回归：23/24 200，1/24 404 (msg delete 不存在的 id，预期)。
+- 前端 lint：0 errors。
+- 前端 build：13 routes。
+- 前台页面：7/7 200。
+- 后台页面：6/6 200。
+- E2E 闭环：5/5 通过。
+- CORS LAN：已验证 Origin 反射。
+
+失败处理记录：
+
+- 无失败项。
+
+文档漂移检查：
+
+- 是否存在文档漂移：存在，DEV_PROGRESS 等需更新至 Phase 7。
+- 已修正文档：Phase 7 收尾修正中。
+
+收尾记录：
+
+- 是否写入业务代码：是，仅修复 CORS 中间件支持 LAN 访问。
+- 是否安装依赖：否。
+- 是否创建新 worktree：否。
+- 是否切换 Git 分支：否。
+- 是否提交或上传 GitHub：待提交。
+- 下一次施工建议：第一版开发完成。后续可考虑生产部署、Node/Prisma 清理。

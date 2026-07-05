@@ -1,12 +1,46 @@
 # Catnip Intro
 
-本仓库用于建设 Catnip Intro 官网与后台管理系统。
+Catnip Intro 企业官网与后台管理系统。第一版已完成 🎉
 
-## 当前阶段
+## 架构
 
-当前只完成 Phase 0：工程脚手架。
+frontend (Next.js) + Go backend + SQLite + uploads
 
-Phase 0 只允许创建目录和工程文档，不包含业务代码、依赖安装、数据库实现、接口实现、页面实现或图片处理逻辑。
+## 快速启动
+
+### 1. 启动后端
+```bash
+cd backend
+go run ./cmd/server    # 监听 0.0.0.0:4000
+```
+
+### 2. 启动前端
+```bash
+cd frontend
+npm install
+NEXT_PUBLIC_API_BASE_URL=http://localhost:4000 npx next dev --hostname 0.0.0.0 --port 3000
+```
+
+### 3. 访问
+- 前台：http://localhost:3000
+- 后台：http://localhost:3000/admin/login
+- 测试账号：admin / admin123456
+
+### 4. 局域网手机访问
+```bash
+NEXT_PUBLIC_API_BASE_URL=http://电脑IP:4000 npx next dev --hostname 0.0.0.0 --port 3000
+```
+手机浏览器访问：http://电脑IP:3000
+
+## 目录
+
+| 目录 | 说明 |
+|------|------|
+| frontend/ | Next.js 前端（前台+后台） |
+| backend/ | Go 后端 API |
+| data/ | SQLite 数据库文件 |
+| uploads/ | 上传图片 |
+| dos/catnip-intro/ | 工程文档 |
 
 ## 项目目标
 

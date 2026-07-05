@@ -975,3 +975,26 @@ Phase 3 以后：
 9. 设置更新 API ✅
 
 统计：通过 9，失败 0。backend 未修改。后台页面 6/6 全部完成。允许进入 Phase 7，须用户授权。
+
+## 2026-07-05 Phase 7 full site integration and LAN access test
+
+测试范围：全站端到端联调 + 局域网访问。前置条件：已备份 `fa7b0e1`。
+
+测试项目：
+1. 后端 go mod tidy + test ✅
+2. 后端 db-seed + db-check ✅
+3. 24 API 回归 (23×200 + 1×404) ✅
+4. 前端 lint (0 errors) ✅
+5. 前端 build (13 routes) ✅
+6. 前台页面 7/7 ✅
+7. 后台页面 6/6 ✅
+8. E2E 产品闭环 ✅
+9. E2E 案例闭环 ✅
+10. E2E 留言闭环 ✅
+11. E2E 设置闭环 ✅
+12. E2E 图片闭环 ✅
+13. LAN CORS 修复 ✅
+14. data/company.db 未跟踪 ✅
+15. uploads 图片未跟踪 ✅
+
+统计：通过 15，失败 0。CORS 中间件已修复（Origon 反射）。第一版全部功能交付。项目完成。

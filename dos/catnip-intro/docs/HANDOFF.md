@@ -48,38 +48,43 @@
 
 ## 当前交接状态
 
-当前完成 Phase 6C：后台留言管理 + 网站设置页面。
-
-后台页面 **6/6 全部完成** 🎉
+项目第一版已完成 🎉 Phase 7 全站联调通过。
 
 ## 已具备
 
 ### 后端 (Go backend) — 24 个 API 全部完成
 ### 前端 (Next.js) — 前台 7 页面 + 后台 6 页面 全部完成
-- **前台**：/, /about, /products, /cases, /contact
-- **后台**：/admin/login, /admin, /admin/products, /admin/cases, /admin/messages, /admin/settings
-- Token 鉴权：localStorage + GET /api/admin/ping
-- 测试账号：admin / admin123456
+### 联调验证 — 5 条 E2E 闭环 + 24 API 回归 + LAN CORS
+### 项目文档 — 全量施工文档、交接记录、测试记录
 
-## 后台页面完成度
+## 启动方式
 
-| 路径 | 状态 |
-|------|------|
-| /admin/login | ✅ |
-| /admin | ✅ |
-| /admin/products | ✅ |
-| /admin/cases | ✅ |
-| /admin/messages | ✅ |
-| /admin/settings | ✅ |
+```bash
+# 1. 后端 (端口 4000)
+cd backend && go run ./cmd/server
+
+# 2. 前端 (端口 3000)
+cd frontend && NEXT_PUBLIC_API_BASE_URL=http://localhost:4000 npx next dev --hostname 0.0.0.0 --port 3000
+
+# 3. 局域网手机访问
+# 修改 .env.local: NEXT_PUBLIC_API_BASE_URL=http://电脑IP:4000
+# 手机浏览器访问: http://电脑IP:3000
+```
+
+## 测试账号
+
+admin / admin123456
 
 ## 尚未具备
 
-- 全站端到端联调验收
-- 局域网手机访问测试
+- 无。第一版全部功能已交付。
 
-## 下一位 Codex 应做什么
+## 后续可考虑
 
-进入 Phase 7：全站联调 + 局域网手机访问验收。重点是端到端验证，不要新增功能模块。
+- 生产环境部署
+- Node/Prisma 历史代码清理
+- 正式 migration 方案（db push → migrate）
+- HTTPS 支持
 
 ## 2026-07-05 Phase 1 handoff
 
