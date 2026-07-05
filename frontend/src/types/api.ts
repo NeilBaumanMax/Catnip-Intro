@@ -43,6 +43,18 @@ export interface MessageRequest {
   content: string
 }
 
+export interface Message {
+  id: number
+  name: string
+  phone: string
+  email: string
+  company: string
+  content: string
+  status: string
+  created_at: string
+  updated_at: string
+}
+
 export interface APIResponse<T = unknown> {
   ok: boolean
   data?: T

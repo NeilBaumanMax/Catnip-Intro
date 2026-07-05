@@ -80,3 +80,28 @@ export async function deleteCase(id: number): Promise<APIResponse<unknown>> {
 export async function setCaseVisibility(id: number, isVisible: boolean): Promise<APIResponse<unknown>> {
   return fetchAdmin(`/api/admin/cases/${id}/visibility`, { method: 'PATCH', body: JSON.stringify({ isVisible }) })
 }
+
+// --- Message admin ---
+
+export async function getMessages(status?: string): Promise<APIResponse<unknown[]>> {
+  const qs = status ? `?status=${encodeURIComponent(status)}` : ''
+  return fetchAdmin(`/api/admin/messages${qs}`)
+}
+
+export async function getMessage(id: number): Promise<APIResponse<unknown>> {
+  return fetchAdmin(`/api/admin/messages/${id}`)
+}
+
+export async function setMessageStatus(id: number, status: string): Promise<APIResponse<unknown>> {
+  return fetchAdmin(`/api/admin/messages/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) })
+}
+
+export async function deleteMessage(id: number): Promise<APIResponse<unknown>> {
+  return fetchAdmin(`/api/admin/messages/${id}`, { method: 'DELETE' })
+}
+
+// --- Settings admin ---
+
+export async function updateSettings(data: Record<string, unknown>): Promise<APIResponse<unknown>> {
+  return fetchAdmin('/api/admin/settings', { method: 'PUT', body: JSON.stringify(data) })
+}
