@@ -9,8 +9,10 @@ import (
 	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/auth"
 	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/cases"
 	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/database"
+	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/messages"
 	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/middleware"
 	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/products"
+	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/settings"
 	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/uploads"
 )
 
@@ -44,6 +46,8 @@ func main() {
 	authSvc := auth.NewService(db, tokenStore)
 	productSvc := products.NewService(products.NewRepository(db))
 	caseSvc := cases.NewService(cases.NewRepository(db))
+	messageSvc := messages.NewService(messages.NewRepository(db))
+	settingsSvc := settings.NewService(settings.NewRepository(db))
 
 	mux := http.NewServeMux()
 
@@ -66,6 +70,10 @@ func main() {
 	mux.HandleFunc("GET /api/cases", cases.ListPublic(caseSvc))
 	mux.HandleFunc("GET /api/cases/{id}", cases.GetPublic(caseSvc))
 
+	// Public message + settings routes
+	mux.HandleFunc("POST /api/messages", messages.CreatePublic(messageSvc))
+	mux.HandleFunc("GET /api/settings", settings.GetPublic(settingsSvc))
+
 	// --- Admin routes (auth required) ---
 	authMw := middleware.RequireAuth(tokenStore)
 
@@ -82,6 +90,15 @@ func main() {
 	mux.Handle("PUT /api/admin/cases/{id}", authMw(cases.Update(caseSvc)))
 	mux.Handle("DELETE /api/admin/cases/{id}", authMw(cases.Delete(caseSvc)))
 	mux.Handle("PATCH /api/admin/cases/{id}/visibility", authMw(cases.SetVisibility(caseSvc)))
+
+	// Message admin
+	mux.Handle("GET /api/admin/messages", authMw(messages.ListAdmin(messageSvc)))
+	mux.Handle("GET /api/admin/messages/{id}", authMw(messages.GetAdmin(messageSvc)))
+	mux.Handle("PATCH /api/admin/messages/{id}/status", authMw(messages.SetStatus(messageSvc)))
+	mux.Handle("DELETE /api/admin/messages/{id}", authMw(messages.Delete(messageSvc)))
+
+	// Settings admin
+	mux.Handle("PUT /api/admin/settings", authMw(settings.Upsert(settingsSvc)))
 
 	// Apply CORS
 	corsHandler := middleware.CORS(mux)
