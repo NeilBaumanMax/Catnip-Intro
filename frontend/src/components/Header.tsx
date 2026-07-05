@@ -26,22 +26,26 @@ export default function Header() {
       <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
           <Image src="/logo.png" alt="Catnipent" width={48} height={48} className="object-contain" />
-          <span className="text-base font-bold text-[#0F3D7A]">Catnipent</span>
+          <span className="text-lg font-black text-[#0F3D7A]" style={{ fontFamily: 'var(--font-orbitron)' }}>Catnipent</span>
         </Link>
 
         {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-1">
+        <ul className="hidden md:flex items-center gap-2">
           {navItems.map((item) => (
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                  isActive(item.href)
-                    ? 'text-[#00AEEF] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-5 after:h-0.5 after:bg-[#00AEEF] after:rounded-full'
-                    : 'text-gray-500 hover:text-[#0F3D7A]'
-                }`}
+                className={`relative px-5 py-2.5 text-base font-semibold rounded-full transition-all duration-300`}
+                style={{ fontFamily: 'var(--font-orbitron)' }}
               >
-                {item.label}
+                <span className={`relative z-10 transition-colors duration-300 ${
+                  isActive(item.href) ? 'text-white' : 'text-gray-400 hover:text-white'
+                }`}>
+                  {item.label}
+                </span>
+                {isActive(item.href) && (
+                  <span className="absolute inset-0 bg-gradient-to-r from-[#00AEEF] to-[#1A56DB] rounded-full shadow-lg shadow-cyan-500/25" />
+                )}
               </Link>
             </li>
           ))}
