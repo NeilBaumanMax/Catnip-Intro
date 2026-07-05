@@ -38,7 +38,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const category = (product as { category?: string }).category || ''
   const summary = (product as { summary?: string }).summary || ''
   const description = (product as { description?: string }).description || ''
-  const image_url = (product as { image_url?: string }).image_url || ''
+  const image_url = (product as { image_url?: string }).image_url || (product as { image?: string }).image || ''
   const tags = (product as { tags?: string[] }).tags || []
 
   return (

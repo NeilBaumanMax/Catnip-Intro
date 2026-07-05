@@ -10,8 +10,9 @@ export default async function ProductsPage() {
 
   const displayProducts = fallbackProducts.map((fb) => {
     const api = apiProducts.find((p) => p.name === fb.name)
-    if (api) return { ...fb, image_url: api.image_url || '', id: api.id }
-    return { ...fb, image_url: '', id: fb.id }
+    const img = (api && api.image_url) ? (api.image_url as string) : fb.image
+    if (api) return { ...fb, image_url: img, id: api.id }
+    return { ...fb, image_url: img, id: fb.id }
   })
 
   return (
