@@ -2,9 +2,7 @@
 
 ## 当前阶段
 
-当前完成 Phase 2C：后端技术栈切换文档修正。
-
-后端技术栈已从 Node.js/Express/Prisma 切换为 Go + SQLite。
+当前完成 Phase 2D：Go backend 最小骨架。
 
 ## 职责
 
@@ -22,13 +20,15 @@ Go backend 负责登录、产品、案例、留言、网站设置、图片上传
 
 ## 允许
 
-- 当前阶段已明确 Go backend 为后续主路线。
-- 当前阶段 Node/Prisma 代码保留为历史资料。
-- 后续阶段实现 Go API、鉴权、参数校验、SQLite 读写和静态文件访问。
+- 当前阶段已创建 Go backend 最小骨架。
+- 当前阶段 Go backend 使用 net/http 标准库。
+- Node/Prisma 历史代码保留不动。
+- 后续阶段接入 SQLite、实现 API、鉴权、参数校验。
 
 ## 禁止
 
-- 在 Phase 2C 写任何代码（Node 或 Go）。
+- 在 Phase 2D 接入 SQLite。
+- 在 Phase 2D 实现业务接口。
 - 删除现有 Node/Prisma 文件。
 - 将真实图片保存到 SQLite。
 - 让未鉴权请求访问后台管理接口。
@@ -37,37 +37,32 @@ Go backend 负责登录、产品、案例、留言、网站设置、图片上传
 
 ### 历史阶段（已完成，保留不动）
 
-- Phase 0 已创建 `backend/README.md`。
-- Phase 1 已创建 Node.js + Express + TypeScript 最小后端骨架，`GET /health` 可用。
-- Phase 2A 已接入 Prisma 6.19.0 + SQLite，`data/company.db` 5 表就位。
-- Phase 2B 已创建 Prisma Client 单例、seed/check 脚本，读写链路验证通过。
+- Phase 1 已创建 Node.js + Express + TypeScript 最小后端骨架。
+- Phase 2A 已接入 Prisma 6.19.0 + SQLite。
+- Phase 2B 已创建 Prisma Client 单例、seed/check 脚本。
 
-### 当前阶段
+### Go backend 阶段
 
 - Phase 2C 已创建 `BACKEND_TECH_STACK_DECISION.md`。
-- Phase 2C 所有工程文档已修正为 Go backend 路线。
-- 注意：`prisma migrate` 不可用问题已记录为历史问题，不再阻塞项目。
+- Phase 2D 已创建 `backend/go.mod`（Go 1.24.5）。
+- Phase 2D 已创建 `backend/cmd/server/main.go`（net/http，无第三方依赖）。
+- Phase 2D `GET /health` 通过，返回 `{"ok":true,"message":"go backend is running"}`。
+- Phase 2D 监听 `0.0.0.0:4000`，404 处理正常，Content-Type: application/json。
 
-## 新 Go 后端建议目录结构
+## Go backend 目录结构
 
 ```
 backend/
+├─ go.mod
 ├─ cmd/
 │  └─ server/
-│     └─ main.go
-├─ internal/
-│  ├─ config/
-│  ├─ database/
-│  ├─ models/
-│  ├─ handlers/
-│  ├─ middleware/
-│  ├─ routes/
-│  └─ services/
-├─ go.mod
-├─ go.sum
-└─ README.md
+│     └─ main.go        # 入口（已创建）
+├─ internal/             # 内部包（后续扩展）
+├─ src/                  # Node/Prisma 历史代码，保留不动
+├─ prisma/               # Prisma schema，历史资料
+└─ package.json          # Node 依赖声明，历史资料
 ```
 
 ## 下一步
 
-Phase 2D：Go backend 最小骨架。创建 Go 项目，监听 `0.0.0.0:4000`，提供 `GET /health`。
+Phase 2E：Go + SQLite 数据库结构与读写验证。

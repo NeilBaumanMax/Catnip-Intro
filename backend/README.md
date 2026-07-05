@@ -1,19 +1,83 @@
 # backend
 
-当前完成 Phase 2C：后端技术栈切换文档修正。
+当前完成 Phase 2D：Go backend 最小骨架。
 
 ⚠️ **后端技术栈已切换**：Node.js/Express/Prisma → Go + SQLite。
-
-本目录中现有 Node/Prisma 代码为 **历史验证阶段产物**，保留不动但不继续扩展。
-后续 Go backend 代码将在此目录中创建。
 
 详细决策见：`dos/catnip-intro/docs/BACKEND_TECH_STACK_DECISION.md`
 
 ---
 
+## Go backend（当前主路线）
+
+### 技术栈
+
+- Go 1.24.5
+- net/http（标准库）
+- 无第三方依赖
+
+### 目录结构
+
+```
+backend/
+├─ go.mod
+├─ cmd/
+│  └─ server/
+│     └─ main.go        # 入口
+├─ internal/             # 内部包（后续扩展）
+├─ src/                  # Node/Prisma 历史代码，保留不动
+├─ prisma/               # Prisma schema，历史资料
+└─ package.json          # Node 依赖声明，历史资料
+```
+
+### 命令
+
+```bash
+cd backend
+go run ./cmd/server
+```
+
+### 健康检查
+
+开发服务监听：
+
+- Host: `0.0.0.0`
+- Port: `4000`
+
+访问：
+
+```text
+http://localhost:4000/health
+```
+
+期望返回：
+
+```json
+{
+  "ok": true,
+  "message": "go backend is running"
+}
+```
+
+### 当前允许
+
+- 启动 Go backend。
+- 访问 `GET /health`。
+- 其他路径返回 404。
+
+### 当前禁止
+
+- 接入 SQLite。
+- 实现登录接口。
+- 实现产品/案例/留言/网站设置接口。
+- 实现上传接口。
+- 写任何前端页面。
+
+---
+
 ## 历史 Node/Prisma 阶段（已完成，保留不动）
 
-本目录曾作为 Catnip Intro 的 Node.js 后端服务目录。
+本目录中 Node/Prisma 代码为历史验证阶段产物，保留不动但不继续扩展。
 
 ## 技术栈
 

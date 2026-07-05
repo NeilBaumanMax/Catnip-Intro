@@ -661,3 +661,72 @@
 - 是否切换 Git 分支：否。
 - 是否提交或上传 GitHub：待提交和推送。
 - 下一次施工建议：进入 Phase 2D：Go backend 最小骨架。
+
+## 2026-07-05 Phase 2D Go backend minimal skeleton
+
+备份记录：
+
+- 备份方式：开工前 `git status` 确认工作区干净，`main` 与 `origin/main` 同步。
+- 备份位置或提交：`95dfa37`，`origin/main`（Phase 2C 提交）。
+- 不能备份原因：无。
+
+读档记录：
+
+- 已读取全部工程文档。
+
+本轮目标：
+
+- 创建 Go backend 最小可运行骨架，使用 net/http 标准库，无第三方依赖。
+- 监听 `0.0.0.0:4000`，提供 `GET /health`。
+- 不接入 SQLite，不写业务接口。
+- 不删除不修改 Node/Prisma 历史文件。
+
+本轮计划：
+
+1. 安装 Go 1.24.5（brew 不可用，从 golang.org 下载安装到 ~/devtools/go）。
+2. 创建 `backend/go.mod` 和 `backend/cmd/server/main.go`。
+3. `go mod tidy` 验证无第三方依赖。
+4. 启动服务并用 curl 测试 /health 和 404。
+5. 测试通过后更新文档、提交推送。
+
+施工记录：
+
+- Go 1.24.5 已安装到 `/Users/neil/devtools/go/go/bin/go`，darwin-arm64。
+- 已创建 `backend/go.mod`：module github.com/NeilBaumanMax/Catnip-Intro/backend，go 1.24.5。
+- 已创建 `backend/cmd/server/main.go`：使用 net/http 标准库，结构体 JSON 序列化。
+- `go mod tidy` 通过，零第三方依赖。
+- `go test ./...` 通过（无测试文件，预期行为）。
+- 首次测试时端口被旧进程占用，kill 后重新测试通过。
+- Node/Prisma 文件确认完好：`src/app.ts`、`prisma/schema.prisma`、`package.json`。
+
+测试记录：
+
+- Go version：1.24.5 darwin/arm64。
+- `go mod tidy`：通过，无第三方依赖。
+- `go test ./...`：通过。
+- `go run ./cmd/server`：服务启动成功，输出 "Go backend listening on http://0.0.0.0:4000"。
+- `curl -sS http://localhost:4000/health`：返回 `{"ok":true,"message":"go backend is running"}`。✅
+- `curl -sS -o /dev/null -w "%{http_code}" http://localhost:4000/other`：返回 404。✅
+- Content-Type 验证：`application/json`。✅
+- Node/Prisma 文件未删除、未修改。✅
+
+失败处理记录：
+
+- 失败原因：首次测试时端口 4000 被旧 Go server 进程占用（PID 53101）。
+- 修复动作：`kill 53101` 释放端口后重新测试。
+- 重新测试结果：全部通过。
+
+文档漂移检查：
+
+- 是否存在文档漂移：存在，`DEV_PROGRESS.md`、分层进度、`backend/README.md` 需更新为 Phase 2D 完成态。
+- 已修正文档：正在修正中。
+- 未修正原因：无。
+
+收尾记录：
+
+- 是否写入业务代码：否，仅写入 Go backend 健康检查骨架。
+- 是否安装依赖：是，安装 Go 1.24.5 系统工具（项目零第三方 Go 依赖）。
+- 是否创建新 worktree：否。
+- 是否切换 Git 分支：否。
+- 是否提交或上传 GitHub：待提交和推送。
+- 下一次施工建议：进入 Phase 2E：Go + SQLite 数据库结构与读写验证。
