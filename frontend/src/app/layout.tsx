@@ -4,8 +4,8 @@ import Footer from '@/components/Footer'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Catnip Intro',
-  description: '企业官网',
+  title: 'Catnipent — 本地 Agent 软硬件一体化',
+  description: '科霓朋特科技，让 AI 从云端工具变成可本地运行的智能员工与设备大脑。',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
