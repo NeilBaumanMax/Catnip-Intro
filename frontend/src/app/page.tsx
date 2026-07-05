@@ -1,16 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { getProducts, getCases } from '@/lib/api'
-import { getImageUrl } from '@/lib/api'
+import { fallbackProducts } from '@/lib/fallback'
+import { getProducts, getCases, getImageUrl } from '@/lib/api'
 
 export const dynamic = 'force-dynamic'
-
-const features = [
-  { icon: '🔒', title: '本地部署', desc: '数据不出域，断网可用，私有化运行' },
-  { icon: '🧠', title: 'Agent Runtime', desc: '自然语言→设备控制，长期稳定执行任务' },
-  { icon: '⚡', title: '端侧智能', desc: '软硬件一体化交付，开箱即用' },
-  { icon: '🛡️', title: '安全可信', desc: '面向政府、学校、企业级场景' },
-]
 
 const scenarios = [
   { icon: '🏫', title: '学校/园区', desc: '图书管理 Agent、资料问答、知识库部署' },
@@ -28,106 +21,104 @@ const whyUs = [
 
 export default async function HomePage() {
   const [productsRes, casesRes] = await Promise.all([getProducts(), getCases()])
-  const products = productsRes.ok ? (productsRes.data || []).slice(0, 4) : []
+  const apiProducts = productsRes.ok ? (productsRes.data || []) : []
   const caseItems = casesRes.ok ? (casesRes.data || []).slice(0, 3) : []
 
+  // Merge: prefer API products, fill with fallback to ensure 4
+  const displayProducts = fallbackProducts.map((fb) => {
+    const api = apiProducts.find((p: { name: string }) => p.name === fb.name)
+    if (api) return { ...fb, image_url: api.image_url || '', id: api.id }
+    return { ...fb, image_url: '', id: fb.id }
+  })
+
   return (
-    <div className="overflow-hidden">
+    <div className="page-enter overflow-hidden">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-[#0F3D7A] via-[#1A56DB] to-[#0a1628] text-white">
-        <div className="max-w-7xl mx-auto px-4 py-20 md:py-32">
+      <section className="relative bg-gradient-to-br from-[#0F3D7A] via-[#1A56DB] to-[#0a1628] text-white overflow-hidden">
+        <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] hero-orb bg-[#00AEEF]" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] hero-orb bg-[#1A56DB]" />
+        <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-32">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <p className="text-[#00AEEF] font-medium mb-4 text-sm tracking-widest uppercase">万物有灵 · 本地 Agent 软硬件一体化</p>
               <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-6">
-                让 AI 从云端工具
-                <br />
-                变成可本地运行的
-                <br />
+                让 AI 从云端工具<br />变成可本地运行的<br />
                 <span className="text-[#00AEEF]">智能员工与设备大脑</span>
               </h1>
               <p className="text-lg text-blue-100 mb-8 max-w-lg leading-relaxed">
-                科霓朋特科技 — 面向端侧大模型部署、设备控制和本地智能执行的软硬件一体化产品，
-                将自然语言指令转化为本地可执行任务。
+                科霓朋特科技面向端侧大模型部署、设备控制和本地智能执行，提供本地 Agent 智能板卡、端侧 AI 控制主板与私有化 Agent 系统。
               </p>
               <div className="flex gap-4 flex-wrap">
-                <Link href="/products" className="bg-[#00AEEF] hover:bg-cyan-400 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                <Link href="/products" className="bg-[#00AEEF] hover:bg-cyan-400 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/25">
                   查看产品
                 </Link>
-                <Link href="/contact" className="border border-white/30 hover:bg-white/10 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                <Link href="/contact" className="border border-white/30 hover:bg-white/10 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200">
                   联系我们
                 </Link>
               </div>
             </div>
-            <div className="hidden md:block">
-              <Image src="/product-board.jpg" alt="AI Agent 智能板卡" width={600} height={400} className="rounded-xl shadow-2xl" />
+            <div className="hidden md:block relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#00AEEF]/20 to-transparent rounded-2xl" />
+              <Image src="/product-board.jpg" alt="AI Agent 智能板卡" width={600} height={400} className="rounded-2xl shadow-2xl ring-1 ring-white/10 relative z-10" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <p className="text-[#00AEEF] font-medium text-sm mb-2">核心技术能力</p>
-            <h2 className="text-3xl font-bold text-gray-900">为什么选择本地 Agent</h2>
+      {/* Product Matrix */}
+      <section className="py-20 bg-white relative">
+        <div className="absolute inset-0 bg-grid" />
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <p className="text-[#00AEEF] font-medium text-sm mb-3">核心产品</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">软硬件一体化产品矩阵</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto">
+              围绕本地 Agent、端侧 AI、智能硬件和私有化部署，构建可交付、可维护、可落地的 AI 硬件产品体系。
+            </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {features.map((f) => (
-              <div key={f.title} className="text-center p-6 rounded-xl bg-[#F6F8FB] hover:shadow-md transition-shadow">
-                <span className="text-3xl">{f.icon}</span>
-                <h3 className="font-bold text-gray-900 mt-3 mb-2">{f.title}</h3>
-                <p className="text-sm text-gray-500">{f.desc}</p>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {displayProducts.map((p) => (
+              <Link key={p.id} href={`/products/${p.id}`} className="card-hover bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm group">
+                <div className="h-48 bg-gradient-to-br from-[#0F3D7A] to-[#1A56DB] flex items-center justify-center relative overflow-hidden">
+                  {(p as { image_url?: string }).image_url ? (
+                    <img src={getImageUrl((p as { image_url: string }).image_url)} alt={p.name} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
+                  ) : (
+                    <div className="text-center text-white/30">
+                      <span className="text-5xl block mb-2">
+                        {p.id === 1 ? '🖥️' : p.id === 2 ? '🔌' : p.id === 3 ? '📦' : '🎭'}
+                      </span>
+                    </div>
+                  )}
+                  <div className="absolute top-3 left-3">
+                    <span className="text-[10px] text-white/80 bg-white/10 backdrop-blur px-2 py-0.5 rounded-full">{p.category}</span>
+                  </div>
+                </div>
+                <div className="p-5">
+                  <h3 className="font-bold text-gray-900 mb-1.5">{p.name}</h3>
+                  <p className="text-sm text-gray-500 line-clamp-2 mb-3">{p.summary}</p>
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {p.tags.slice(0, 3).map((t: string) => (
+                      <span key={t} className="text-[10px] text-[#0F3D7A] bg-blue-50 px-2 py-0.5 rounded-full">{t}</span>
+                    ))}
+                  </div>
+                  <span className="text-sm text-[#1A56DB] font-medium group-hover:underline">查看详情 →</span>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Products */}
-      {products.length > 0 && (
-        <section className="py-20 bg-[#F6F8FB]">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="text-center mb-12">
-              <p className="text-[#00AEEF] font-medium text-sm mb-2">核心产品</p>
-              <h2 className="text-3xl font-bold text-gray-900">软硬件一体化产品矩阵</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {products.map((p) => (
-                <Link key={p.id} href={`/products/${p.id}`} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all group">
-                  <div className="h-48 bg-gradient-to-br from-[#0F3D7A] to-[#1A56DB] flex items-center justify-center relative overflow-hidden">
-                    {p.image_url ? (
-                      <img src={getImageUrl(p.image_url)} alt={p.name} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
-                    ) : (
-                      <span className="text-4xl text-white/30">📦</span>
-                    )}
-                  </div>
-                  <div className="p-5">
-                    {p.category && <span className="text-xs text-[#00AEEF] bg-cyan-50 px-2 py-0.5 rounded-full">{p.category}</span>}
-                    <h3 className="font-bold text-gray-900 mt-2 mb-1">{p.name}</h3>
-                    <p className="text-sm text-gray-500 line-clamp-2">{p.summary}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="text-center mt-8">
-              <Link href="/products" className="text-[#1A56DB] font-medium hover:underline">查看全部产品 →</Link>
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Scenarios */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <p className="text-[#00AEEF] font-medium text-sm mb-2">应用场景</p>
-            <h2 className="text-3xl font-bold text-gray-900">覆盖多行业本地智能场景</h2>
+      <section className="py-20 bg-[#F6F8FB]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <p className="text-[#00AEEF] font-medium text-sm mb-3">应用场景</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">覆盖多行业本地智能场景</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {scenarios.map((s) => (
-              <div key={s.title} className="border border-gray-100 rounded-xl p-6 hover:border-[#00AEEF] transition-colors">
+              <div key={s.title} className="card-hover bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                 <span className="text-3xl">{s.icon}</span>
                 <h3 className="font-bold text-gray-900 mt-3 mb-2">{s.title}</h3>
                 <p className="text-sm text-gray-500">{s.desc}</p>
@@ -139,15 +130,15 @@ export default async function HomePage() {
 
       {/* Cases */}
       {caseItems.length > 0 && (
-        <section className="py-20 bg-[#F6F8FB]">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="text-center mb-12">
-              <p className="text-[#00AEEF] font-medium text-sm mb-2">解决方案</p>
-              <h2 className="text-3xl font-bold text-gray-900">落地案例</h2>
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-14">
+              <p className="text-[#00AEEF] font-medium text-sm mb-3">落地案例</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">客户实践</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {caseItems.map((c) => (
-                <Link key={c.id} href={`/cases/${c.id}`} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all group">
+              {caseItems.map((c: { id: number; title: string; summary: string; image_url: string }) => (
+                <Link key={c.id} href={`/cases/${c.id}`} className="card-hover bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 group">
                   <div className="h-48 bg-gradient-to-br from-[#0F3D7A] to-[#1A56DB] flex items-center justify-center">
                     {c.image_url ? (
                       <img src={getImageUrl(c.image_url)} alt={c.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
@@ -162,20 +153,17 @@ export default async function HomePage() {
                 </Link>
               ))}
             </div>
-            <div className="text-center mt-8">
-              <Link href="/cases" className="text-[#1A56DB] font-medium hover:underline">查看全部案例 →</Link>
-            </div>
           </div>
         </section>
       )}
 
       {/* Why Us */}
       <section className="py-20 bg-[#0a1628] text-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold">为什么选择 Catnipent</h2>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold">为什么选择 Catnipent</h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {whyUs.map((w) => (
               <div key={w.title} className="text-center p-6">
                 <h3 className="font-bold text-lg mb-2 text-[#00AEEF]">{w.title}</h3>
@@ -188,10 +176,10 @@ export default async function HomePage() {
 
       {/* CTA */}
       <section className="py-20 bg-gradient-to-r from-[#0F3D7A] to-[#1A56DB] text-white text-center">
-        <div className="max-w-3xl mx-auto px-4">
+        <div className="max-w-3xl mx-auto px-6">
           <h2 className="text-3xl font-bold mb-4">准备好让 AI 真正落地了吗？</h2>
           <p className="text-lg text-blue-100 mb-8">联系我们，了解本地 Agent 如何为您的场景赋能</p>
-          <Link href="/contact" className="inline-block bg-[#00AEEF] hover:bg-cyan-400 text-white px-8 py-3 rounded-lg font-medium text-lg transition-colors">
+          <Link href="/contact" className="inline-block bg-[#00AEEF] hover:bg-cyan-400 text-white px-8 py-3 rounded-lg font-medium text-lg transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/25">
             立即咨询
           </Link>
         </div>
