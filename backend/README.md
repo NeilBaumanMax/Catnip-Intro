@@ -1,6 +1,6 @@
 # backend
 
-当前完成 Phase 2D：Go backend 最小骨架。
+当前完成 Phase 2E：Go + SQLite 数据库结构与读写验证。
 
 ⚠️ **后端技术栈已切换**：Node.js/Express/Prisma → Go + SQLite。
 
@@ -12,19 +12,34 @@
 
 ### 技术栈
 
-- Go 1.24.5
+- Go 1.25.0
 - net/http（标准库）
-- 无第三方依赖
+- database/sql（标准库）
+- modernc.org/sqlite v1.53.0（纯 Go SQLite 驱动，无 CGO）
 
 ### 目录结构
 
 ```
 backend/
 ├─ go.mod
+├─ go.sum
 ├─ cmd/
-│  └─ server/
-│     └─ main.go        # 入口
-├─ internal/             # 内部包（后续扩展）
+│  ├─ server/
+│  │  └─ main.go         # HTTP 入口，/health
+│  ├─ db-seed/
+│  │  └─ main.go         # 数据库写入验证
+│  └─ db-check/
+│     └─ main.go         # 数据库读取验证
+├─ internal/
+│  ├─ database/
+│  │  ├─ database.go     # SQLite 连接管理
+│  │  └─ schema.go       # 5 张表 DDL
+│  └─ models/
+│     ├─ admin.go
+│     ├─ product.go
+│     ├─ case.go
+│     ├─ message.go
+│     └─ site_setting.go
 ├─ src/                  # Node/Prisma 历史代码，保留不动
 ├─ prisma/               # Prisma schema，历史资料
 └─ package.json          # Node 依赖声明，历史资料
@@ -34,7 +49,13 @@ backend/
 
 ```bash
 cd backend
+
+# 启动 HTTP 服务
 go run ./cmd/server
+
+# 数据库验证
+go run ./cmd/db-seed      # 写入测试数据（可重复执行）
+go run ./cmd/db-check     # 读取并打印数据库内容
 ```
 
 ### 健康检查

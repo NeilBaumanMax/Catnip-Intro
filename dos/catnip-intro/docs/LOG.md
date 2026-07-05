@@ -730,3 +730,76 @@
 - 是否切换 Git 分支：否。
 - 是否提交或上传 GitHub：待提交和推送。
 - 下一次施工建议：进入 Phase 2E：Go + SQLite 数据库结构与读写验证。
+
+## 2026-07-05 Phase 2E Go SQLite database verification
+
+备份记录：
+
+- 备份方式：开工前 `git status` 确认工作区干净。
+- 备份位置或提交：`4ec3c36`，`origin/main`（Phase 2D 提交）。
+- 不能备份原因：无。
+
+读档记录：
+
+- 已读取全部工程文档。
+
+本轮目标：
+
+- 在 Go backend 中接入 SQLite（database/sql + modernc.org/sqlite）。
+- 创建 5 张基础表，实现 db-seed/db-check 读写验证。
+- 不实现 HTTP 业务接口。
+
+本轮计划：
+
+1. 创建 `internal/database/database.go`（连接管理）。
+2. 创建 `internal/database/schema.go`（DDL）。
+3. 创建 `internal/models/` 模型。
+4. 创建 `cmd/db-seed/main.go` 和 `cmd/db-check/main.go`。
+5. `go mod tidy` 下载 modernc.org/sqlite。
+6. 执行测试序列。
+7. 测试通过后更新文档、提交推送。
+
+施工记录：
+
+- Go 自动升级 toolchain 到 1.25.0（modernc.org/sqlite v1.53.0 要求 go >= 1.25.0）。
+- 已安装 `modernc.org/sqlite v1.53.0`（纯 Go，无 CGO）。
+- 已创建 `internal/database/database.go`：使用 `sql.Open("sqlite", ...)`，SetMaxOpenConns(1)。
+- 已创建 `internal/database/schema.go`：CREATE TABLE IF NOT EXISTS × 5。
+- 已创建 `internal/models/`：admin.go、product.go、case.go、message.go、site_setting.go。
+- 已创建 `cmd/db-seed/main.go`：ON CONFLICT upsert，幂等可重复执行。
+- 已创建 `cmd/db-check/main.go`：count 查询 + 样例输出。
+- 数据库路径解析：从 cwd 向上查找 go.mod 定位项目根，拼接 data/company.db。
+
+测试记录：
+
+- `go mod tidy`：通过，modernc.org/sqlite v1.53.0 下载成功。
+- `go test ./...`：通过。
+- `go run ./cmd/db-seed`（首次）：失败，Prisma 旧数据库残留（camelCase 列名 vs snake_case）。
+- 修复动作：删除 Prisma 旧 `data/company.db`，重新运行 db-seed。
+- `go run ./cmd/db-seed`（修复后）：通过，5 条测试数据全部写入。✅
+- `go run ./cmd/db-check`：通过，Admin 1 / Product 1 / Case 1 / Message 1 / SiteSetting 1，Product name `__seed_product`，Case title `__seed_case`。✅
+- 重复 db-seed + db-check：通过，数量保持 1，ON CONFLICT 幂等。✅
+- `curl /health`：通过，`{"ok":true,"message":"go backend is running"}`。✅
+- `data/company.db` 未被 Git 跟踪：通过。✅
+- Node/Prisma 文件未修改：通过。✅
+
+失败处理记录：
+
+- 失败原因：首次 db-seed 失败，`admin` 表已有 Prisma 旧 schema（camelCase 列名 `passwordHash`），`CREATE TABLE IF NOT EXISTS` 跳过建表，INSERT 列名不匹配。
+- 修复动作：删除旧 `data/company.db` 后重新 db-seed。
+- 重新测试结果：全部通过。
+
+文档漂移检查：
+
+- 是否存在文档漂移：存在，多份文档需更新为 Phase 2E 完成态。
+- 已修正文档：正在修正中。
+- 未修正原因：无。
+
+收尾记录：
+
+- 是否写入业务代码：否，仅写入数据库读写验证代码。
+- 是否安装依赖：是，安装 modernc.org/sqlite v1.53.0（纯 Go，无 CGO）。
+- 是否创建新 worktree：否。
+- 是否切换 Git 分支：否。
+- 是否提交或上传 GitHub：待提交和推送。
+- 下一次施工建议：进入 Phase 3（uploads 图片上传与静态访问）或 Phase 4（Go backend 业务接口）。

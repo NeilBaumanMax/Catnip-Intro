@@ -731,3 +731,100 @@ Phase 3 以后：
 - 是否已修正文档漂移：是。
 - 是否允许提交本次结果：是。
 - 是否允许进入下一 Phase：Phase 2D 完成后建议进入 Phase 2E，须由用户明确授权。
+
+## 2026-07-05 Phase 2E Go SQLite database verification test
+
+测试范围：
+
+- Go + database/sql + modernc.org/sqlite 数据库接入。
+- db-seed 写入验证 + db-check 读取验证。
+- /health 仍然正常。
+
+测试前置条件：
+
+- 已备份：是，备份提交 `4ec3c36`。
+- 已读取文档：是。
+- 已写开工计划：是。
+- Go 1.25.0 toolchain + modernc.org/sqlite v1.53.0。
+
+测试项目：
+
+1. 项目：`go mod tidy`
+   检查方式：退出码。
+   结果：通过，modernc.org/sqlite v1.53.0 下载成功。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+2. 项目：`go test ./...`
+   检查方式：退出码。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+3. 项目：`go run ./cmd/db-seed`（首次，删除旧库后）
+   检查方式：写入 5 条测试数据。
+   结果：通过。
+   失败原因：首次存在 Prisma 旧 database（camelCase 列名），CREATE TABLE IF NOT EXISTS 跳过建表。
+   修复记录：`rm data/company.db` 后重新运行。
+   重新测试结果：通过。
+
+4. 项目：`go run ./cmd/db-check`
+   检查方式：读取各表 count + 样例。
+   结果：通过，Admin 1 / Product 1 / Case 1 / Message 1 / SiteSetting 1，Product name `__seed_product`，Case title `__seed_case`。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+5. 项目：seed 可重复执行
+   检查方式：再次 db-seed 后 db-check，数量保持 1。
+   结果：通过，ON CONFLICT upsert 幂等。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+6. 项目：`curl /health`
+   检查方式：`go run ./cmd/server` 后 curl。
+   结果：通过，`{"ok":true,"message":"go backend is running"}`。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+7. 项目：`data/company.db` 不被 Git 跟踪
+   检查方式：`git ls-files`。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+8. 项目：Node/Prisma 历史文件未修改
+   检查方式：文件时间戳和内容。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+9. 项目：使用 database/sql + modernc.org/sqlite
+   检查方式：go.mod 依赖列表。
+   结果：通过，未引入 GORM/Gin/mattn/go-sqlite3。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+10. 项目：表结构使用 snake_case 列名
+    检查方式：SQL DDL 和模型定义。
+    结果：通过。
+    失败原因：无。
+    修复记录：无。
+    重新测试结果：无需重测。
+
+统计：
+
+- 通过数量：10
+- 失败数量：0
+- 失败项：无最终失败项；首次 Prisma 旧库冲突已修复。
+- 是否存在文档漂移：存在，多份文档需更新为 Phase 2E 完成态。
+- 是否已修正文档漂移：是。
+- 是否允许提交本次结果：是。
+- 是否允许进入下一 Phase：Phase 2E 完成后建议进入 Phase 3 或 Phase 4，须由用户明确授权。
