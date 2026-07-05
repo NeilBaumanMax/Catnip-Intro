@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 const slides = [
-  { src: '/images/products/wanwu-agent-board.png', name: '万物有灵 AI Agent 智能板卡', tag: '本地 Agent 智能硬件', desc: '面向本地 Agent 运行、知识库调用、工具执行和硬件控制的智能算力板卡，将自然语言指令转化为本地可执行任务。', tags: ['本地部署', 'Agent Runtime', '硬件控制', '私有化运行'], id: 1 },
-  { src: '/images/products/lobsterpi-edge-ai-board.png', name: '龙虾派端侧 AI 控制主板', tag: '端侧 AI 控制主板', desc: '面向端侧大模型部署、设备控制和边缘推理的 AI 控制主板，适合智能硬件、工业控制和机器人场景。', tags: ['端侧 AI', '边缘推理', '设备控制', '工业接口'], id: 2 },
-  { src: '/images/products/opc-ai-employee-box.png', name: 'OPC 智能员工盒子', tag: '智能办公与私有化部署', desc: '面向企业、学校和园区的本地智能员工终端，支持知识库问答、文档处理、流程自动化和私有化部署。', tags: ['智能办公', '本地知识库', '私有化部署', '文档处理'], id: 3 },
-  { src: '/images/products/live2d-smart-accessory.png', name: 'Live2D 智能挂件', tag: 'AI 交互硬件', desc: '结合 Live2D 形象、本地 Agent 能力和智能硬件交互的桌面级 AI 挂件，适合陪伴、展示、教学和品牌互动。', tags: ['Live2D', 'AI 交互', '桌面助手', '创客教育'], id: 4 },
+  { src: '/images/products/wanwu-agent-board.jpg', name: '万物有灵 AI Agent 智能板卡', tag: '本地 Agent 智能硬件', desc: '面向本地 Agent 运行、知识库调用、工具执行和硬件控制的智能算力板卡，将自然语言指令转化为本地可执行任务。', tags: ['本地部署', 'Agent Runtime', '硬件控制', '私有化运行'], id: 1 },
+  { src: '/images/products/lobsterpi-edge-ai-board.jpg', name: '龙虾派端侧 AI 控制主板', tag: '端侧 AI 控制主板', desc: '面向端侧大模型部署、设备控制和边缘推理的 AI 控制主板，适合智能硬件、工业控制和机器人场景。', tags: ['端侧 AI', '边缘推理', '设备控制', '工业接口'], id: 2 },
+  { src: '/images/products/opc-ai-employee-box.jpg', name: 'OPC 智能员工盒子', tag: '智能办公与私有化部署', desc: '面向企业、学校和园区的本地智能员工终端，支持知识库问答、文档处理、流程自动化和私有化部署。', tags: ['智能办公', '本地知识库', '私有化部署', '文档处理'], id: 3 },
+  { src: '/images/products/live2d-smart-accessory.jpg', name: 'Live2D 智能挂件', tag: 'AI 交互硬件', desc: '结合 Live2D 形象、本地 Agent 能力和智能硬件交互的桌面级 AI 挂件，适合陪伴、展示、教学和品牌互动。', tags: ['Live2D', 'AI 交互', '桌面助手', '创客教育'], id: 4 },
 ]
 
 const API = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
