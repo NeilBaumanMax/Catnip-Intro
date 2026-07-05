@@ -33,16 +33,18 @@ frontend 负责官网页面和后台管理页面。
 - /admin/login (登录页), /admin (仪表盘), AdminLayout (侧边栏+鉴权)
 
 ### Phase 6B：后台产品/案例管理 ✅
-- /admin/products (产品 CRUD 表格 + 内联表单)
-- /admin/cases (案例 CRUD 表格 + 内联表单)
-- ProductManager / CaseManager 组件
-- adminApi.ts 扩展：8 个 CRUD API 函数
+
+### Phase 6C：后台留言/设置管理 ✅
+- /admin/messages (列表+详情弹窗+状态修改+删除)
+- /admin/settings (读取+修改网站设置)
+- MessageManager / SettingsForm 组件
+- 后台页面 6/6 全部完成 🎉
 
 ## 未完成
 
-- [ ] /admin/messages 留言管理页面
-- [ ] /admin/settings 网站设置页面
+- [ ] 全站端到端联调验收 (Phase 7)
+- [ ] 局域网手机访问测试 (Phase 7)
 
 ## 下一步
 
-Phase 6C：留言管理页面 + 网站设置页面。
+Phase 7：全站联调 + 局域网手机访问验收。

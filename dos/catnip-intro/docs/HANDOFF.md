@@ -48,45 +48,38 @@
 
 ## 当前交接状态
 
-当前完成 Phase 6B：后台产品/案例管理 CRUD 页面。
+当前完成 Phase 6C：后台留言管理 + 网站设置页面。
+
+后台页面 **6/6 全部完成** 🎉
 
 ## 已具备
 
 ### 后端 (Go backend) — 24 个 API 全部完成
-- 公开：health, login, uploads, static, products, cases, messages, settings
-- 鉴权：admin ping, products CRUD, cases CRUD, messages CRUD, settings upsert
-
-### 前端 (Next.js) 
-- **前台官网**：7 个页面 (/, /about, /products, /cases, /contact)
-- **admin 后台**：
-  - /admin/login (登录页)
-  - /admin (后台首页仪表盘)
-  - /admin/products (产品 CRUD + 显示隐藏)
-  - /admin/cases (案例 CRUD + 显示隐藏)
-  - 侧边栏导航 + token 鉴权守卫
-- Token 鉴权：localStorage + GET /api/admin/ping 验证
+### 前端 (Next.js) — 前台 7 页面 + 后台 6 页面 全部完成
+- **前台**：/, /about, /products, /cases, /contact
+- **后台**：/admin/login, /admin, /admin/products, /admin/cases, /admin/messages, /admin/settings
+- Token 鉴权：localStorage + GET /api/admin/ping
 - 测试账号：admin / admin123456
-- Node/Prisma 历史代码保留
 
 ## 后台页面完成度
 
-| 路径 | 状态 | 功能 |
-|------|------|------|
-| /admin/login | ✅ | 登录页 |
-| /admin | ✅ | 后台首页 |
-| /admin/products | ✅ | 产品 CRUD + 显示隐藏 |
-| /admin/cases | ✅ | 案例 CRUD + 显示隐藏 |
-| /admin/messages | ⬜ | 留言管理 (Phase 6C) |
-| /admin/settings | ⬜ | 网站设置 (Phase 6C) |
+| 路径 | 状态 |
+|------|------|
+| /admin/login | ✅ |
+| /admin | ✅ |
+| /admin/products | ✅ |
+| /admin/cases | ✅ |
+| /admin/messages | ✅ |
+| /admin/settings | ✅ |
 
 ## 尚未具备
 
-- 留言管理页面
-- 网站设置页面
+- 全站端到端联调验收
+- 局域网手机访问测试
 
 ## 下一位 Codex 应做什么
 
-进入 Phase 6C：留言管理页面 + 网站设置页面。不要重复做产品/案例管理页面。使用已有 token。
+进入 Phase 7：全站联调 + 局域网手机访问验收。重点是端到端验证，不要新增功能模块。
 
 ## 2026-07-05 Phase 1 handoff
 

@@ -958,3 +958,20 @@ Phase 3 以后：
 9. 前台首页回归 ✅
 
 统计：通过 9，失败 0。backend 未修改。零新前端依赖。允许进入 Phase 6C，须用户授权。
+
+## 2026-07-05 Phase 6C admin message settings test
+
+测试范围：后台留言管理和网站设置页面。前置条件：已备份 `5c3aefd`。
+
+测试项目：
+1. npm run lint: 0 errors ✅
+2. npm run build ✅
+3. /admin/messages HTTP 200 ✅
+4. /admin/settings HTTP 200 ✅
+5. 留言列表 API ✅
+6. 留言详情 API ✅
+7. 状态修改 API ✅
+8. 设置读取 API ✅
+9. 设置更新 API ✅
+
+统计：通过 9，失败 0。backend 未修改。后台页面 6/6 全部完成。允许进入 Phase 7，须用户授权。

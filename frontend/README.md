@@ -47,6 +47,8 @@ npx next dev --hostname 0.0.0.0 --port 3000
 | /admin | 后台首页（需登录） |
 | /admin/products | 产品管理（新增/编辑/删除/隐藏） |
 | /admin/cases | 案例管理（新增/编辑/删除/隐藏） |
+| /admin/messages | 留言管理（列表/详情/状态/删除） |
+| /admin/settings | 网站设置（读取/修改/保存） |
 
 ## 技术栈
 

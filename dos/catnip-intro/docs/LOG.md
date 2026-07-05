@@ -1072,3 +1072,63 @@
 - 是否切换 Git 分支：否。
 - 是否提交或上传 GitHub：已提交，`c7b08a0`。
 - 下一次施工建议：进入 Phase 6C（留言管理页面 + 网站设置页面）。
+
+## 2026-07-05 Phase 6C admin message settings pages
+
+备份记录：
+
+- 备份位置或提交：`5c3aefd`，`origin/main`（Phase 6B-DOC 提交）。
+
+读档记录：
+
+- 已读取工程文档、adminApi.ts、adminAuth.ts、types/api.ts、AdminLayout.tsx。
+
+本轮目标：
+
+- 实现 /admin/messages 留言管理和 /admin/settings 网站设置页面。
+- 后台页面 6/6 全部完成。
+
+本轮计划：
+
+1. 扩展 `adminApi.ts`（5 个 message/settings API 函数）。
+2. 添加 Message 类型到 `types/api.ts`。
+3. 创建 `MessageManager.tsx`（列表+详情弹窗+状态修改+删除）。
+4. 创建 `SettingsForm.tsx`（读取+修改+保存网站设置）。
+5. 创建页面文件并执行 lint/build/联调测试。
+6. 测试通过后提交推送。
+
+施工记录：
+
+- 已扩展 `adminApi.ts`：getMessages/getMessage/setMessageStatus/deleteMessage/updateSettings。
+- 已添加 Message 接口到 `types/api.ts`。
+- 已创建 `MessageManager.tsx`：状态筛选下拉框（全部/new/processing/processed），列表表格，详情弹窗（含状态修改和历史），删除 confirm。
+- 已创建 `SettingsForm.tsx`：8 字段表单，companyName 必填，保存后显示成功提示。
+- 零新依赖。
+
+测试记录：
+
+- `npm run lint`：通过，0 errors。
+- `npm run build`：通过，/admin/messages + /admin/settings。
+- 留言列表 API → Messages: 2。
+- 留言详情 API → name + status。
+- 状态修改 API → processed。
+- 设置读取 API → 公司名。
+- 设置更新 API → ok=true，字段已更新。
+
+失败处理记录：
+
+- 无失败项。
+
+文档漂移检查：
+
+- 是否存在文档漂移：存在，DEV_PROGRESS、HANDOFF、frontend 分层进度需更新至 Phase 6C。
+- 已修正文档：Phase 6C-DOC 修正中。
+
+收尾记录：
+
+- 是否写入业务代码：是，后台留言/设置管理页面。
+- 是否安装依赖：否。
+- 是否创建新 worktree：否。
+- 是否切换 Git 分支：否。
+- 是否提交或上传 GitHub：已提交，`ca9f407`。
+- 下一次施工建议：进入 Phase 7（全站联调 + 局域网手机访问验收）。后台页面 6/6 已完成。
