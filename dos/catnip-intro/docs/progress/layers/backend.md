@@ -2,44 +2,41 @@
 
 ## 当前阶段
 
-当前完成 Phase 2E：Go + SQLite 数据库结构与读写验证。
+当前完成 Phase 3：uploads 图片上传与静态访问。
 
 ## 职责
 
 Go backend 负责登录、产品、案例、留言、网站设置、图片上传和 uploads 静态访问。
 
-## 允许
+## 当前进度（Go backend 主路线）
 
-- 当前阶段 Go backend 已接入 SQLite。
-- 当前阶段已通过 db-seed/db-check 验证读写路径。
-- Node/Prisma 历史代码保留不动。
-- 后续阶段实现 HTTP 业务接口和鉴权。
+### Phase 2D：Go backend 最小骨架 ✅
+- go.mod、cmd/server/main.go（net/http）。
+- `GET /health` → `{"ok":true,"message":"go backend is running"}`。
 
-## 禁止
+### Phase 2E：Go + SQLite ✅
+- database/sql + modernc.org/sqlite v1.53.0。
+- 5 张表 DDL（snake_case），db-seed/db-check 验证通过。
 
-- 将真实图片保存到 SQLite。
-- 让未鉴权请求访问后台管理接口。
-- 删除现有 Node/Prisma 文件。
+### Phase 3：uploads ✅
+- `POST /api/uploads`：multipart/form-data，安全命名，5MB 限制。
+- `GET /uploads/...`：http.FileServer 静态访问。
+- 文件类型白名单（JPEG/PNG/WebP/SVG），MIME + 扩展名校验。
+- 4 个子目录：products、cases、company、qrcode。
+- 全部使用 Go 标准库，零额外依赖。
 
-## 当前进度
+## 已完成接口
 
-### Go backend（当前主路线）
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | /health | 健康检查 |
+| POST | /api/uploads | 图片上传 |
+| GET | /uploads/... | 静态文件访问 |
 
-- Phase 2D 已创建 Go 项目骨架（go.mod、cmd/server/main.go）。
-- Phase 2D `GET /health` 可用，net/http 标准库。
-- Phase 2E 已安装 `modernc.org/sqlite`（v1.53.0，纯 Go，无 CGO）。
-- Phase 2E 已创建 `internal/database/database.go` + `schema.go`。
-- Phase 2E 已创建 `internal/models/`（admin.go、product.go、case.go、message.go、site_setting.go）。
-- Phase 2E 已创建 `cmd/db-seed/main.go`（ON CONFLICT upsert，幂等可重复执行）。
-- Phase 2E 已创建 `cmd/db-check/main.go`（count 查询 + 样例输出）。
-- Phase 2E `data/company.db` 5 张表就位，读写验证通过。
-- Phase 2E `GET /health` 仍然正常返回。
-
-### Node/Prisma（历史阶段，保留不动）
+## Node/Prisma（历史阶段，保留不动）
 
 - Phase 1-2B 代码完好保留。
-```
 
 ## 下一步
 
-Phase 3 或 Phase 4：实现 Go backend HTTP 业务接口（登录、产品、案例、留言、网站设置）。
+Phase 4：Go backend 业务接口（登录鉴权 + 产品/案例/留言/网站设置 CRUD）。

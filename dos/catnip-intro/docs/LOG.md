@@ -803,3 +803,76 @@
 - 是否切换 Git 分支：否。
 - 是否提交或上传 GitHub：待提交和推送。
 - 下一次施工建议：进入 Phase 3（uploads 图片上传与静态访问）或 Phase 4（Go backend 业务接口）。
+
+## 2026-07-05 Phase 3 uploads static access
+
+备份记录：
+
+- 备份方式：开工前 `git status` 确认工作区干净。
+- 备份位置或提交：`1fbed04`，`origin/main`（Phase 2E 提交）。
+
+读档记录：
+
+- 已读取工程文档和关键源文件。
+
+本轮目标：
+
+- 实现 POST /api/uploads 图片上传和 GET /uploads/ 静态访问。
+- 使用 Go 标准库，不引入第三方上传库。
+
+本轮计划：
+
+1. 创建 uploads 子目录和 .gitkeep。
+2. 创建 `backend/internal/uploads/handler.go`。
+3. 更新 `backend/cmd/server/main.go` 注册路由。
+4. 更新 .gitignore 忽略上传图片。
+5. 执行测试序列。
+6. 测试通过后更新文档、提交推送。
+
+施工记录：
+
+- 已创建上传处理器 `internal/uploads/handler.go`：
+  - POST /api/uploads：multipart/form-data，category 分类，安全随机命名。
+  - 文件类型白名单（JPEG/PNG/WebP/SVG），MIME + 扩展名校验。
+  - 文件大小限制 5MB。
+  - 安全文件名：时间戳 + 随机 hex + 原扩展名。
+- 已更新 `cmd/server/main.go`：注册 /api/uploads 和 /uploads/ 路由。
+- 已创建 4 个子目录：products、cases、company、qrcode（含 .gitkeep）。
+- .gitignore 已配置子目录级别忽略规则，保留 .gitkeep。
+
+测试记录：
+
+- `go mod tidy`：通过，零新依赖。
+- `go test ./...`：通过。
+- `go run ./cmd/server`：服务正常启动。
+- `curl /health`：通过，`{"ok":true,"message":"go backend is running"}`。
+- `POST /api/uploads`（products）：通过，返回 `{"ok":true,"url":"/uploads/products/xxx.png",...}`。
+- 文件落盘验证：`uploads/products/` 下文件存在，69 字节。
+- `GET /uploads/products/xxx.png`：通过，HTTP 200，正确返回文件。
+- GET /api/uploads：通过，HTTP 405。
+- 非法 category：通过，HTTP 400 + 错误信息。
+- 非图片文件：通过，HTTP 400 拦截（扩展名 .txt）。
+- uploads/company 分类上传：通过。
+- .gitignore 验证：上传图片不被 Git 跟踪，通过。
+
+失败处理记录：
+
+- 失败原因：首次测试时端口被旧 server 进程占用，新代码未生效（404）。
+- 修复动作：`lsof -ti :4000 | xargs kill -9` 后重新测试。
+- 失败原因：.gitignore 第一版规则 `uploads/*` 只匹配顶级，未递归忽略子目录文件。
+- 修复动作：为每个子目录添加独立的 `uploads/subdir/*` 忽略规则，删除测试图片后重验。
+- 重新测试结果：全部通过。
+
+文档漂移检查：
+
+- 是否存在文档漂移：存在，多份文档需更新为 Phase 3 完成态。
+- 已修正文档：正在修正中。
+
+收尾记录：
+
+- 是否写入业务代码：否，仅写入上传和静态访问底座。
+- 是否安装依赖：否，使用 Go 标准库。
+- 是否创建新 worktree：否。
+- 是否切换 Git 分支：否。
+- 是否提交或上传 GitHub：待提交和推送。
+- 下一次施工建议：进入 Phase 4（Go backend 业务接口）。

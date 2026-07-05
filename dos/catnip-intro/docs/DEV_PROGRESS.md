@@ -2,11 +2,11 @@
 
 ## 当前阶段
 
-Phase 2E：Go + SQLite 数据库结构与读写验证。
+Phase 3：uploads 图片上传与静态访问。
 
 ## 当前状态
 
-Phase 2E 测试通过。Go backend 已接入 SQLite（database/sql + modernc.org/sqlite），5 张表就位，db-seed/db-check 读写验证通过。
+Phase 3 测试通过。Go backend 已实现图片上传（POST /api/uploads）和静态文件访问（GET /uploads/...）。
 
 ## 已完成
 
@@ -16,23 +16,22 @@ Phase 2E 测试通过。Go backend 已接入 SQLite（database/sql + modernc.org
 ### Phase 2B：数据库读写验证脚本 ✅（历史阶段）
 ### Phase 2C：数据库迁移方案评估 + 后端技术栈切换 ✅
 ### Phase 2D：Go backend 最小骨架 ✅
-
 ### Phase 2E：Go + SQLite 数据库结构与读写验证 ✅
-- 安装 `modernc.org/sqlite`（纯 Go SQLite 驱动，无 CGO）。
-- 创建 `backend/internal/database/database.go`（连接管理）。
-- 创建 `backend/internal/database/schema.go`（5 张表 DDL）。
-- 创建 `backend/internal/models/`（Admin、Product、Case、Message、SiteSetting 模型）。
-- 创建 `backend/cmd/db-seed/main.go`（upsert 写入测试数据，ON CONFLICT 幂等）。
-- 创建 `backend/cmd/db-check/main.go`（读取各表 count + 样例数据）。
-- `data/company.db` 生成并通过读写验证。
+
+### Phase 3：uploads 图片上传与静态访问 ✅
+- 创建 `backend/internal/uploads/handler.go`（上传 + 静态访问）。
+- `POST /api/uploads`：multipart/form-data，安全随机命名，category 分类，5MB 限制。
+- `GET /uploads/...`：http.FileServer 静态访问。
+- 文件类型白名单（JPEG/PNG/WebP/SVG），MIME + 扩展名校验。
+- uploads 子目录：products、cases、company、qrcode（含 .gitkeep）。
+- .gitignore 正确忽略上传图片，保留目录结构。
 - `GET /health` 仍然正常工作。
-- Node/Prisma 历史文件未删除、未修改。
 
 ## 未完成
 
-- 未实现 HTTP 业务接口（登录、产品、案例、留言、上传）。
+- 未实现 HTTP 业务接口（登录、产品、案例、留言、上传关联业务）。
 - 未创建前端项目代码（Next.js）。
 
 ## 下一阶段
 
-Phase 3：uploads 图片上传与静态访问，或 Phase 4：Go backend 业务接口。
+Phase 4：Go backend 业务接口（登录鉴权 + 产品/案例/留言/网站设置 CRUD）。

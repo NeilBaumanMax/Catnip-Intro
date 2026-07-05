@@ -4,3 +4,20 @@
 
 # SQLite local database
 data/company.db
+
+# Uploaded images (keep directory structure, ignore real files)
+uploads/*
+!uploads/README.md
+!uploads/.gitkeep
+!uploads/products/
+!uploads/cases/
+!uploads/company/
+!uploads/qrcode/
+uploads/products/*
+!uploads/products/.gitkeep
+uploads/cases/*
+!uploads/cases/.gitkeep
+uploads/company/*
+!uploads/company/.gitkeep
+uploads/qrcode/*
+!uploads/qrcode/.gitkeep

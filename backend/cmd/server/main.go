@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+
+	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/uploads"
 )
 
 type healthResponse struct {
@@ -32,7 +34,15 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	mux := http.NewServeMux()
+
 	mux.HandleFunc("/health", healthHandler)
+	mux.HandleFunc("/api/uploads", uploads.UploadHandler)
+
+	staticHandler, err := uploads.StaticHandler()
+	if err != nil {
+		log.Fatalf("uploads static handler: %v", err)
+	}
+	mux.Handle("/uploads/", staticHandler)
 
 	host := "0.0.0.0"
 	port := "4000"

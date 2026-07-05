@@ -1,6 +1,6 @@
 # backend
 
-当前完成 Phase 2E：Go + SQLite 数据库结构与读写验证。
+当前完成 Phase 3：uploads 图片上传与静态访问。
 
 ⚠️ **后端技术栈已切换**：Node.js/Express/Prisma → Go + SQLite。
 

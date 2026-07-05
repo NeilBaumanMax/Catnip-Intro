@@ -828,3 +828,76 @@ Phase 3 以后：
 - 是否已修正文档漂移：是。
 - 是否允许提交本次结果：是。
 - 是否允许进入下一 Phase：Phase 2E 完成后建议进入 Phase 3 或 Phase 4，须由用户明确授权。
+
+## 2026-07-05 Phase 3 uploads static access test
+
+测试范围：
+
+- POST /api/uploads 图片上传和 GET /uploads/ 静态访问。
+- Go 标准库 net/http 实现。
+
+测试前置条件：
+
+- 已备份：是，备份提交 `1fbed04`。
+- Go 1.25.0 toolchain。
+
+测试项目：
+
+1. 项目：`go mod tidy` + `go test ./...`
+   检查方式：退出码。
+   结果：通过，零新依赖。
+   失败原因：无。
+
+2. 项目：`curl /health`
+   检查方式：HTTP 响应。
+   结果：通过，`{"ok":true,"message":"go backend is running"}`。
+
+3. 项目：POST /api/uploads（products）
+   检查方式：返回 JSON。
+   结果：通过，`{"ok":true,"url":"/uploads/products/xxx.png",...}`。
+
+4. 项目：文件落盘
+   检查方式：`ls uploads/products/`。
+   结果：通过，文件存在。
+
+5. 项目：GET /uploads/products/xxx.png 静态访问
+   检查方式：HTTP 状态码 + 文件大小。
+   结果：通过，HTTP 200，69 bytes。
+
+6. 项目：GET /api/uploads 返回 405
+   检查方式：HTTP 状态码。
+   结果：通过，405。
+
+7. 项目：非法 category 返回 400
+   检查方式：HTTP 状态码 + 错误信息。
+   结果：通过，400，"非法 category"。
+
+8. 项目：非图片文件返回 400
+   检查方式：扩展名 .txt 拦截。
+   结果：通过，400，"不允许的文件扩展名"。
+
+9. 项目：company 分类上传
+   检查方式：返回 JSON。
+   结果：通过。
+
+10. 项目：上传图片不被 Git 跟踪
+    检查方式：`git add --dry-run` + .gitignore 验证。
+    结果：通过（修正 .gitignore 子目录规则后）。
+
+11. 项目：/health 仍然正常
+    检查方式：上传测试后验证。
+    结果：通过。
+
+12. 项目：零新 Go 依赖
+    检查方式：go.mod 无新增 require。
+    结果：通过。
+
+统计：
+
+- 通过数量：12
+- 失败数量：0
+- 失败项：无最终失败项；首次端口占用 + .gitignore 规则已修复。
+- 是否存在文档漂移：存在，多份文档需更新为 Phase 3 完成态。
+- 是否已修正文档漂移：是。
+- 是否允许提交本次结果：是。
+- 是否允许进入下一 Phase：Phase 3 完成后建议进入 Phase 4，须由用户明确授权。
