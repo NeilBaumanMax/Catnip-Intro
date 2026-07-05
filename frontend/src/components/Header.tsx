@@ -35,10 +35,10 @@ export default function Header() {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 ${
                   isActive(item.href)
-                    ? 'text-[#00AEEF] bg-cyan-50/80'
-                    : 'text-gray-600 hover:text-[#0F3D7A] hover:bg-gray-100/60'
+                    ? 'text-[#00AEEF] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-5 after:h-0.5 after:bg-[#00AEEF] after:rounded-full'
+                    : 'text-gray-500 hover:text-[#0F3D7A]'
                 }`}
               >
                 {item.label}
