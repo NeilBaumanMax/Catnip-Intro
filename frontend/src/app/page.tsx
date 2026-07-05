@@ -35,7 +35,7 @@ export default async function HomePage() {
   return (
     <div className="page-enter overflow-hidden">
       {/* Hero */}
-      <section className="relative text-white overflow-hidden min-h-[90vh] flex items-center">
+      <section className="relative text-white overflow-hidden py-20 md:py-28 flex items-center">
         {/* Background image */}
         <div className="absolute inset-0 z-0">
           <Image src="/images/hero-bg.jpg" alt="" fill className="object-cover" priority />
@@ -65,7 +65,7 @@ export default async function HomePage() {
             </div>
             <div className="hidden md:block relative">
               <div className="absolute -inset-4 bg-gradient-to-br from-[#00AEEF]/30 to-[#0F3D7A]/30 rounded-3xl blur-xl" />
-              <Image src="/images/products/wanwu-agent-board.png" alt="万物有灵 AI Agent 智能板卡" width={600} height={450} className="relative rounded-2xl shadow-2xl ring-1 ring-white/20" />
+              <Image src="/images/products/wanwu-agent-board.png" alt="万物有灵 AI Agent 智能板卡" width={500} height={375} className="relative rounded-2xl shadow-2xl ring-1 ring-white/20 w-full max-w-lg mx-auto" />
             </div>
           </div>
         </div>
