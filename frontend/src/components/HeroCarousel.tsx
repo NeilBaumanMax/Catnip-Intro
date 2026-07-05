@@ -10,13 +10,11 @@ const slides = [
   { src: '/images/products/live2d-smart-accessory.jpg', name: 'Live2D 智能挂件', tag: 'AI 交互硬件', desc: '结合 Live2D 形象、本地 Agent 能力和智能硬件交互的桌面级 AI 挂件，适合陪伴、展示、教学和品牌互动。', tags: ['Live2D', 'AI 交互', '桌面助手', '创客教育'], id: 4 },
 ]
 
-const API = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
-
 export default function HeroCarousel() {
   const [i, setI] = useState(0)
 
   useEffect(() => {
-    const es = new EventSource(`${API}/api/carousel/tick`)
+    const es = new EventSource(`/api/carousel/tick`)
     es.onmessage = (e) => {
       const n = parseInt(e.data, 10)
       if (!isNaN(n) && n >= 0 && n < 4) setI(n)
