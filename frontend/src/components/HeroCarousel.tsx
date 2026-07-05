@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 
 const slides = [
@@ -11,63 +11,34 @@ const slides = [
 ]
 
 export default function HeroCarousel() {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const [current, setCurrent] = useState(0)
+  const [i, setI] = useState(0)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
-  const currentRef = useRef(current)
-  currentRef.current = current
 
-  const goTo = (index: number) => {
-    const el = scrollRef.current
-    if (!el) return
-    const child = el.children[index] as HTMLElement
-    if (!child) return
-    el.scrollTo({ left: child.offsetLeft, behavior: 'smooth' })
-    setCurrent(index)
-  }
-
-  // Auto-play timer
   useEffect(() => {
-    timerRef.current = setInterval(() => {
-      const next = (currentRef.current + 1) % slides.length
-      goTo(next)
-    }, 4000)
+    timerRef.current = setInterval(() => setI((p) => (p + 1) % 4), 4000)
     return () => { if (timerRef.current) clearInterval(timerRef.current) }
   }, [])
 
-  const handleManual = (index: number) => {
+  const goTo = (n: number) => {
     if (timerRef.current) clearInterval(timerRef.current)
-    goTo(index)
-    timerRef.current = setInterval(() => {
-      const next = (currentRef.current + 1) % slides.length
-      goTo(next)
-    }, 4000)
+    setI(n)
+    timerRef.current = setInterval(() => setI((p) => (p + 1) % 4), 4000)
   }
 
-  const handleScroll = () => {
-    const el = scrollRef.current
-    if (!el) return
-    const x = el.scrollLeft
-    const w = el.children[0]?.clientWidth || 1
-    const idx = Math.round(x / w)
-    if (idx !== currentRef.current) {
-      setCurrent(idx)
-    }
-  }
-
-  const s = slides[current]
+  const s = slides[i]
 
   return (
     <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+      {/* Left text */}
       <div>
         <p className="text-[#00AEEF] font-medium mb-3 text-xs tracking-[0.3em] uppercase" style={{ fontFamily: 'var(--font-orbitron)' }}>
           万物有灵 · 本地 Agent 软硬件一体化
         </p>
-        <h1 className="text-3xl md:text-5xl font-black leading-tight mb-3 transition-all duration-300" style={{ fontFamily: 'var(--font-orbitron)' }}>
+        <h1 className="text-3xl md:text-5xl font-black leading-tight mb-3" style={{ fontFamily: 'var(--font-orbitron)' }}>
           {s.name}
         </h1>
         <span className="inline-block text-xs text-[#00AEEF] bg-white/10 backdrop-blur px-3 py-1 rounded-full mb-4">{s.tag}</span>
-        <p className="text-base text-gray-300 mb-5 max-w-lg leading-relaxed transition-all duration-300">{s.desc}</p>
+        <p className="text-base text-gray-300 mb-5 max-w-lg leading-relaxed">{s.desc}</p>
         <div className="flex flex-wrap gap-2 mb-5">
           {s.tags.map((t) => <span key={t} className="text-xs text-white/70 bg-white/10 backdrop-blur px-3 py-1 rounded-full">{t}</span>)}
         </div>
@@ -79,26 +50,28 @@ export default function HeroCarousel() {
             联系我们
           </Link>
         </div>
+        {/* Dots */}
         <div className="flex gap-2 mt-6">
-          {slides.map((_, n) => (
-            <button key={n} onClick={() => handleManual(n)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${n === current ? 'w-8 bg-[#00AEEF]' : 'w-1.5 bg-white/30 hover:bg-white/50'}`}
+          {[0, 1, 2, 3].map((n) => (
+            <button key={n} onClick={() => goTo(n)}
+              className={`rounded-full transition-all duration-300 ${n === i ? 'w-8 h-1.5 bg-[#00AEEF]' : 'w-1.5 h-1.5 bg-white/30 hover:bg-white/50'}`}
             />
           ))}
         </div>
       </div>
 
+      {/* Right image - fixed aspect ratio, object-cover for uniform sizing */}
       <div className="hidden md:block">
-        <div
-          ref={scrollRef}
-          onScroll={handleScroll}
-          className="flex overflow-x-auto snap-x snap-mandatory rounded-2xl"
-          style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.3) transparent' }}
-        >
+        <div className="relative aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-white/20 shadow-2xl bg-white/5">
           {slides.map((slide, n) => (
-            <div key={n} className="snap-center shrink-0 w-full">
-              <img src={slide.src} alt={slide.name} className="w-full h-auto rounded-2xl ring-1 ring-white/20" />
-            </div>
+            <img
+              key={n}
+              src={slide.src}
+              alt={slide.name}
+              className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out ${
+                n === i ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+              }`}
+            />
           ))}
         </div>
       </div>
