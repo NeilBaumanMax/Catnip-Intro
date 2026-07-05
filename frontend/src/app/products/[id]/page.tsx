@@ -33,11 +33,13 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   }
 
   const name = (product as { name: string }).name
-  const category = (product as { category?: string }).category || ''
-  const summary = (product as { summary?: string }).summary || ''
-  const description = (product as { description?: string }).description || ''
-  const image_url = (product as { image_url?: string }).image_url || (product as { image?: string }).image || ''
-  const tags = (product as { tags?: string[] }).tags || []
+  const category = (product as { category?: string }).category || (fb as { category?: string })?.category || ''
+  const summary = (product as { summary?: string }).summary || (fb as { summary?: string })?.summary || ''
+  const description = (product as { description?: string }).description || (fb as { description?: string })?.description || ''
+  const apiImg = (apiData as { image_url?: string })?.image_url
+  const fbImg = (fb as { image?: string })?.image
+  const image_url = (apiImg && apiImg !== '') ? apiImg : (fbImg || '')
+  const tags = (product as { tags?: string[] }).tags || (fb as { tags?: string[] })?.tags || []
 
   return (
     <div className="page-enter">
