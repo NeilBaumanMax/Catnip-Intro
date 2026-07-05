@@ -901,3 +901,22 @@ Phase 3 以后：
 - 是否已修正文档漂移：是。
 - 是否允许提交本次结果：是。
 - 是否允许进入下一 Phase：Phase 3 完成后建议进入 Phase 4，须由用户明确授权。
+
+## 2026-07-05 Phase 4A admin auth foundation test
+
+测试范围：统一 JSON 响应、CORS、bcrypt 登录、token 鉴权中间件。
+
+前置条件：已备份 `2d73bbc`，重建 data/company.db（bcrypt 密码）。
+
+测试项目：
+1. health ✅
+2. login success (200 + token) ✅
+3. login fail (401) ✅
+4. protected no token (401) ✅
+5. protected with token (200) ✅
+6. protected bad token (401) ✅
+7. uploads regression ✅
+8. db-seed bcrypt hash ✅
+9. go mod tidy + test ✅
+
+统计：通过 9，失败 0。允许进入 Phase 4B，须用户授权。

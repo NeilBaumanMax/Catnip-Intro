@@ -2,36 +2,44 @@
 
 ## 当前阶段
 
-Phase 3：uploads 图片上传与静态访问。
+Phase 4A：Go backend API 基础 + 管理员登录鉴权。
 
 ## 当前状态
 
-Phase 3 测试通过。Go backend 已实现图片上传（POST /api/uploads）和静态文件访问（GET /uploads/...）。
+Phase 4A 测试通过。统一 JSON 响应、CORS、bcrypt 登录、token 鉴权中间件已实现。
 
 ## 已完成
 
-### Phase 0：工程脚手架 ✅
-### Phase 1：Node backend 最小骨架 ✅（历史阶段）
-### Phase 2A：Prisma + SQLite 基础接入 ✅（历史阶段）
-### Phase 2B：数据库读写验证脚本 ✅（历史阶段）
-### Phase 2C：数据库迁移方案评估 + 后端技术栈切换 ✅
-### Phase 2D：Go backend 最小骨架 ✅
-### Phase 2E：Go + SQLite 数据库结构与读写验证 ✅
+### Phase 0-3 ✅
+### Phase 4A：Go backend API 基础 + 管理员登录鉴权 ✅
+- `internal/api/response.go`：统一 JSON 响应格式（WriteOK / WriteError）。
+- `internal/auth/token_store.go`：内存 token store（crypto/rand + sync.RWMutex）。
+- `internal/auth/service.go`：登录逻辑（bcrypt 密码校验 + token 生成）。
+- `internal/auth/handler.go`：POST /api/auth/login handler。
+- `internal/middleware/cors.go`：CORS 中间件（Allow-Origin: localhost:3000）。
+- `internal/middleware/auth.go`：Bearer token 鉴权中间件（RequireAuth）。
+- `cmd/server/main.go`：组装路由（公开/受保护），挂载 CORS 和鉴权。
+- `cmd/db-seed/main.go`：默认管理员 admin/admin123456（bcrypt hash）。
+- 新增依赖：`golang.org/x/crypto v0.53.0`（bcrypt）。
 
-### Phase 3：uploads 图片上传与静态访问 ✅
-- 创建 `backend/internal/uploads/handler.go`（上传 + 静态访问）。
-- `POST /api/uploads`：multipart/form-data，安全随机命名，category 分类，5MB 限制。
-- `GET /uploads/...`：http.FileServer 静态访问。
-- 文件类型白名单（JPEG/PNG/WebP/SVG），MIME + 扩展名校验。
-- uploads 子目录：products、cases、company、qrcode（含 .gitkeep）。
-- .gitignore 正确忽略上传图片，保留目录结构。
-- `GET /health` 仍然正常工作。
+## 已完成接口
+
+| 方法 | 路径 | 鉴权 | 说明 |
+|------|------|------|------|
+| GET | /health | 公开 | 健康检查 |
+| POST | /api/auth/login | 公开 | 管理员登录 |
+| POST | /api/uploads | 公开 | 图片上传 |
+| GET | /uploads/... | 公开 | 静态文件访问 |
+| GET | /api/admin/ping | **需 token** | 鉴权验证接口 |
 
 ## 未完成
 
-- 未实现 HTTP 业务接口（登录、产品、案例、留言、上传关联业务）。
-- 未创建前端项目代码（Next.js）。
+- 产品 CRUD
+- 案例 CRUD
+- 留言接口
+- 网站设置接口
+- 前端页面
 
 ## 下一阶段
 
-Phase 4：Go backend 业务接口（登录鉴权 + 产品/案例/留言/网站设置 CRUD）。
+Phase 4B：Go backend 业务接口（产品/案例/留言/网站设置 CRUD）。

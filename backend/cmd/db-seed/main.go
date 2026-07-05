@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/auth"
 	"github.com/NeilBaumanMax/Catnip-Intro/backend/internal/database"
 )
 
@@ -11,6 +12,10 @@ const seedProductName = "__seed_product"
 const seedCaseTitle = "__seed_case"
 const seedMessageName = "__seed_message"
 const seedSiteSettingCompany = "__seed_company"
+
+// Default admin credentials for development
+const defaultAdminUser = "admin"
+const defaultAdminPass = "admin123456"
 
 func main() {
 	dbPath := database.DefaultDBPath()
@@ -32,19 +37,37 @@ func main() {
 
 	log.Println("[db-seed] 开始写入测试数据 ...")
 
-	// Admin: upsert via INSERT OR REPLACE
+	// Default admin with bcrypt password
+	defaultAdminHash, err := auth.HashPassword(defaultAdminPass)
+	if err != nil {
+		log.Fatalf("[db-seed] hash default admin password: %v", err)
+	}
 	_, err = db.Exec(`
 		INSERT INTO admin (id, username, password_hash, created_at, updated_at)
-		VALUES (1, ?, 'test_hash_from_seed', datetime('now'), datetime('now'))
+		VALUES (1, ?, ?, datetime('now'), datetime('now'))
 		ON CONFLICT(id) DO UPDATE SET
 			username = excluded.username,
 			password_hash = excluded.password_hash,
 			updated_at = excluded.updated_at
-	`, seedAdminUsername)
+	`, defaultAdminUser, defaultAdminHash)
 	if err != nil {
-		log.Fatalf("[db-seed] Admin 写入失败: %v", err)
+		log.Fatalf("[db-seed] 默认 Admin 写入失败: %v", err)
 	}
-	log.Printf("[db-seed] Admin username=%s", seedAdminUsername)
+	log.Printf("[db-seed] Admin username=%s (bcrypt)", defaultAdminUser)
+
+	// Test admin (for seed verification)
+	testAdminHash, err := auth.HashPassword("test_hash_from_seed")
+	if err != nil {
+		log.Fatalf("[db-seed] hash test admin password: %v", err)
+	}
+	_, err = db.Exec(`
+		INSERT OR REPLACE INTO admin (id, username, password_hash, created_at, updated_at)
+		VALUES (2, ?, ?, datetime('now'), datetime('now'))
+	`, seedAdminUsername, testAdminHash)
+	if err != nil {
+		log.Fatalf("[db-seed] 测试 Admin 写入失败: %v", err)
+	}
+	log.Printf("[db-seed] Admin username=%s (bcrypt)", seedAdminUsername)
 
 	// Product
 	_, err = db.Exec(`

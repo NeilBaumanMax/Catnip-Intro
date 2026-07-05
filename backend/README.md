@@ -1,6 +1,6 @@
 # backend
 
-当前完成 Phase 3：uploads 图片上传与静态访问。
+当前完成 Phase 4A：Go backend API 基础 + 管理员登录鉴权。
 
 ⚠️ **后端技术栈已切换**：Node.js/Express/Prisma → Go + SQLite。
 

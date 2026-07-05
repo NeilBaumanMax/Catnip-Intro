@@ -876,3 +876,72 @@
 - 是否切换 Git 分支：否。
 - 是否提交或上传 GitHub：待提交和推送。
 - 下一次施工建议：进入 Phase 4（Go backend 业务接口）。
+
+## 2026-07-05 Phase 4A admin auth foundation
+
+备份记录：
+
+- 备份位置或提交：`2d73bbc`，`origin/main`（Phase 3 提交）。
+
+读档记录：
+
+- 已读取工程文档、main.go、database.go、schema.go、admin model、db-seed。
+
+本轮目标：
+
+- 实现统一 JSON 响应、CORS、bcrypt 登录、token 鉴权、受保护测试接口。
+
+本轮计划：
+
+1. 创建 `internal/api/response.go`（统一响应格式）。
+2. 创建 `internal/auth/`（token_store、service、handler）。
+3. 创建 `internal/middleware/`（cors、auth）。
+4. 更新 `cmd/server/main.go`（路由组装 + 中间件）。
+5. 更新 `cmd/db-seed/main.go`（bcrypt 密码 + 默认管理员）。
+6. 删除旧 database，db-seed 重建，执行全套测试。
+
+施工记录：
+
+- 已创建 `internal/api/response.go`：Response 结构体 + WriteOK/WriteError。
+- 已创建 `internal/auth/token_store.go`：内存 map + sync.RWMutex，crypto/rand 32 字节 hex token。
+- 已创建 `internal/auth/service.go`：Login 方法（bcrypt 校验 + token 生成），HashPassword 导出。
+- 已创建 `internal/auth/handler.go`：POST /api/auth/login，JSON 解析 + 参数校验。
+- 已创建 `internal/middleware/cors.go`：Allow-Origin localhost:3000，OPTIONS 预检。
+- 已创建 `internal/middleware/auth.go`：RequireAuth，提取 Bearer token 并验证。
+- 已更新 `cmd/server/main.go`：组装公开/受保护路由，挂载 CORS。
+- 已更新 `cmd/db-seed/main.go`：默认管理员 admin/admin123456（bcrypt），测试管理员 bcrypt。
+- 新增依赖：golang.org/x/crypto v0.53.0。
+- 重建 data/company.db（旧库 admin 为明文 hash，不兼容 bcrypt）。
+
+测试记录：
+
+- `go mod tidy`：通过，golang.org/x/crypto v0.53.0 下载成功。
+- `go test ./...`：通过。
+- `go run ./cmd/db-seed`：通过，2 admin（bcrypt），1 product，1 case，1 message，1 site_setting。
+- `go run ./cmd/db-check`：通过，Admin 2 / Product 1 / Case 1 / Message 1 / SiteSetting 1。
+- `curl /health`：通过，`{"ok":true,"message":"go backend is running"}`。
+- POST /api/auth/login (正确密码)：通过，200 + token + user。
+- POST /api/auth/login (错误密码)：通过，401 + "invalid credentials"。
+- GET /api/admin/ping (无 token)：通过，401 + "unauthorized"。
+- GET /api/admin/ping (正确 token)：通过，200 + "admin auth ok"。
+- GET /api/admin/ping (错误 token)：通过，401 + "unauthorized"。
+- POST /api/uploads 回归：通过。
+- db-seed 中 password_hash 为 bcrypt 格式（$2a$10$...）：通过。
+
+失败处理记录：
+
+- 无失败项。
+
+文档漂移检查：
+
+- 是否存在文档漂移：存在，多份文档需更新为 Phase 4A 完成态。
+- 已修正文档：正在修正中。
+
+收尾记录：
+
+- 是否写入业务代码：是，登录鉴权为业务功能底座。
+- 是否安装依赖：是，golang.org/x/crypto v0.53.0（bcrypt）。
+- 是否创建新 worktree：否。
+- 是否切换 Git 分支：否。
+- 是否提交或上传 GitHub：待提交和推送。
+- 下一次施工建议：进入 Phase 4B（产品/案例/留言/网站设置 CRUD）。
