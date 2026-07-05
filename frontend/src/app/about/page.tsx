@@ -57,12 +57,15 @@ export default function AboutPage() {
   return (
     <div className="page-enter">
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-[#0F3D7A] via-[#1A56DB] to-[#0a1628] text-white py-16 md:py-20 overflow-hidden">
-        <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] hero-orb bg-[#00AEEF]" />
-        <div className="relative max-w-4xl mx-auto px-6 text-center">
+      <section className="relative text-white py-16 md:py-20 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image src="/images/about-bg.jpg" alt="" fill className="object-cover" priority />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/90 via-[#0a1628]/75 to-[#0a1628]/60" />
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <p className="text-[#00AEEF] font-medium text-sm mb-3 tracking-widest uppercase">About Catnipent</p>
           <h1 className="text-3xl md:text-5xl font-bold mb-4">关于科霓朋特</h1>
-          <p className="text-blue-100 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-200 text-lg max-w-2xl mx-auto">
             面向本地 Agent 软硬件一体化的科技型创业企业。
           </p>
         </div>
