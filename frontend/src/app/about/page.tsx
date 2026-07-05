@@ -22,7 +22,7 @@ const glassCardHover = 'bg-white/10 backdrop-blur-md border border-white/20 roun
 
 export default function AboutPage() {
   return (
-    <div className="page-enter relative">
+    <div className="page-enter">
       {/* Full-page background */}
       <div className="fixed inset-0 z-0">
         <Image src="/images/about-bg.jpg" alt="" fill className="object-cover" priority />

@@ -30,7 +30,7 @@ export default async function ContactPage() {
   const s = res.ok ? res.data : null
 
   return (
-    <div className="page-enter relative">
+    <div className="page-enter">
       {/* Full-page background */}
       <div className="fixed inset-0 z-0">
         <Image src="/images/contact-bg.jpg" alt="" fill className="object-cover" priority />

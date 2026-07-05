@@ -19,7 +19,7 @@ export default async function ProductsPage() {
   })
 
   return (
-    <div className="page-enter relative">
+    <div className="page-enter">
       {/* Full-page background */}
       <div className="fixed inset-0 z-0">
         <Image src="/images/products-bg.jpg" alt="" fill className="object-cover" priority />

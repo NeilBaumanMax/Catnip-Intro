@@ -40,7 +40,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const tags = (product as { tags?: string[] }).tags || []
 
   return (
-    <div className="page-enter relative">
+    <div className="page-enter">
       {/* Full-page background */}
       <div className="fixed inset-0 z-0">
         <Image src="/images/products-bg.jpg" alt="" fill className="object-cover" priority />
