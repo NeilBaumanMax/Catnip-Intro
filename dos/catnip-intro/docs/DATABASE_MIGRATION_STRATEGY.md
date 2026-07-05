@@ -278,4 +278,18 @@ Phase 2C (当前)          Phase 3-6              正式上线前
 
 ## 下一阶段
 
-进入 **Phase 3：后台登录与内容管理**。继续使用 Prisma + db push，不阻塞业务开发。
+~~进入 **Phase 3：后台登录与内容管理**。继续使用 Prisma + db push，不阻塞业务开发。~~
+
+**2026-07-05 更新**：后端技术栈已从 Node.js/Express/Prisma 切换为 Go + SQLite。Prisma 不再作为后续主路线。
+
+### Prisma 处理结论
+
+1. Prisma 并不是独立站必须组件。
+2. Prisma 是 Node/TypeScript 后端路线下的数据库工具。
+3. 由于后端路线切换为 Go，Prisma 不再作为后续主路线。
+4. Phase 2A / Phase 2B 的 Prisma 成果作为已验证资料保留，不继续扩展。
+5. `prisma migrate dev` 失败问题记录为历史问题，不再阻塞项目。
+6. 后续数据库迁移能力由 Go 后端方案重新设计。
+7. `data/company.db` 仍然不提交 GitHub。
+
+完整决策文档见：`dos/catnip-intro/docs/BACKEND_TECH_STACK_DECISION.md`

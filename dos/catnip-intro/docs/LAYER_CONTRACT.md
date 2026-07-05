@@ -2,7 +2,7 @@
 
 ## 当前阶段
 
-当前只完成 Phase 0：工程脚手架。
+当前完成 Phase 2C：后端技术栈切换文档修正。
 
 本文件定义各层允许和禁止的行为，后续开发必须遵守。
 
@@ -12,9 +12,9 @@
 
 - 实现前台页面。
 - 实现后台管理页面。
-- 调用 backend API。
-- 展示 backend 返回的数据。
-- 使用 backend 返回的图片 URL 展示图片。
+- 调用 Go backend API。
+- 展示 Go backend 返回的数据。
+- 使用 Go backend 返回的图片 URL 展示图片。
 - 做基础表单校验和用户交互。
 
 禁止：
@@ -24,9 +24,9 @@
 - 直接读写 `uploads/` 文件系统。
 - 在前端保存明文管理员密码。
 - 将后台鉴权只放在前端完成。
-- 私自定义不经过 backend 的数据来源。
+- 私自定义不经过 Go backend 的数据来源。
 
-## backend
+## Go backend
 
 允许：
 
@@ -38,6 +38,7 @@
 - 校验请求参数。
 - 控制后台接口鉴权。
 - 统一处理错误响应。
+- 监听 `0.0.0.0:4000` 端口。
 
 禁止：
 
@@ -70,8 +71,8 @@
 允许：
 
 - 保存后台上传的真实图片文件。
-- 按后端规则组织图片路径。
-- 由 backend 暴露静态访问路径。
+- 按 Go backend 规则组织图片路径。
+- 由 Go backend 暴露静态访问路径。
 
 禁止：
 
@@ -84,14 +85,13 @@
 
 允许：
 
-- 定义 frontend 与 backend 的 API 契约。
+- 定义 frontend 与 Go backend 的 API 契约。
 - 定义图片 URL 访问规则。
 - 定义错误码和响应结构。
 - 定义登录态传递方式。
 
 禁止：
 
-- 绕开 backend 直接集成 frontend 与 SQLite。
-- 绕开 backend 直接集成 frontend 与 uploads 文件系统。
+- 绕开 Go backend 直接集成 frontend 与 SQLite。
+- 绕开 Go backend 直接集成 frontend 与 uploads 文件系统。
 - 在未确认技术栈前锁定具体实现细节。
-

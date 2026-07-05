@@ -9,14 +9,14 @@
 项目架构固定为：
 
 - frontend
-- backend
+- Go backend
 - SQLite
 - uploads
 
 各部分含义：
 
-- frontend：前端网站，负责官网页面和后台管理页面。
-- backend：后端接口，负责登录、产品、案例、留言、网站设置、图片上传。
+- frontend（Next.js + TypeScript + Tailwind CSS）：前端网站，负责官网页面和后台管理页面。
+- Go backend：后端接口，负责登录、产品、案例、留言、网站设置、图片上传、SQLite 读写和 uploads 静态访问。
 - SQLite：本地数据库文件，负责保存文字数据和图片路径。
 - uploads：本地图片文件夹，负责保存真实图片文件。
 
@@ -41,7 +41,7 @@
 - 留言管理
 - 网站设置
 
-后端：
+Go backend：
 
 - 登录接口
 - 产品接口
@@ -61,22 +61,19 @@
 
 ## 当前阶段边界
 
-当前只完成 Phase 0：工程脚手架。
+当前完成 Phase 2C：后端技术栈切换文档修正。
 
-Phase 0 允许：
+Phase 0-2B 为 Node/Express/Prisma 历史路线，已完成但后续不再扩展。
 
-- 创建目录。
-- 创建 README。
-- 创建工程文档。
-- 明确架构、职责、计划、流程、验收标准。
+Phase 2C 允许：
 
-Phase 0 禁止：
+- 修改工程文档以反映 Go 后端路线。
+- 创建技术栈决策文档。
 
-- 写业务代码。
-- 创建前端页面代码。
-- 创建后端接口代码。
-- 创建数据库迁移或模型代码。
-- 创建上传处理代码。
+Phase 2C 禁止：
+
+- 写任何代码（Node 或 Go）。
+- 删除现有 Node/Prisma 文件。
 - 安装依赖。
 - 创建新 worktree。
 - 切换 Git 分支。
@@ -109,6 +106,7 @@ Phase 0 禁止：
 - `docs/LOG.md` 是否记录本轮过程。
 - `docs/HANDOFF.md` 是否能支撑下一轮接手。
 - `docs/TEST_METRICS.md` 是否记录最新测试结果。
+- `docs/BACKEND_TECH_STACK_DECISION.md` 是否反映最新决策。
 - `docs/progress/layers/*.md` 是否反映各层最新状态。
 
 ## 第一版验收方向
@@ -119,9 +117,9 @@ Phase 0 禁止：
 - 后台登录后可以管理产品、案例、留言和网站设置。
 - 图片上传后真实文件保存在 `uploads/`。
 - SQLite 只保存文字字段和图片路径。
-- 后端统一负责数据读写、鉴权、上传和静态文件访问。
+- Go backend 统一负责数据读写、鉴权、上传和静态文件访问。
 - 前端不直接访问 SQLite 或 uploads 文件系统。
 
 ## 下一阶段
 
-Phase 1 应在用户确认后开始，目标是创建最小可运行工程骨架，并补充基础运行文档。
+Phase 2D：Go backend 最小骨架。

@@ -555,3 +555,97 @@ Phase 3 以后：
 - 是否已修正文档漂移：是。
 - 是否允许提交本次结果：是。
 - 是否允许进入下一 Phase：Phase 2C 完成后建议进入 Phase 3，须由用户明确授权。
+
+## 2026-07-05 Phase 2C backend stack switch test
+
+测试范围：
+
+- 后端技术栈切换文档修正（Go 替代 Node/Express/Prisma）。
+
+测试前置条件：
+
+- 已备份：是，开工前工作区干净，`main` 与 `origin/main` 同步，备份提交 `2f8bd6f`。
+- 已读取文档：是。
+- 已写开工计划：是。
+
+测试项目：
+
+1. 项目：BACKEND_TECH_STACK_DECISION.md 存在
+   检查方式：文件存在性。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+2. 项目：ARCHITECTURE.md 已改为 frontend + Go backend + SQLite + uploads
+   检查方式：grep "Go backend" ARCHITECTURE.md。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+3. 项目：LAYER_CONTRACT.md 已明确 Go backend 是数据读写唯一入口
+   检查方式：grep "Go backend" LAYER_CONTRACT.md。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+4. 项目：CONSTRUCTION_PLAN.md 已重排 Phase 2D-9
+   检查方式：grep "Phase 2D" CONSTRUCTION_PLAN.md。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+5. 项目：HANDOFF.md 已明确下一阶段是 Phase 2D
+   检查方式：grep "Phase 2D" HANDOFF.md。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+6. 项目：DEV_PROGRESS.md 已更新当前阶段
+   检查方式：grep "Phase 2C" DEV_PROGRESS.md。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+7. 项目：backend/README.md 已标注 Node/Prisma 为历史路线
+   检查方式：grep "历史" backend/README.md。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+8. 项目：CODEX_START_HERE 和 MASTER_REQUIREMENTS 已改为 Go
+   检查方式：grep "Go backend" CODEX_START_HERE.md CODEX_MASTER_REQUIREMENTS.md。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+9. 项目：不修改业务代码、不创建 Go 文件、不删除 Node/Prisma 文件
+   检查方式：`git status` 确认只包含文档修改。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+10. 项目：grep 验证无文档漂移
+    检查方式：`grep -rn "Express\|Prisma.*后端\|Node\.js.*后端" dos/catnip-intro/` 确认无将 Node/Express/Prisma 作为未来主路线的描述。
+    结果：通过，仅剩历史记录和 DATABASE_MIGRATION_STRATEGY 的评估内容。
+    失败原因：无。
+    修复记录：无。
+    重新测试结果：无需重测。
+
+统计：
+
+- 通过数量：10
+- 失败数量：0
+- 失败项：无。
+- 是否存在文档漂移：否。
+- 是否已修正文档漂移：是。
+- 是否允许提交本次结果：是。
+- 是否允许进入下一 Phase：Phase 2C 完成后建议进入 Phase 2D，须由用户明确授权。

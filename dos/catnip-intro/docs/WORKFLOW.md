@@ -2,7 +2,9 @@
 
 ## 当前阶段
 
-当前只完成 Phase 0：工程脚手架。
+当前完成 Phase 2C：后端技术栈切换文档修正。
+
+Phase 0-2B 为 Node/Express/Prisma 历史路线，已完成但后续不再扩展。后续主路线为 Go backend。
 
 ## 每次 Codex 标准施工流程
 
@@ -45,11 +47,12 @@
 8. `docs/LOG.md`
 9. `docs/HANDOFF.md`
 10. `docs/TEST_METRICS.md`
-11. `docs/progress/layers/frontend.md`
-12. `docs/progress/layers/backend.md`
-13. `docs/progress/layers/database.md`
-14. `docs/progress/layers/uploads.md`
-15. `docs/progress/layers/integration.md`
+11. `docs/BACKEND_TECH_STACK_DECISION.md`
+12. `docs/progress/layers/frontend.md`
+13. `docs/progress/layers/backend.md`
+14. `docs/progress/layers/database.md`
+15. `docs/progress/layers/uploads.md`
+16. `docs/progress/layers/integration.md`
 
 ## 开发流程
 
@@ -141,7 +144,12 @@
 - 删除用户已有文件。
 - 重置 Git 状态。
 - 扩大本轮任务范围。
+- 删除现有 Node/Prisma 代码文件。
 
-## Phase 0 特别规则
+## 技术栈变更说明
 
-Phase 0 只能创建目录和工程文档。任何页面、接口、数据库模型、上传逻辑都属于后续阶段。
+后端技术栈已从 Node.js + Express + TypeScript + Prisma 切换为 Go + SQLite。详见 `docs/BACKEND_TECH_STACK_DECISION.md`。`backend/` 目录中 Node/Prisma 代码作为历史资料保留不动。
+
+## 下一阶段
+
+Phase 2D：Go backend 最小骨架。

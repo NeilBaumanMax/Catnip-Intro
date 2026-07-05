@@ -1,8 +1,19 @@
 # backend
 
-当前完成 Phase 2B：数据库读写验证脚本。
+当前完成 Phase 2C：后端技术栈切换文档修正。
 
-本目录是 Catnip Intro 的后端服务目录。
+⚠️ **后端技术栈已切换**：Node.js/Express/Prisma → Go + SQLite。
+
+本目录中现有 Node/Prisma 代码为 **历史验证阶段产物**，保留不动但不继续扩展。
+后续 Go backend 代码将在此目录中创建。
+
+详细决策见：`dos/catnip-intro/docs/BACKEND_TECH_STACK_DECISION.md`
+
+---
+
+## 历史 Node/Prisma 阶段（已完成，保留不动）
+
+本目录曾作为 Catnip Intro 的 Node.js 后端服务目录。
 
 ## 技术栈
 

@@ -590,3 +590,74 @@
 - 是否切换 Git 分支：否。
 - 是否提交或上传 GitHub：待提交和推送。
 - 下一次施工建议：进入 Phase 3（后台登录与内容管理），继续使用 Prisma + db push。
+
+## 2026-07-05 Phase 2C backend stack switch
+
+备份记录：
+
+- 备份方式：开工前 `git status` 确认工作区干净，`main` 与 `origin/main` 同步。
+- 备份位置或提交：`2f8bd6f`，`origin/main`（前一个 Phase 2C 提交）。
+- 不能备份原因：无。
+
+读档记录：
+
+- 已读取全部工程文档和目标目录文件。
+- 已执行 grep 扫描 Node/Express/Prisma 引用分布。
+
+本轮目标：
+
+- 把 dos/catnip-intro 下所有工程文档从 Node/Express/Prisma 后端路线修正为 Go 后端路线。
+- 不修改业务代码，不替换后端代码，不删除现有 backend 文件。
+
+本轮计划：
+
+1. 开工前检查和 grep 扫描现有引用。
+2. 创建 BACKEND_TECH_STACK_DECISION.md。
+3. 更新 DATABASE_MIGRATION_STRATEGY.md 加入 Prisma 处理结论。
+4. 逐份修正 ARCHITECTURE、LAYER_CONTRACT、CONSTRUCTION_PLAN、WORKFLOW。
+5. 修正 CODEX_START_HERE、CODEX_MASTER_REQUIREMENTS。
+6. 修正 DEV_PROGRESS、HANDOFF、backend README、分层进度。
+7. 追加 LOG、TEST_METRICS。
+8. grep 验证无文档漂移，提交推送。
+
+施工记录：
+
+- 已创建 `BACKEND_TECH_STACK_DECISION.md`：详细记录切换原因、新旧方案对比、Go 后端目录规划、Phase 2D 目标。
+- 已更新 `DATABASE_MIGRATION_STRATEGY.md`：加入 Prisma 处理结论，标注原有建议已过时。
+- 已修正 `CODEX_START_HERE.md`：架构改为 frontend + Go backend + SQLite + uploads。
+- 已修正 `CODEX_MASTER_REQUIREMENTS.md`：backend 描述改为 Go，更新禁止事项。
+- 已修正 `ARCHITECTURE.md`：Go backend 职责替代 Node backend。
+- 已修正 `LAYER_CONTRACT.md`：backend 层改为 Go backend 约束。
+- 已重写 `CONSTRUCTION_PLAN.md`：Phase 0-2B 归入历史阶段，新增 Phase 2D-9。
+- 已修正 `WORKFLOW.md`：更新技术栈说明和禁止事项。
+- 已修正 `DEV_PROGRESS.md`：区分历史阶段和当前阶段。
+- 已修正 `HANDOFF.md`：更新当前交接状态和建议。
+- 已修正 `backend/README.md`：标注 Node/Prisma 为历史阶段。
+- 已修正 `progress/layers/backend.md`：新增 Go 后端目录结构。
+- 已修正 `progress/layers/database.md`：标注 Prisma 为历史资料。
+
+测试记录：
+
+- grep 文档漂移检查：通过，未发现将 Node/Express/Prisma 作为未来主路线的描述。
+- Node/Prisma 代码未删除：通过。
+- 未创建 Go 代码：通过。
+- 未修改 frontend/uploads：通过。
+
+失败处理记录：
+
+- 无失败项。
+
+文档漂移检查：
+
+- 是否存在文档漂移：否，所有文档已统一为 Go 后端路线。
+- 已修正文档：全部工程文档已修正。
+- 未修正原因：无。
+
+收尾记录：
+
+- 是否写入业务代码：否。
+- 是否安装依赖：否。
+- 是否创建新 worktree：否。
+- 是否切换 Git 分支：否。
+- 是否提交或上传 GitHub：待提交和推送。
+- 下一次施工建议：进入 Phase 2D：Go backend 最小骨架。

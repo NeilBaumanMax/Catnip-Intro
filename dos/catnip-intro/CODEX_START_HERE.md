@@ -4,18 +4,18 @@
 
 ## 当前阶段
 
-当前只完成 Phase 0：工程脚手架。
+当前完成 Phase 2C：后端技术栈切换文档修正。
 
-Phase 0 的目标是建立项目目录、工程文档、职责边界、开发计划和验收标准。当前阶段不允许写业务代码，不允许安装依赖，不允许创建新 worktree，不允许切换 Git 分支。
+Phase 0-2B 为 Node/Express/Prisma 历史路线，已完成但后续不再扩展。
 
 ## 项目目标
 
-Catnip Intro 是一个企业官网与后台管理系统，采用 frontend + backend + SQLite + uploads 架构：
+Catnip Intro 是一个企业官网与后台管理系统，采用 frontend + Go backend + SQLite + uploads 架构：
 
-- frontend 负责官网页面和后台管理页面。
-- backend 负责登录、产品、案例、留言、网站设置和图片上传接口。
+- frontend（Next.js + TypeScript + Tailwind CSS）负责官网页面和后台管理页面。
+- Go backend 负责接口服务、登录鉴权、产品管理、案例管理、留言管理、网站设置、图片上传、SQLite 读写。
 - SQLite 通过本地数据库文件保存文字数据和图片路径。
-- uploads 保存真实图片文件，并由后端提供静态访问。
+- uploads 保存真实图片文件，并由 Go backend 提供静态访问。
 
 ## 固定开工顺序
 
@@ -41,11 +41,12 @@ Catnip Intro 是一个企业官网与后台管理系统，采用 frontend + back
 8. `dos/catnip-intro/docs/LOG.md`
 9. `dos/catnip-intro/docs/HANDOFF.md`
 10. `dos/catnip-intro/docs/TEST_METRICS.md`
-11. `dos/catnip-intro/docs/progress/layers/frontend.md`
-12. `dos/catnip-intro/docs/progress/layers/backend.md`
-13. `dos/catnip-intro/docs/progress/layers/database.md`
-14. `dos/catnip-intro/docs/progress/layers/uploads.md`
-15. `dos/catnip-intro/docs/progress/layers/integration.md`
+11. `dos/catnip-intro/docs/BACKEND_TECH_STACK_DECISION.md`
+12. `dos/catnip-intro/docs/progress/layers/frontend.md`
+13. `dos/catnip-intro/docs/progress/layers/backend.md`
+14. `dos/catnip-intro/docs/progress/layers/database.md`
+15. `dos/catnip-intro/docs/progress/layers/uploads.md`
+16. `dos/catnip-intro/docs/progress/layers/integration.md`
 
 ## 开工规则
 
@@ -102,19 +103,6 @@ Catnip Intro 是一个企业官网与后台管理系统，采用 frontend + back
 5. 提出下一次施工建议。
 6. 上传 GitHub 并记录上传结果。
 
-## Phase 0 验收标准
-
-- `dos/catnip-intro/CODEX_START_HERE.md` 存在。
-- `dos/catnip-intro/CODEX_MASTER_REQUIREMENTS.md` 存在。
-- `docs` 下所有工程文档存在。
-- `frontend`、`backend`、`data`、`uploads` 四个目录存在。
-- 每个基础目录都有 `README.md`。
-- 文档明确当前只完成 Phase 0。
-- 没有创建业务代码。
-- 没有安装依赖。
-- 没有创建新 worktree。
-- 没有切换 Git 分支。
-
 ## 下一阶段
 
-可以进入 Phase 1 的前提是 Phase 0 验收全部通过。Phase 1 应建立最小可运行项目骨架，但不得超出用户确认的技术栈和范围。
+Phase 2D：Go backend 最小骨架。
