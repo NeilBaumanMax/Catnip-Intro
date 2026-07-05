@@ -413,3 +413,78 @@ Phase 3 以后：
 - 是否已修正文档漂移：是。
 - 是否允许提交本次结果：是。
 - 是否允许进入下一 Phase：Phase 2A 完成后可建议进入 Phase 2B 或 Phase 3，但须由用户明确授权。
+
+## 2026-07-05 Phase 2B database read/write verification test
+
+测试范围：
+
+- Prisma Client 连接和 seed/check 读写验证脚本。
+
+测试前置条件：
+
+- 已备份：是，开工前工作区干净，`main` 与 `origin/main` 同步，备份提交 `b88c7d9`。
+- 已读取文档：是。
+- 已写开工计划：是。
+- 当前 Node：`v24.16.0`。
+- 当前 Prisma：`6.19.0`。
+
+测试项目：
+
+1. 项目：`npm run build`
+   检查方式：TypeScript 编译。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+2. 项目：`npm run prisma:generate`
+   检查方式：Prisma Client 生成。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+3. 项目：`npm run prisma:push`
+   检查方式：schema 同步到数据库。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+4. 项目：`npm run db:seed`
+   检查方式：写入 5 条测试数据。
+   结果：通过，Admin/Product/Case/Message/SiteSetting 各 1 条。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+5. 项目：`npm run db:check`
+   检查方式：读取各表数量和样例。
+   结果：通过，Admin 1 / Product 1 / Case 1 / Message 1 / SiteSetting 1，Product name `__seed_product`，Case title `__seed_case`。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+6. 项目：seed 可重复执行
+   检查方式：再次 `db:seed` 后 `db:check`，数量仍为 1。
+   结果：通过，upsert 策略有效。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+7. 项目：`data/company.db` 不被 Git 跟踪
+   检查方式：`git status`。
+   结果：通过，`data/company.db` 不在输出中。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+统计：
+
+- 通过数量：7
+- 失败数量：0
+- 失败项：无。
+- 是否存在文档漂移：存在，多份文档需更新为 Phase 2B 完成态。
+- 是否已修正文档漂移：是。
+- 是否允许提交本次结果：是。
+- 是否允许进入下一 Phase：Phase 2B 完成后可建议进入 Phase 3，但须由用户明确授权。

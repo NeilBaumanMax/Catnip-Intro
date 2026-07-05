@@ -1,6 +1,6 @@
 # backend
 
-当前完成 Phase 2A：Prisma + SQLite 基础接入。
+当前完成 Phase 2B：数据库读写验证脚本。
 
 本目录是 Catnip Intro 的后端服务目录。
 
@@ -23,8 +23,24 @@ npm start
 
 # Prisma
 npm run prisma:generate   # 生成 Prisma Client
-npm run prisma:push        # 同步 schema 到 SQLite（替代 migrate）
+npm run prisma:push        # 同步 schema 到 SQLite（本地原型方案）
 npm run prisma:migrate     # Prisma migrate（本机暂不可用）
+
+# 数据库验证
+npm run db:seed             # 写入测试数据
+npm run db:check            # 读取并打印数据库内容
+```
+
+## 目录结构
+
+```
+src/
+├── app.ts              # Express 入口
+├── lib/
+│   └── prisma.ts       # Prisma Client 连接单例
+└── scripts/
+    ├── seed.ts          # 数据库写入验证脚本
+    └── check-db.ts      # 数据库读取验证脚本
 ```
 
 ## 数据库
@@ -32,9 +48,9 @@ npm run prisma:migrate     # Prisma migrate（本机暂不可用）
 数据库文件：`data/company.db`
 
 - `prisma:generate` — 从 schema 生成 Prisma Client
-- `prisma:push` — 直接同步 schema 到 SQLite，不生成 migration 历史文件
-
-注意：本机 Prisma migration engine 不可用（返回空 `Schema engine error`），当前使用 `prisma db push` 替代 `prisma migrate`。
+- `prisma:push` — 直接同步 schema 到 SQLite，不生成 migration 历史文件（本机 `prisma migrate` 不可用时的本地原型方案）
+- `db:seed` — 写入 5 表测试数据（upsert，可重复执行）
+- `db:check` — 读取各表数量和样例数据
 
 ## 健康检查
 
@@ -64,6 +80,7 @@ http://localhost:4000/health
 - 访问 `GET /health`。
 - 使用基础 CORS。
 - 通过 Prisma Client 连接 SQLite。
+- 执行 `db:seed` 和 `db:check` 验证数据库读写。
 
 ## 当前禁止
 

@@ -2,11 +2,11 @@
 
 ## 当前阶段
 
-Phase 2A：Prisma + SQLite 基础接入。
+Phase 2B：数据库读写验证脚本。
 
 ## 当前状态
 
-Phase 2A 测试通过。`data/company.db` 已通过 `prisma db push` 生成，5 张表就位。
+Phase 2B 测试通过。Prisma Client 连接模块和 seed/check 验证脚本已创建，数据库读写路径通过验证。
 
 ## Phase 状态记录模板
 
@@ -46,8 +46,6 @@ Phase 2A 测试通过。`data/company.db` 已通过 `prisma db push` 生成，5 
 - 创建根目录 README。
 - 创建各基础目录 README。
 - 创建架构、层级契约、建设计划、工作流、日志、交接、测试指标和分层进度文档。
-- 补充标准施工流程。
-- 补充统一日志模板、测试记录模板、交接记录模板和 Phase 状态记录模板。
 - Phase 1 backend：创建 Node.js + Express + TypeScript 最小后端骨架。
 - Phase 1 backend：配置基础 CORS。
 - Phase 1 backend：实现 `GET /health`。
@@ -56,16 +54,19 @@ Phase 2A 测试通过。`data/company.db` 已通过 `prisma db push` 生成，5 
 - Phase 2A：安装 Prisma 6.19.0 + SQLite 依赖。
 - Phase 2A：`prisma db push` 成功生成 `data/company.db`，5 张表就位。
 - Phase 2A：`prisma:generate` 成功生成 Prisma Client。
-- Phase 2A：`npm run build` 通过。
-- 注意：本机 `prisma migrate` 不可用（Schema engine error），使用 `prisma db push` 替代。
+- Phase 2B：创建 `backend/src/lib/prisma.ts`，导出 Prisma Client 单例。
+- Phase 2B：创建 `backend/src/scripts/seed.ts`，upsert 写入 5 表测试数据。
+- Phase 2B：创建 `backend/src/scripts/check-db.ts`，读取各表数量和样例。
+- Phase 2B：`db:seed` 和 `db:check` npm scripts 已配置。
+- Phase 2B：数据库读写路径通过验证（seed 写入 + check 读取）。
+- 注意：本机 `prisma migrate` 不可用（Schema engine error），使用 `prisma db push` 替代作为本地原型方案。
 
 ## 未完成
 
 - 未创建前端项目代码。
 - 未创建上传处理逻辑。
-- 未创建 seed/check 脚本。
 - 未实现登录、产品、案例、留言、上传等真实业务接口。
 
 ## 下一阶段
 
-建议进入 Phase 2B（seed/check 脚本）或 Phase 3（后台登录与内容管理）。
+建议进入 Phase 3：后台登录与内容管理。

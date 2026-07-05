@@ -457,3 +457,67 @@
 - 是否切换 Git 分支：否。
 - 是否提交或上传 GitHub：待提交和推送。
 - 下一次施工建议：Phase 2A 已完成，可选择进入 Phase 2B（seed/check）或 Phase 3（登录与内容管理），视用户授权而定。
+
+## 2026-07-05 Phase 2B database read/write verification
+
+备份记录：
+
+- 备份方式：开工前 `git status` 确认工作区干净，`main` 与 `origin/main` 同步。
+- 备份位置或提交：`b88c7d9`，`origin/main`（Phase 2A 提交）。
+- 不能备份原因：无。
+
+读档记录：
+
+- 已读取文档：`CODEX_START_HERE.md`、`CODEX_MASTER_REQUIREMENTS.md`、`ARCHITECTURE.md`、`LAYER_CONTRACT.md`、`CONSTRUCTION_PLAN.md`、`WORKFLOW.md`、`DEV_PROGRESS.md`、`LOG.md`、`HANDOFF.md`、`progress/layers/database.md`、`progress/layers/backend.md`。
+- 已读取目标目录文件：`backend/package.json`、`backend/tsconfig.json`、`backend/src/app.ts`。
+
+本轮目标：
+
+- 创建 Prisma Client 连接文件和 seed/check 验证脚本。
+- 证明 backend 可以通过 Prisma Client 正常写入和读取 SQLite 数据。
+- 不实现真实业务接口，不修改 frontend。
+
+本轮计划：
+
+1. 创建 `backend/src/lib/prisma.ts`（Prisma Client 单例）。
+2. 创建 `backend/src/scripts/seed.ts`（写入 5 表测试数据，upsert 可重复执行）。
+3. 创建 `backend/src/scripts/check-db.ts`（读取各表数量和样例）。
+4. 更新 `backend/package.json` 新增 `db:seed` 和 `db:check` scripts。
+5. 执行测试序列。
+6. 测试通过后更新文档、提交并推送。
+
+施工记录：
+
+- 已创建 `backend/src/lib/prisma.ts`，导出 Prisma Client 单例。
+- 已创建 `backend/src/scripts/seed.ts`，使用 upsert 写入 Admin、Product、Case、Message、SiteSetting 各 1 条测试数据。
+- 已创建 `backend/src/scripts/check-db.ts`，查询各表 count 并打印样例 name/title。
+- 已更新 `backend/package.json`，新增 `db:seed`、`db:check` scripts（使用编译后 JS，无需额外依赖）。
+
+测试记录：
+
+- `npm run build`：通过。
+- `npm run prisma:generate`：通过。
+- `npm run prisma:push`：通过，数据库已同步。
+- `npm run db:seed`：通过，5 条数据全部写入。
+- `npm run db:check`：通过，读取 Admin 1 / Product 1 / Case 1 / Message 1 / SiteSetting 1，样例 Product name `__seed_product`、Case title `__seed_case`。
+- 重复 `db:seed` + `db:check`：通过，数量保持 1，upsert 可重复执行。
+- `git status` 确认 `data/company.db` 未被跟踪：通过。
+
+失败处理记录：
+
+- 无失败项。
+
+文档漂移检查：
+
+- 是否存在文档漂移：存在，`DEV_PROGRESS.md`、分层进度、`backend/README.md` 需更新为 Phase 2B 完成态。
+- 已修正文档：正在修正中。
+- 未修正原因：无。
+
+收尾记录：
+
+- 是否写入业务代码：否，仅写入 Prisma Client 连接和读写验证脚本。
+- 是否安装依赖：否。
+- 是否创建新 worktree：否。
+- 是否切换 Git 分支：否。
+- 是否提交或上传 GitHub：待提交和推送。
+- 下一次施工建议：Phase 2B 完成，数据库读写路径已验证。建议进入 Phase 3（后台登录与内容管理）。

@@ -2,7 +2,7 @@
 
 ## 当前阶段
 
-当前完成 Phase 2A：Prisma + SQLite 基础接入。
+当前完成 Phase 2B：数据库读写验证脚本。
 
 ## 职责
 
@@ -20,6 +20,7 @@ SQLite 负责保存文字数据和图片路径。
 
 - 已创建 SQLite 数据库文件 `data/company.db`。
 - 已定义表结构（通过 `backend/prisma/schema.prisma`）。
+- 已通过 Prisma Client 验证写入和读取路径。
 - 保存图片路径。
 
 ## 禁止
@@ -33,8 +34,12 @@ SQLite 负责保存文字数据和图片路径。
 - Phase 2A 已创建 `backend/prisma/schema.prisma`，包含 Admin、Product、Case、Message、SiteSetting 模型。
 - Phase 2A 已通过 `prisma db push` 生成 `data/company.db`，5 张表全部就位。
 - Phase 2A 已通过 `prisma generate` 生成 Prisma Client。
-- 注意：本机 `prisma migrate` 不可用（schema engine 空错误），使用 `prisma db push` 替代。
+- Phase 2B 已创建 `backend/src/lib/prisma.ts`（Prisma Client 连接单例）。
+- Phase 2B 已创建 `backend/src/scripts/seed.ts`（upsert 写入验证）。
+- Phase 2B 已创建 `backend/src/scripts/check-db.ts`（读取验证）。
+- Phase 2B 已验证写入→读取完整链路通过。
+- 注意：本机 `prisma migrate` 不可用（schema engine 空错误），使用 `prisma db push` 替代作为本地原型方案。
 
 ## 下一步
 
-Phase 2B 建议创建 seed/check 脚本，验证数据库读写路径。也可以直接进入 Phase 3（后台登录与内容管理），视用户授权而定。
+Phase 3 建议在 backend 中实现登录鉴权和业务接口，通过 Prisma Client 读写数据库。
