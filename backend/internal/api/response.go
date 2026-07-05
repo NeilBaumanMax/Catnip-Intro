@@ -12,6 +12,7 @@ type Response struct {
 	Token   string `json:"token,omitempty"`
 	User    any    `json:"user,omitempty"`
 	Message string `json:"message,omitempty"`
+	Data    any    `json:"data,omitempty"`
 }
 
 func WriteJSON(w http.ResponseWriter, status int, resp Response) {

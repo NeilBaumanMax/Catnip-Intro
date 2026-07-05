@@ -2,25 +2,21 @@
 
 ## 当前阶段
 
-Phase 4A：Go backend API 基础 + 管理员登录鉴权。
+Phase 4B：Go backend 产品/案例业务接口。
 
 ## 当前状态
 
-Phase 4A 测试通过。统一 JSON 响应、CORS、bcrypt 登录、token 鉴权中间件已实现。
+Phase 4B 测试通过。12 个接口全部可用：6 个公开访问 + 6 个后台管理（token 鉴权）。
 
 ## 已完成
 
-### Phase 0-3 ✅
-### Phase 4A：Go backend API 基础 + 管理员登录鉴权 ✅
-- `internal/api/response.go`：统一 JSON 响应格式（WriteOK / WriteError）。
-- `internal/auth/token_store.go`：内存 token store（crypto/rand + sync.RWMutex）。
-- `internal/auth/service.go`：登录逻辑（bcrypt 密码校验 + token 生成）。
-- `internal/auth/handler.go`：POST /api/auth/login handler。
-- `internal/middleware/cors.go`：CORS 中间件（Allow-Origin: localhost:3000）。
-- `internal/middleware/auth.go`：Bearer token 鉴权中间件（RequireAuth）。
-- `cmd/server/main.go`：组装路由（公开/受保护），挂载 CORS 和鉴权。
-- `cmd/db-seed/main.go`：默认管理员 admin/admin123456（bcrypt hash）。
-- 新增依赖：`golang.org/x/crypto v0.53.0`（bcrypt）。
+### Phase 0-4A ✅
+### Phase 4B：产品/案例业务接口 ✅
+- `internal/products/`：repository + service + handler（6 个接口）
+- `internal/cases/`：repository + service + handler（6 个接口）
+- 公开接口（无需登录）：列表/详情，只返回 is_visible=true
+- 后台接口（需 Bearer token）：创建/编辑/删除/显示隐藏
+- 统一响应：`{"ok":true,"data":...}` 或 `{"ok":false,"error":"..."}`
 
 ## 已完成接口
 
@@ -29,17 +25,27 @@ Phase 4A 测试通过。统一 JSON 响应、CORS、bcrypt 登录、token 鉴权
 | GET | /health | 公开 | 健康检查 |
 | POST | /api/auth/login | 公开 | 管理员登录 |
 | POST | /api/uploads | 公开 | 图片上传 |
-| GET | /uploads/... | 公开 | 静态文件访问 |
-| GET | /api/admin/ping | **需 token** | 鉴权验证接口 |
+| GET | /uploads/... | 公开 | 静态文件 |
+| GET | /api/products | 公开 | 产品列表（仅可见） |
+| GET | /api/products/{id} | 公开 | 产品详情（仅可见） |
+| GET | /api/cases | 公开 | 案例列表（仅可见） |
+| GET | /api/cases/{id} | 公开 | 案例详情（仅可见） |
+| GET | /api/admin/ping | token | 鉴权验证 |
+| POST | /api/admin/products | token | 新增产品 |
+| PUT | /api/admin/products/{id} | token | 修改产品 |
+| DELETE | /api/admin/products/{id} | token | 删除产品 |
+| PATCH | /api/admin/products/{id}/visibility | token | 显示/隐藏 |
+| POST | /api/admin/cases | token | 新增案例 |
+| PUT | /api/admin/cases/{id} | token | 修改案例 |
+| DELETE | /api/admin/cases/{id} | token | 删除案例 |
+| PATCH | /api/admin/cases/{id}/visibility | token | 显示/隐藏 |
 
 ## 未完成
 
-- 产品 CRUD
-- 案例 CRUD
 - 留言接口
 - 网站设置接口
 - 前端页面
 
 ## 下一阶段
 
-Phase 4B：Go backend 业务接口（产品/案例/留言/网站设置 CRUD）。
+Phase 4C：留言接口 + 网站设置接口，或 Phase 5：frontend 前端项目。
