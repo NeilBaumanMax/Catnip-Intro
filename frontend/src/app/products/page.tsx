@@ -28,7 +28,7 @@ export default async function ProductsPage() {
 
       <div className="relative z-10">
         {/* Hero */}
-        <section className="py-20 md:py-24 text-center">
+        <section className="py-12 md:py-24 text-center">
           <div className="max-w-4xl mx-auto px-6">
             <p className="text-[#00AEEF] font-medium text-sm mb-3 tracking-widest uppercase">Product Center</p>
             <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">产品中心</h1>

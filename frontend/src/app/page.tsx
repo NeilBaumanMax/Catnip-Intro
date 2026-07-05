@@ -40,13 +40,13 @@ export default async function HomePage() {
           <Image src="/images/hero-bg.jpg" alt="" fill className="object-cover" priority />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/95 via-[#0a1628]/80 to-[#0a1628]/60" />
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 md:py-20 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-20 w-full">
           <HeroCarousel />
         </div>
       </section>
 
       {/* Product Matrix */}
-      <section className="py-20 bg-white relative">
+      <section className="py-12 md:py-20 bg-white relative">
         <div className="absolute inset-0 bg-grid" />
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center mb-14">
@@ -90,7 +90,7 @@ export default async function HomePage() {
       </section>
 
       {/* Scenarios */}
-      <section className="py-20 bg-[#F6F8FB]">
+      <section className="py-12 md:py-20 bg-[#F6F8FB]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-14">
             <p className="text-[#00AEEF] font-medium text-sm mb-3">应用场景</p>
@@ -109,7 +109,7 @@ export default async function HomePage() {
       </section>
 
       {/* Why Us */}
-      <section className="py-20 bg-[#0a1628] text-white">
+      <section className="py-12 md:py-20 bg-[#0a1628] text-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-bold">为什么选择 Catnipent</h2>
@@ -126,7 +126,7 @@ export default async function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-[#0F3D7A] to-[#1A56DB] text-white text-center">
+      <section className="py-12 md:py-20 bg-gradient-to-r from-[#0F3D7A] to-[#1A56DB] text-white text-center">
         <div className="max-w-3xl mx-auto px-6">
           <h2 className="text-3xl font-bold mb-4">准备好让 AI 真正落地了吗？</h2>
           <p className="text-lg text-blue-100 mb-8">联系我们，了解本地 Agent 如何为您的场景赋能</p>

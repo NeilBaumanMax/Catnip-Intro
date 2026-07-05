@@ -60,9 +60,9 @@ export default function HeroCarousel() {
         </div>
       </div>
 
-      {/* Right image - fixed aspect ratio, object-cover for uniform sizing */}
-      <div className="hidden md:block">
-        <div className="relative aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-white/20 shadow-2xl bg-white/5">
+      {/* Right image - shows on all screens */}
+      <div>
+        <div className="relative aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-white/20 shadow-2xl bg-white/5 max-w-sm mx-auto md:max-w-none">
           {slides.map((slide, n) => (
             <img
               key={n}

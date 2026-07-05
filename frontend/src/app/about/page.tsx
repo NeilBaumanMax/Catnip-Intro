@@ -31,7 +31,7 @@ export default function AboutPage() {
 
       <div className="relative z-10">
         {/* Hero */}
-        <section className="py-20 md:py-24 text-center">
+        <section className="py-12 md:py-24 text-center">
           <div className="max-w-4xl mx-auto px-6">
             <p className="text-[#00AEEF] font-medium text-sm mb-3 tracking-widest uppercase">About Catnipent</p>
             <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">关于科霓朋特</h1>
@@ -42,7 +42,7 @@ export default function AboutPage() {
         </section>
 
         {/* Company Intro + Team Image */}
-        <section className="pb-12">
+        <section className="pb-8 md:pb-12">
           <div className="max-w-4xl mx-auto px-6">
             <div className={`${glassCard} p-8 md:p-10`}>
               <div className="grid md:grid-cols-5 gap-8 items-center">
@@ -64,7 +64,7 @@ export default function AboutPage() {
         </section>
 
         {/* Tech Route */}
-        <section className="pb-12">
+        <section className="pb-8 md:pb-12">
           <div className="max-w-4xl mx-auto px-6">
             <div className="text-center mb-8">
               <p className="text-[#00AEEF] font-medium text-sm mb-3">技术路线</p>
@@ -84,7 +84,7 @@ export default function AboutPage() {
         </section>
 
         {/* Timeline */}
-        <section className="pb-12">
+        <section className="pb-8 md:pb-12">
           <div className="max-w-3xl mx-auto px-6">
             <div className="text-center mb-10">
               <p className="text-[#00AEEF] font-medium text-sm mb-3">发展历程</p>
