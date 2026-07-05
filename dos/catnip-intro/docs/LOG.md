@@ -1238,3 +1238,26 @@
 - 是否安装依赖：是，Nginx 1.26.2 系统工具，Orbitron Google Font。
 - 是否修改 backend：否。
 - 下一阶段建议：项目已交付。
+
+## 2026-07-06 后期优化
+
+本轮目标：Logo 去白底、导航字体优化、移动端适配、后端 SSE 轮播。
+
+施工记录：
+- Python PIL 去除 Logo 白底，保存为透明 PNG。
+- 导航栏字体改为 Orbitron 艺术字，字号 text-sm→text-base。
+- 导航高亮：气泡方案被否决，最终用青色文字+底部短横线。
+- 全站 Section padding 响应式：`py-20`→`py-12 md:py-20`。
+- Hero 产品图在手机端可见（移除 hidden md:block）。
+- 后端新增 `/api/carousel/tick` SSE 接口，Go goroutine 每 4 秒轮转，所有设备通过 EventSource 同步接收。
+- 前端 HeroCarousel 改用 EventSource 替代 setInterval，多设备轮播同步。
+
+测试记录：
+- Logo 透明 PNG 显示正常。
+- npm run build 通过（生产模式）。
+- 移动端页面适配验证。
+- SSE 接口注册成功。
+
+收尾记录：
+- 是否写入业务代码：是，SSE 轮播、前端适配。
+- 是否修改 backend：是，新增 carousel SSE handler。

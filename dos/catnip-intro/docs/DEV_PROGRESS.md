@@ -44,6 +44,8 @@
   - Orbitron 科技风字体
   - 联系我们词云动效
   - 产品中心 4 产品大卡片
+- 后端 SSE 轮播 ✅ (Go goroutine 计时 → EventSource 推送)
+- 移动端适配 ✅ (响应式间距、Hero 图片手机可见)
 - Nginx 反向代理 ✅ (:8080 → Next.js :3000 + Go :4000)
 
 ### 底座

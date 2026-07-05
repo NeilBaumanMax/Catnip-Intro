@@ -17,6 +17,7 @@ Go 1.25 + net/http + database/sql + modernc.org/sqlite + Nginx 1.26.2
 - Phase 4B: 产品/案例 API ✅
 - Phase 4C: 留言/设置 API ✅
 - Phase 7: 全站联调 + LAN CORS ✅
+- SSE 轮播 ✅ (/api/carousel/tick, Go goroutine 4s 推送)
 - Nginx 反向代理 ✅ (:8080 → :3000 + :4000)
 
 ## 24 个 API
