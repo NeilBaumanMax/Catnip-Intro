@@ -2,11 +2,11 @@
 
 ## 当前阶段
 
-Phase 1：backend 最小骨架。
+Phase 2A：Prisma + SQLite 基础接入。
 
 ## 当前状态
 
-Phase 1 backend 最小骨架测试通过。后端服务可以启动，并提供 `GET /health` 健康检查接口。
+Phase 2A 测试通过。`data/company.db` 已通过 `prisma db push` 生成，5 张表就位。
 
 ## Phase 状态记录模板
 
@@ -46,26 +46,26 @@ Phase 1 backend 最小骨架测试通过。后端服务可以启动，并提供 
 - 创建根目录 README。
 - 创建各基础目录 README。
 - 创建架构、层级契约、建设计划、工作流、日志、交接、测试指标和分层进度文档。
-- 补充标准施工流程：开工备份、读档、写计划、施工写日志、测试写日志、失败回修、测试通过后修正文档漂移、提出下次建议、上传 GitHub。
+- 补充标准施工流程。
 - 补充统一日志模板、测试记录模板、交接记录模板和 Phase 状态记录模板。
 - Phase 1 backend：创建 Node.js + Express + TypeScript 最小后端骨架。
 - Phase 1 backend：配置基础 CORS。
-- Phase 1 backend：配置 `dev`、`build`、`start` npm scripts。
-- Phase 1 backend：实现 `GET /health`，返回 `{"ok":true,"message":"backend is running"}`。
-- Phase 1 backend：服务监听 `0.0.0.0:4000`。
+- Phase 1 backend：实现 `GET /health`。
+- Phase 2A：创建 `backend/.env.example`。
+- Phase 2A：创建 `backend/prisma/schema.prisma`，定义 Admin、Product、Case、Message、SiteSetting 模型。
+- Phase 2A：安装 Prisma 6.19.0 + SQLite 依赖。
+- Phase 2A：`prisma db push` 成功生成 `data/company.db`，5 张表就位。
+- Phase 2A：`prisma:generate` 成功生成 Prisma Client。
+- Phase 2A：`npm run build` 通过。
+- 注意：本机 `prisma migrate` 不可用（Schema engine error），使用 `prisma db push` 替代。
 
 ## 未完成
 
 - 未创建前端项目代码。
-- 未创建 SQLite 数据库文件。
 - 未创建上传处理逻辑。
-- 未安装前端依赖。
+- 未创建 seed/check 脚本。
 - 未实现登录、产品、案例、留言、上传等真实业务接口。
-- 未接入 SQLite。
-- 未接入 Prisma。
 
 ## 下一阶段
 
-建议进入 Phase 2：数据库与后端基础。
-
-Phase 2 开工前必须先备份当前仓库状态，并记录备份方式和备份位置。
+建议进入 Phase 2B（seed/check 脚本）或 Phase 3（后台登录与内容管理）。

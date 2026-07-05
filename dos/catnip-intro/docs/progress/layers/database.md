@@ -2,7 +2,7 @@
 
 ## 当前阶段
 
-当前只完成 Phase 0：工程脚手架。
+当前完成 Phase 2A：Prisma + SQLite 基础接入。
 
 ## 职责
 
@@ -18,22 +18,23 @@ SQLite 负责保存文字数据和图片路径。
 
 ## 允许
 
-- 后续阶段创建 SQLite 数据库文件。
-- 后续阶段定义表结构、索引和初始管理员数据。
+- 已创建 SQLite 数据库文件 `data/company.db`。
+- 已定义表结构（通过 `backend/prisma/schema.prisma`）。
 - 保存图片路径。
 
 ## 禁止
 
-- 在 Phase 0 创建数据库文件或模型代码。
 - 保存真实图片二进制文件。
 - 直接暴露给 frontend。
 
 ## 当前进度
 
 - Phase 0 已创建 `data/README.md`。
-- 尚未创建 SQLite 数据库文件。
+- Phase 2A 已创建 `backend/prisma/schema.prisma`，包含 Admin、Product、Case、Message、SiteSetting 模型。
+- Phase 2A 已通过 `prisma db push` 生成 `data/company.db`，5 张表全部就位。
+- Phase 2A 已通过 `prisma generate` 生成 Prisma Client。
+- 注意：本机 `prisma migrate` 不可用（schema engine 空错误），使用 `prisma db push` 替代。
 
 ## 下一步
 
-Phase 2 定义数据库结构并创建 SQLite 文件。
-
+Phase 2B 建议创建 seed/check 脚本，验证数据库读写路径。也可以直接进入 Phase 3（后台登录与内容管理），视用户授权而定。

@@ -1,8 +1,8 @@
 # backend
 
-当前完成 Phase 1：backend 最小可运行骨架。
+当前完成 Phase 2A：Prisma + SQLite 基础接入。
 
-本目录是 Catnip Intro 的后端服务目录。当前阶段只提供 Express + TypeScript 基础服务和健康检查接口，不包含数据库、Prisma、登录、产品、案例、留言、上传或其他真实业务接口。
+本目录是 Catnip Intro 的后端服务目录。
 
 ## 技术栈
 
@@ -10,6 +10,8 @@
 - Express
 - TypeScript
 - CORS
+- Prisma 6.19.0
+- SQLite
 
 ## 命令
 
@@ -18,7 +20,21 @@ npm install
 npm run build
 npm run dev
 npm start
+
+# Prisma
+npm run prisma:generate   # 生成 Prisma Client
+npm run prisma:push        # 同步 schema 到 SQLite（替代 migrate）
+npm run prisma:migrate     # Prisma migrate（本机暂不可用）
 ```
+
+## 数据库
+
+数据库文件：`data/company.db`
+
+- `prisma:generate` — 从 schema 生成 Prisma Client
+- `prisma:push` — 直接同步 schema 到 SQLite，不生成 migration 历史文件
+
+注意：本机 Prisma migration engine 不可用（返回空 `Schema engine error`），当前使用 `prisma db push` 替代 `prisma migrate`。
 
 ## 健康检查
 
@@ -47,11 +63,10 @@ http://localhost:4000/health
 - 启动后端服务。
 - 访问 `GET /health`。
 - 使用基础 CORS。
+- 通过 Prisma Client 连接 SQLite。
 
 ## 当前禁止
 
-- 接入 SQLite。
-- 接入 Prisma。
 - 实现登录接口。
 - 实现产品接口。
 - 实现案例接口。

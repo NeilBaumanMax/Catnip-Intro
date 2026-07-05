@@ -212,3 +212,204 @@ Phase 3 以后：
 - 是否已修正文档漂移：是。
 - 是否允许提交本次结果：是。
 - 是否允许进入下一 Phase：Phase 1 完成后可以建议进入 Phase 2，但必须由用户明确授权。
+
+## 2026-07-05 Phase 2A Prisma SQLite foundation test
+
+测试范围：
+
+- backend Prisma + SQLite schema。
+- Prisma Client generate。
+- Prisma migrate 生成 `data/company.db`。
+
+测试前置条件：
+
+- 已备份：是，开工前 `main` 与 `origin/main` 干净同步，备份提交 `9f82872`。
+- 已读取文档：是。
+- 已写开工计划：是。
+- 当前 Node：`v24.16.0`，通过显式 PATH 使用 `/Users/neil/devtools/nodejs/bin/node`。
+
+测试项目：
+
+1. 项目：`cd backend && npm install`
+   检查方式：命令退出码。
+   结果：通过。
+   失败原因：初始命令实际使用 Node v26，已中止。
+   修复记录：显式使用 Node 24 PATH 后重新安装。
+   重新测试结果：通过。
+
+2. 项目：`cd backend && npm run build`
+   检查方式：TypeScript 编译。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+3. 项目：`cd backend && npm run prisma:generate`
+   检查方式：Prisma Client 生成。
+   结果：通过。
+   失败原因：无。
+   修复记录：Prisma 6.19.0 下通过。
+   重新测试结果：通过。
+
+4. 项目：`cd backend && npm run prisma:migrate`
+   检查方式：Prisma migrate。
+   结果：失败。
+   失败原因：Prisma schema engine 返回 `Schema engine error`，未输出具体原因。
+   修复记录：验证 schema 有效，将 Prisma 从 5.22.0 升级到 6.19.0 后重试。
+   重新测试结果：失败。
+
+5. 项目：确认 `data/company.db` 是否生成
+   检查方式：文件存在性。
+   结果：失败。
+   失败原因：migrate 未通过。
+   修复记录：无。
+   重新测试结果：无。
+
+统计：
+
+- 通过数量：3
+- 失败数量：2
+- 失败项：`npm run prisma:migrate`、`data/company.db` 生成。
+- 是否存在文档漂移：收尾前存在 `data/README.md` 完成态漂移。
+- 是否已修正文档漂移：是。
+- 是否允许提交本次结果：否。
+- 是否允许进入下一 Phase：否。
+
+## 2026-07-05 Phase 2A-Debug Prisma migrate failure test
+
+测试范围：
+
+- Prisma migrate 失败原因定位。
+- 不执行 seed/check，不新增业务 API。
+
+测试前置条件：
+
+- 当前工作区保留 Phase 2A 未完成改动：是。
+- 当前分支是 `main`：是。
+- 未创建新 worktree：是。
+- 当前 Node：`v24.16.0`。
+- 当前 npm：`11.13.0`。
+- 本地 Prisma：`6.19.0`。
+
+测试项目：
+
+1. 项目：开工诊断
+   检查方式：`pwd`、`git status`、`node -v`、`npm -v`、`npx prisma -v`、目录和文件内容检查。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+2. 项目：`DEBUG="prisma:*" npx prisma migrate dev`
+   检查方式：调试输出。
+   结果：失败。
+   失败原因：schema-engine 返回空的 `Schema engine error`。
+   修复记录：继续隔离路径、schema 和 engine。
+   重新测试结果：失败。
+
+3. 项目：`prisma migrate diff`
+   检查方式：从 schema 生成 SQL。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+4. 项目：临时 schema migrate
+   检查方式：临时相同 schema、最小 Admin schema、空 schema。
+   结果：失败。
+   失败原因：均返回空的 `Schema engine error`。
+   修复记录：确认问题不是业务模型、SQLite 相对路径或 schema 语法。
+   重新测试结果：失败。
+
+5. 项目：`migrate diff` + `migrate deploy`
+   检查方式：临时迁移目录。
+   结果：失败。
+   失败原因：`migrate deploy` 仍返回空的 `Schema engine error`。
+   修复记录：无，达到修复轮次限制。
+   重新测试结果：失败。
+
+6. 项目：`data/company.db`
+   检查方式：文件存在性。
+   结果：失败。
+   失败原因：migrate 未通过。
+   修复记录：无。
+   重新测试结果：无。
+
+统计：
+
+- 通过数量：2
+- 失败数量：4
+- 失败项：`migrate dev`、临时 schema migrate、`migrate deploy`、`data/company.db` 生成。
+- 是否存在文档漂移：不存在完成态漂移；Phase 2A 仍未完成。
+- 是否已修正文档漂移：是。
+- 是否允许提交本次结果：否。
+- 是否允许进入下一 Phase：否。
+
+## 2026-07-05 Phase 2A-Debug Round 2 test
+
+测试范围：
+
+- `prisma db push` 替代 `prisma migrate` 生成 `data/company.db`。
+- Prisma Client generate 和 TypeScript build。
+
+测试前置条件：
+
+- 已备份：是，开工前 `main` 与 `origin/main` 干净同步，备份提交 `9f82872`。
+- 已读取文档：是。
+- 已写开工计划：是。
+- 当前 Node：`v24.16.0`。
+- 当前 Prisma：`6.19.0`。
+
+测试项目：
+
+1. 项目：`prisma db push`
+   检查方式：命令输出和退出码。
+   结果：通过，输出 "SQLite database company.db created"。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+2. 项目：`npm run prisma:push`
+   检查方式：npm script 执行。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+3. 项目：`data/company.db` 文件存在性
+   检查方式：`ls -la` 和 `sqlite3 .tables`。
+   结果：通过，32768 字节，Admin、Case、Message、Product、SiteSetting 5 张表就位。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+4. 项目：sqlite3 schema 验证
+   检查方式：`sqlite3 .schema` 与 `prisma/schema.prisma` 对比。
+   结果：通过，表结构一致。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+5. 项目：`npm run prisma:generate`
+   检查方式：Prisma Client 生成。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+6. 项目：`npm run build`
+   检查方式：TypeScript 编译。
+   结果：通过。
+   失败原因：无。
+   修复记录：无。
+   重新测试结果：无需重测。
+
+统计：
+
+- 通过数量：6
+- 失败数量：0
+- 失败项：无。
+- 是否存在文档漂移：存在，多份文档需从 Phase 2A 未完成更新为完成态。
+- 是否已修正文档漂移：是。
+- 是否允许提交本次结果：是。
+- 是否允许进入下一 Phase：Phase 2A 完成后可建议进入 Phase 2B 或 Phase 3，但须由用户明确授权。
